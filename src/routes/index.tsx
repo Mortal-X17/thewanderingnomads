@@ -723,6 +723,93 @@ function Field({ label, placeholder }: { label: string; placeholder: string }) {
   );
 }
 
+/* ---------------- FOUNDER PORTRAIT ---------------- */
+
+function FounderPortrait({ src }: { src: string }) {
+  const [loaded, setLoaded] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start end", "end start"],
+  });
+  const y = useTransform(scrollYProgress, [0, 1], ["-4%", "4%"]);
+  const scale = useTransform(scrollYProgress, [0, 0.5, 1], [1.06, 1.02, 1.06]);
+
+  return (
+    <div
+      ref={ref}
+      className="group relative overflow-hidden rounded-[28px] hairline bg-muted shadow-[0_30px_80px_-40px_rgba(20,28,36,0.35)]"
+      style={{ aspectRatio: "4 / 5" }}
+    >
+      {/* Blur-up placeholder */}
+      <div
+        aria-hidden
+        className={`absolute inset-0 transition-opacity duration-700 ${
+          loaded ? "opacity-0" : "opacity-100"
+        }`}
+        style={{
+          background:
+            "radial-gradient(120% 90% at 30% 20%, color-mix(in oklab, var(--forest) 22%, var(--muted)) 0%, var(--muted) 60%, color-mix(in oklab, var(--ink) 12%, var(--muted)) 100%)",
+          filter: "blur(24px)",
+          transform: "scale(1.1)",
+        }}
+      />
+
+      {/* Portrait — parallax + gentle zoom on hover */}
+      <motion.img
+        src={src}
+        alt="Krishnakant Yadav, founder of The Wandering Nomads"
+        width={1200}
+        height={1500}
+        loading="lazy"
+        decoding="async"
+        onLoad={() => setLoaded(true)}
+        style={{ y, scale }}
+        className={`absolute inset-0 h-full w-full object-cover object-[50%_28%] transition-[opacity,filter] duration-1000 ease-out will-change-transform ${
+          loaded ? "opacity-100 blur-0" : "opacity-0 blur-lg"
+        } group-hover:scale-[1.03]`}
+      />
+
+      {/* Tasteful portrait vignette — inner ring + soft edge darken + top light */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background:
+            "radial-gradient(120% 80% at 50% 30%, transparent 55%, rgba(10,14,20,0.28) 100%)",
+        }}
+      />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background:
+            "linear-gradient(180deg, rgba(255,244,220,0.10) 0%, transparent 22%, transparent 60%, rgba(10,14,20,0.55) 100%)",
+        }}
+      />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 rounded-[28px] ring-1 ring-inset ring-white/10"
+      />
+
+      {/* Caption plate */}
+      <div className="absolute inset-x-0 bottom-0 p-5">
+        <div className="glass rounded-2xl px-4 py-3">
+          <div className="flex items-center gap-3">
+            <span className="inline-flex h-1.5 w-1.5 rounded-full bg-forest shadow-[0_0_0_4px_color-mix(in_oklab,var(--forest)_20%,transparent)]" />
+            <p className="text-[10.5px] uppercase tracking-[0.24em] text-ink/60">
+              Founder · Est. 2019
+            </p>
+          </div>
+          <p className="mt-1.5 text-[15px] font-medium text-ink">
+            Krishnakant Yadav <span className="text-muted-foreground">— Krish</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+
+
 /* ---------------- ICONS ---------------- */
 
 function ArrowRight({ className = "" }: { className?: string }) {
