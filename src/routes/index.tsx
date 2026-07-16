@@ -26,17 +26,17 @@ import gVillage from "@/assets/gallery-village.jpg";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "The Wandering Nomads — Founder-led expeditions across the Himalayas" },
+      { title: "The Wandering Nomads — By KRISH" },
       {
         name: "description",
         content:
-          "Small-group journeys through Kashmir, Spiti, Jibhi, Rajasthan and beyond — personally led by Krish. Built on trust, community and real experiences.",
+          "Founder-led expeditions across India's most breathtaking destinations—crafted with trust, community, and unforgettable experiences.",
       },
-      { property: "og:title", content: "The Wandering Nomads — Founder-led expeditions" },
+      { property: "og:title", content: "The Wandering Nomads — By KRISH" },
       {
         property: "og:description",
         content:
-          "Journeys through the Himalayas led personally by Krish. Small groups. Authentic places. Real people.",
+          "Founder-led expeditions across India's most breathtaking destinations—crafted with trust, community, and unforgettable experiences.",
       },
       { property: "og:url", content: "/" },
     ],

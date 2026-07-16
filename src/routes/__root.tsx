@@ -75,27 +75,30 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "The Wandering Nomads — Founder-led expeditions across India, Nepal & Bhutan" },
+      { title: "The Wandering Nomads — By KRISH" },
       {
         name: "description",
         content:
-          "Small-group, founder-led travel expeditions from Kashmir to Spiti, led personally by Krish. Authentic journeys built on trust, community and real experiences.",
+          "Founder-led expeditions across India's most breathtaking destinations—crafted with trust, community, and unforgettable experiences.",
       },
       { name: "author", content: "The Wandering Nomads" },
       { name: "theme-color", content: "#f8f6f0" },
       { property: "og:site_name", content: "The Wandering Nomads" },
-      { property: "og:title", content: "The Wandering Nomads — Founder-led expeditions" },
+      { property: "og:title", content: "The Wandering Nomads — By KRISH" },
       {
         property: "og:description",
         content:
-          "Small-group expeditions led personally by Krish. Authentic journeys through the Himalayas and beyond.",
+          "Founder-led expeditions across India's most breathtaking destinations—crafted with trust, community, and unforgettable experiences.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "The Wandering Nomads — By KRISH" },
+      { name: "twitter:description", content: "Founder-led expeditions across India's most breathtaking destinations—crafted with trust, community, and unforgettable experiences." },
+      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/3fa00827-bd68-4f6b-9816-22dc609dc567" },
+      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/3fa00827-bd68-4f6b-9816-22dc609dc567" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
-      { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
