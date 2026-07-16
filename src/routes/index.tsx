@@ -244,26 +244,10 @@ function About() {
         <div className="grid gap-16 lg:grid-cols-[0.9fr_1.1fr] lg:gap-24">
           <div className="lg:sticky lg:top-32 lg:self-start">
             <Reveal>
-              <div className="relative overflow-hidden rounded-[28px] hairline">
-                <img
-                  src={krishImg}
-                  alt="Krishnakant Yadav, founder of The Wandering Nomads"
-                  className="h-full w-full object-cover"
-                  loading="lazy"
-                  width={1200}
-                  height={1500}
-                />
-                <div className="absolute inset-x-0 bottom-0 p-5">
-                  <div className="glass rounded-2xl px-4 py-3">
-                    <p className="text-[11px] uppercase tracking-[0.2em] text-ink/60">Founder</p>
-                    <p className="mt-1 text-[15px] font-medium text-ink">
-                      Krishnakant Yadav <span className="text-muted-foreground">— Krish</span>
-                    </p>
-                  </div>
-                </div>
-              </div>
+              <FounderPortrait src={krishImg} />
             </Reveal>
           </div>
+
 
           <div>
             <Reveal>
