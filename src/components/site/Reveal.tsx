@@ -15,16 +15,13 @@ export function Reveal({
   children,
   delay = 0,
   className,
-  as: Tag = "div",
 }: {
   children: ReactNode;
   delay?: number;
   className?: string;
-  as?: keyof typeof motion;
 }) {
-  const Comp = motion[Tag] as typeof motion.div;
   return (
-    <Comp
+    <motion.div
       variants={variants}
       initial="hidden"
       whileInView="visible"
@@ -33,6 +30,6 @@ export function Reveal({
       className={className}
     >
       {children}
-    </Comp>
+    </motion.div>
   );
 }
