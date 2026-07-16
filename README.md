@@ -4,8 +4,6 @@ https://thewanderingnomads.lovable.app
 
 A premium founder-led travel platform built to showcase authentic expeditions across India.
 
-**Repository:** https://github.com/Mortal-X17/thewanderingnomads
-
 Designed with:
 - Next.js
 - TypeScript
