@@ -1,0 +1,15 @@
+# The Wandering Nomads
+
+A premium founder-led travel platform built to showcase authentic expeditions across India.
+
+Designed with:
+- Next.js
+- TypeScript
+- Tailwind CSS
+- Framer Motion
+
+Status:
+🚧 Under Active Development
+
+Vision:
+To evolve into a production-grade travel platform with booking, AI recommendations, blogs, dashboards, and a seamless digital experience.
