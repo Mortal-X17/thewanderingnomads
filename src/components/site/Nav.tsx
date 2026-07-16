@@ -112,6 +112,7 @@ export function Nav() {
             />
           </span>
         </button>
+        </div>
       </nav>
 
       <AnimatePresence>
