@@ -1,6 +1,5 @@
 # The Wandering Nomads
 
-https://thewanderingnomads.lovable.app
 
 A premium founder-led travel platform built to showcase authentic expeditions across India.
 
