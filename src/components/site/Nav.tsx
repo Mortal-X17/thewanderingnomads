@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { ThemeToggle } from "@/components/site/ThemeToggle";
 
 const links = [
   { to: "/", label: "Home" },
@@ -71,7 +72,8 @@ export function Nav() {
           ))}
         </ul>
 
-        <div className="hidden md:block">
+        <div className="hidden items-center gap-2 md:flex">
+          <ThemeToggle variant={scrolled ? "dark" : "light"} />
           <Link
             to="/contact"
             className={`inline-flex items-center rounded-full px-4 py-2 text-[13px] font-medium transition ${
@@ -83,6 +85,9 @@ export function Nav() {
             Book Now
           </Link>
         </div>
+
+        <div className="flex items-center gap-2 md:hidden">
+          <ThemeToggle variant={scrolled ? "dark" : "light"} />
 
         <button
           onClick={() => setOpen((v) => !v)}
