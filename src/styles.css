@@ -96,6 +96,51 @@
   --sunrise: oklch(0.82 0.10 60);
 }
 
+.dark {
+  /* Inverted neutrals — semantic tokens (snow/ink/bg/card/muted) flip
+     so every existing utility (bg-snow, text-ink, border-ink/8, bg-card…)
+     adapts automatically. */
+  --snow: oklch(0.16 0.012 250);
+  --background: oklch(0.14 0.012 250);
+  --foreground: oklch(0.95 0.005 90);
+  --ink: oklch(0.97 0.005 90);
+
+  --card: oklch(0.19 0.014 250);
+  --card-foreground: oklch(0.95 0.005 90);
+  --popover: oklch(0.19 0.014 250);
+  --popover-foreground: oklch(0.95 0.005 90);
+
+  --primary: oklch(0.72 0.09 155);
+  --primary-foreground: oklch(0.14 0.012 250);
+  --forest: oklch(0.62 0.07 155);
+
+  --secondary: oklch(0.22 0.012 250);
+  --secondary-foreground: oklch(0.95 0.005 90);
+
+  --muted: oklch(0.22 0.012 250);
+  --muted-foreground: oklch(0.68 0.015 250);
+
+  --accent: oklch(0.24 0.014 250);
+  --accent-foreground: oklch(0.95 0.005 90);
+
+  --destructive: oklch(0.62 0.19 27);
+  --destructive-foreground: oklch(0.98 0.004 95);
+
+  --border: oklch(0.28 0.012 250);
+  --input: oklch(0.28 0.012 250);
+  --ring: oklch(0.65 0.07 155);
+
+  --river: oklch(0.68 0.10 235);
+  --stone: oklch(0.55 0.015 250);
+  --fog: oklch(0.28 0.012 240);
+  --sunrise: oklch(0.78 0.10 60);
+}
+
+.dark .glass {
+  background: color-mix(in oklab, black 40%, transparent);
+  border-color: color-mix(in oklab, white 12%, transparent);
+}
+
 @layer base {
   * {
     border-color: var(--color-border);
