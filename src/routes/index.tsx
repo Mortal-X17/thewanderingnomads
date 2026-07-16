@@ -808,6 +808,9 @@ function FounderPortrait({ src }: { src: string }) {
       </div>
     </div>
   );
+}
+
+
 
 
 /* ---------------- ICONS ---------------- */
