@@ -8,7 +8,8 @@ import { Reveal } from "@/components/site/Reveal";
 import { Counter } from "@/components/site/Counter";
 
 import heroImg from "@/assets/hero-himalaya.jpg";
-import krishImg from "@/assets/krish-portrait.jpg";
+import krishAsset from "@/assets/krish-founder.png.asset.json";
+const krishImg = krishAsset.url;
 import jKashmir from "@/assets/journey-kashmir.jpg";
 import jSpiti from "@/assets/journey-spiti.jpg";
 import jJibhi from "@/assets/journey-jibhi.jpg";
