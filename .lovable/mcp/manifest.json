@@ -1,0 +1,106 @@
+{
+  "version": 1,
+  "sdk_version": "0.23.0",
+  "path": "/mcp",
+  "auth": {
+    "type": "none"
+  },
+  "mcp": {
+    "server": {
+      "name": "the-wandering-nomads-mcp",
+      "version": "0.1.0",
+      "title": "The Wandering Nomads"
+    },
+    "tools": [
+      {
+        "name": "list_journeys",
+        "title": "List journeys",
+        "description": "List every featured, founder-led expedition offered by The Wandering Nomads, with duration, best season, group size, difficulty and a short summary.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {}
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "get_journey",
+        "title": "Get journey details",
+        "description": "Fetch full details for a single featured journey by its slug (e.g. 'kashmir', 'spiti', 'jibhi', 'valley-of-flowers', 'rajasthan', 'rishikesh').",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "slug": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Journey slug, lowercase and hyphenated (e.g. 'kashmir')."
+            }
+          },
+          "required": [
+            "slug"
+          ]
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "about_founder",
+        "title": "About the founder",
+        "description": "Get a short biography and journey timeline for Krish (Krishnakant Yadav), founder of The Wandering Nomads.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {}
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "contact_info",
+        "title": "Contact information",
+        "description": "Get the public contact channels for The Wandering Nomads — email, phone, WhatsApp, Instagram handles and the brand's base city.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {}
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "brand_stats",
+        "title": "Brand statistics",
+        "description": "Get headline statistics for The Wandering Nomads — states explored, cities visited, expeditions run, and community size.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {}
+        },
+        "outputSchema": null
+      }
+    ]
+  }
+}
