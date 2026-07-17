@@ -346,6 +346,9 @@ const journeys = [
     img: jKashmir,
     desc: "Shikaras on Dal Lake. Nights inside Kashmiri homes. The valley the way Krish knows it.",
     duration: "8 days",
+    season: "Apr — Oct",
+    group: "8–12",
+    difficulty: "Easy",
   },
   {
     slug: "spiti",
@@ -354,6 +357,9 @@ const journeys = [
     img: jSpiti,
     desc: "Cold desert monasteries, star-lit villages, and roads that hang from the mountain's edge.",
     duration: "10 days",
+    season: "Jun — Sep",
+    group: "6–10",
+    difficulty: "Moderate",
   },
   {
     slug: "jibhi",
@@ -362,6 +368,9 @@ const journeys = [
     img: jJibhi,
     desc: "Wooden houses, misty pine forests, and a small stream that never stops singing.",
     duration: "5 days",
+    season: "Mar — Nov",
+    group: "6–10",
+    difficulty: "Easy",
   },
   {
     slug: "valley-of-flowers",
@@ -370,6 +379,9 @@ const journeys = [
     img: jVof,
     desc: "An alpine meadow that bursts into colour for only a few weeks a year.",
     duration: "6 days",
+    season: "Jul — Aug",
+    group: "6–8",
+    difficulty: "Moderate",
   },
   {
     slug: "rajasthan",
@@ -378,6 +390,9 @@ const journeys = [
     img: jRaj,
     desc: "Dunes at dusk, forts at dawn, and the honesty of home-cooked thalis in between.",
     duration: "7 days",
+    season: "Oct — Mar",
+    group: "8–12",
+    difficulty: "Easy",
   },
   {
     slug: "rishikesh",
@@ -386,6 +401,9 @@ const journeys = [
     img: jRishi,
     desc: "The Ganges at first light, mountain trails at noon, and prayer flags in every breath.",
     duration: "4 days",
+    season: "Year-round",
+    group: "6–10",
+    difficulty: "Easy",
   },
 ];
 
