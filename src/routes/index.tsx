@@ -458,14 +458,30 @@ function Journeys() {
                   </div>
                 </div>
                 <div className="flex flex-1 flex-col p-6">
-                  <p className="text-[14.5px] leading-relaxed text-muted-foreground">{j.desc}</p>
+                  <p className="text-[14.5px] leading-[1.65] text-muted-foreground">{j.desc}</p>
+
+                  <dl className="mt-6 grid grid-cols-3 gap-3 border-t border-ink/8 pt-5 text-[11px]">
+                    <div>
+                      <dt className="uppercase tracking-[0.16em] text-muted-foreground">Season</dt>
+                      <dd className="mt-1 text-ink">{j.season}</dd>
+                    </div>
+                    <div>
+                      <dt className="uppercase tracking-[0.16em] text-muted-foreground">Group</dt>
+                      <dd className="mt-1 text-ink">{j.group}</dd>
+                    </div>
+                    <div>
+                      <dt className="uppercase tracking-[0.16em] text-muted-foreground">Level</dt>
+                      <dd className="mt-1 text-ink">{j.difficulty}</dd>
+                    </div>
+                  </dl>
+
                   <div className="mt-6 flex items-center justify-between pt-4 border-t border-ink/8">
                     <span className="text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
-                      Small group · Led by Krish
+                      Led by Krish
                     </span>
                     <span className="inline-flex items-center gap-1.5 text-[13px] font-medium text-ink">
                       Explore
-                      <ArrowRight className="h-3.5 w-3.5" />
+                      <ArrowRight className="h-3.5 w-3.5 transition group-hover:translate-x-0.5" />
                     </span>
                   </div>
                 </div>
