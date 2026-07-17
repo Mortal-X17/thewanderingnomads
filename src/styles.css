@@ -182,16 +182,16 @@
     color: var(--ink);
   }
 
-  ::selection {
-    background: color-mix(in oklab, var(--forest) 30%, transparent);
-    color: var(--ink);
-  }
-
   h1, h2, h3, h4 {
     font-family: var(--font-display);
     font-weight: 400;
     letter-spacing: -0.015em;
     color: var(--ink);
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
   }
 }
 
