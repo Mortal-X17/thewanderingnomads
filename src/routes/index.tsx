@@ -28,13 +28,13 @@ import gVillage from "@/assets/gallery-village.jpg";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "The Wandering Nomads — By KRISH" },
+      { title: "The Wandering Nomads — Founder-Led Expeditions by Krish" },
       {
         name: "description",
         content:
           "Founder-led expeditions across India's most breathtaking destinations—crafted with trust, community, and unforgettable experiences.",
       },
-      { property: "og:title", content: "The Wandering Nomads — By KRISH" },
+      { property: "og:title", content: "The Wandering Nomads — Founder-Led Expeditions by Krish" },
       {
         property: "og:description",
         content:
@@ -43,6 +43,36 @@ export const Route = createFileRoute("/")({
       { property: "og:url", content: "/" },
     ],
     links: [{ rel: "canonical", href: "/" }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "TravelAgency",
+          name: "The Wandering Nomads",
+          url: "https://thewanderingnomads.lovable.app",
+          description:
+            "Founder-led expeditions across India — small groups, real places, personally led by Krish.",
+          founder: {
+            "@type": "Person",
+            name: "Krishnakant Yadav",
+            alternateName: "Krish",
+            jobTitle: "Founder & Expedition Lead",
+          },
+          areaServed: "India",
+          address: {
+            "@type": "PostalAddress",
+            addressLocality: "Jaipur",
+            addressRegion: "Rajasthan",
+            addressCountry: "IN",
+          },
+          sameAs: [
+            "https://instagram.com/thewanderingnomads.in",
+            "https://instagram.com/wanderwithkrishh",
+          ],
+        }),
+      },
+    ],
   }),
   component: Home,
 });
