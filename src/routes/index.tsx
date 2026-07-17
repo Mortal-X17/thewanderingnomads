@@ -1,11 +1,13 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { useRef, useState } from "react";
 
 import { Nav } from "@/components/site/Nav";
 import { Footer } from "@/components/site/Footer";
 import { Reveal } from "@/components/site/Reveal";
 import { Counter } from "@/components/site/Counter";
+import { Community } from "@/components/site/Community";
+import { FloatingWhatsApp } from "@/components/site/FloatingWhatsApp";
 
 import heroImg from "@/assets/hero-himalaya.jpg";
 import krishAsset from "@/assets/krish-founder.png.asset.json";
