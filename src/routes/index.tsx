@@ -6,6 +6,8 @@ import { Nav } from "@/components/site/Nav";
 import { Footer } from "@/components/site/Footer";
 import { Reveal } from "@/components/site/Reveal";
 import { Counter } from "@/components/site/Counter";
+import { Community } from "@/components/site/Community";
+import { FloatingWhatsApp } from "@/components/site/FloatingWhatsApp";
 
 import heroImg from "@/assets/hero-himalaya.jpg";
 import krishAsset from "@/assets/krish-founder.png.asset.json";
@@ -26,13 +28,13 @@ import gVillage from "@/assets/gallery-village.jpg";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "The Wandering Nomads — By KRISH" },
+      { title: "The Wandering Nomads — Founder-Led Expeditions by Krish" },
       {
         name: "description",
         content:
           "Founder-led expeditions across India's most breathtaking destinations—crafted with trust, community, and unforgettable experiences.",
       },
-      { property: "og:title", content: "The Wandering Nomads — By KRISH" },
+      { property: "og:title", content: "The Wandering Nomads — Founder-Led Expeditions by Krish" },
       {
         property: "og:description",
         content:
@@ -41,6 +43,36 @@ export const Route = createFileRoute("/")({
       { property: "og:url", content: "/" },
     ],
     links: [{ rel: "canonical", href: "/" }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "TravelAgency",
+          name: "The Wandering Nomads",
+          url: "https://thewanderingnomads.lovable.app",
+          description:
+            "Founder-led expeditions across India — small groups, real places, personally led by Krish.",
+          founder: {
+            "@type": "Person",
+            name: "Krishnakant Yadav",
+            alternateName: "Krish",
+            jobTitle: "Founder & Expedition Lead",
+          },
+          areaServed: "India",
+          address: {
+            "@type": "PostalAddress",
+            addressLocality: "Jaipur",
+            addressRegion: "Rajasthan",
+            addressCountry: "IN",
+          },
+          sameAs: [
+            "https://instagram.com/thewanderingnomads.in",
+            "https://instagram.com/wanderwithkrishh",
+          ],
+        }),
+      },
+    ],
   }),
   component: Home,
 });
@@ -57,11 +89,13 @@ function Home() {
         <Journeys />
         <WhyKrish />
         <Gallery />
+        <Community />
         <Testimonials />
         <Certifications />
         <Contact />
       </main>
       <Footer />
+      <FloatingWhatsApp />
       <div
         aria-hidden
         className="pointer-events-none fixed inset-0 z-[60] opacity-[0.035] mix-blend-overlay"
@@ -312,6 +346,9 @@ const journeys = [
     img: jKashmir,
     desc: "Shikaras on Dal Lake. Nights inside Kashmiri homes. The valley the way Krish knows it.",
     duration: "8 days",
+    season: "Apr — Oct",
+    group: "8–12",
+    difficulty: "Easy",
   },
   {
     slug: "spiti",
@@ -320,6 +357,9 @@ const journeys = [
     img: jSpiti,
     desc: "Cold desert monasteries, star-lit villages, and roads that hang from the mountain's edge.",
     duration: "10 days",
+    season: "Jun — Sep",
+    group: "6–10",
+    difficulty: "Moderate",
   },
   {
     slug: "jibhi",
@@ -328,6 +368,9 @@ const journeys = [
     img: jJibhi,
     desc: "Wooden houses, misty pine forests, and a small stream that never stops singing.",
     duration: "5 days",
+    season: "Mar — Nov",
+    group: "6–10",
+    difficulty: "Easy",
   },
   {
     slug: "valley-of-flowers",
@@ -336,6 +379,9 @@ const journeys = [
     img: jVof,
     desc: "An alpine meadow that bursts into colour for only a few weeks a year.",
     duration: "6 days",
+    season: "Jul — Aug",
+    group: "6–8",
+    difficulty: "Moderate",
   },
   {
     slug: "rajasthan",
@@ -344,6 +390,9 @@ const journeys = [
     img: jRaj,
     desc: "Dunes at dusk, forts at dawn, and the honesty of home-cooked thalis in between.",
     duration: "7 days",
+    season: "Oct — Mar",
+    group: "8–12",
+    difficulty: "Easy",
   },
   {
     slug: "rishikesh",
@@ -352,6 +401,9 @@ const journeys = [
     img: jRishi,
     desc: "The Ganges at first light, mountain trails at noon, and prayer flags in every breath.",
     duration: "4 days",
+    season: "Year-round",
+    group: "6–10",
+    difficulty: "Easy",
   },
 ];
 
@@ -406,14 +458,30 @@ function Journeys() {
                   </div>
                 </div>
                 <div className="flex flex-1 flex-col p-6">
-                  <p className="text-[14.5px] leading-relaxed text-muted-foreground">{j.desc}</p>
+                  <p className="text-[14.5px] leading-[1.65] text-muted-foreground">{j.desc}</p>
+
+                  <dl className="mt-6 grid grid-cols-3 gap-3 border-t border-ink/8 pt-5 text-[11px]">
+                    <div>
+                      <dt className="uppercase tracking-[0.16em] text-muted-foreground">Season</dt>
+                      <dd className="mt-1 text-ink">{j.season}</dd>
+                    </div>
+                    <div>
+                      <dt className="uppercase tracking-[0.16em] text-muted-foreground">Group</dt>
+                      <dd className="mt-1 text-ink">{j.group}</dd>
+                    </div>
+                    <div>
+                      <dt className="uppercase tracking-[0.16em] text-muted-foreground">Level</dt>
+                      <dd className="mt-1 text-ink">{j.difficulty}</dd>
+                    </div>
+                  </dl>
+
                   <div className="mt-6 flex items-center justify-between pt-4 border-t border-ink/8">
                     <span className="text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
-                      Small group · Led by Krish
+                      Led by Krish
                     </span>
                     <span className="inline-flex items-center gap-1.5 text-[13px] font-medium text-ink">
                       Explore
-                      <ArrowRight className="h-3.5 w-3.5" />
+                      <ArrowRight className="h-3.5 w-3.5 transition group-hover:translate-x-0.5" />
                     </span>
                   </div>
                 </div>
