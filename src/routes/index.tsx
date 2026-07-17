@@ -89,11 +89,13 @@ function Home() {
         <Journeys />
         <WhyKrish />
         <Gallery />
+        <Community />
         <Testimonials />
         <Certifications />
         <Contact />
       </main>
       <Footer />
+      <FloatingWhatsApp />
       <div
         aria-hidden
         className="pointer-events-none fixed inset-0 z-[60] opacity-[0.035] mix-blend-overlay"
