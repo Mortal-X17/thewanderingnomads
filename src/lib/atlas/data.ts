@@ -112,9 +112,17 @@ function buildContent(id: string): StateContent | undefined {
   return { cover: gallery[0], gallery };
 }
 
+const nameFix: Record<string, string> = {
+  Uttaranchal: "Uttarakhand",
+  Orissa: "Odisha",
+  "Andaman and Nicobar": "Andaman & Nicobar Islands",
+  "Dadra and Nagar Haveli": "Dadra & Nagar Haveli",
+};
+
 export const ATLAS_STATES: AtlasState[] = raw.states
   .map((s) => ({
     ...s,
+    name: nameFix[s.name] ?? s.name,
     visited: visitedIds.has(s.id),
     content: buildContent(s.id),
   }))
