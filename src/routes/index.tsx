@@ -192,6 +192,24 @@ function Hero() {
             <ArrowRight className="h-4 w-4 transition group-hover:translate-x-0.5" />
           </Link>
           <Link
+            to="/atlas"
+            className="group relative inline-flex items-center gap-2.5 overflow-hidden rounded-full px-6 py-3.5 text-[13.5px] font-medium text-white transition"
+            style={{
+              background:
+                "linear-gradient(120deg, color-mix(in oklab, var(--forest) 88%, black) 0%, color-mix(in oklab, var(--river) 70%, var(--forest)) 100%)",
+              boxShadow:
+                "0 8px 24px -10px color-mix(in oklab, var(--forest) 70%, transparent), inset 0 0 0 1px rgba(255,255,255,0.14)",
+            }}
+          >
+            <span
+              aria-hidden
+              className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/25 to-transparent transition-transform duration-700 ease-out group-hover:translate-x-full"
+            />
+            <MapIcon className="h-4 w-4 opacity-90" />
+            <span className="relative">Explore Atlas Map</span>
+            <ArrowRight className="relative h-4 w-4 transition group-hover:translate-x-0.5" />
+          </Link>
+          <Link
             to="/contact"
             className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/5 px-6 py-3.5 text-[13.5px] font-medium text-white backdrop-blur-md transition hover:bg-white/15"
           >
@@ -888,6 +906,20 @@ function ArrowRight({ className = "" }: { className?: string }) {
     <svg viewBox="0 0 24 24" fill="none" className={className} aria-hidden="true">
       <path
         d="M5 12h14M13 6l6 6-6 6"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+function MapIcon({ className = "" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" className={className} aria-hidden="true">
+      <path
+        d="M9 4l-6 2v14l6-2 6 2 6-2V4l-6 2-6-2zM9 4v14M15 6v14"
         stroke="currentColor"
         strokeWidth="1.5"
         strokeLinecap="round"

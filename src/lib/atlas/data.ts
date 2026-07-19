@@ -1,14 +1,14 @@
 /**
- * Travel Atlas — content model
- * Designed as a scalable schema. Everything except id/name is optional so
- * states, cities, places, stories, and media can be added over time
- * (or later hydrated from a CMS) without touching the UI.
+ * Travel Atlas — content model.
  *
- * Future World Atlas: wrap this list under a Country node; the components
- * already accept a generic `region` prop shape.
+ * Renders India + Nepal + Bhutan from a pre-projected map built at author
+ * time (see src/lib/atlas/subcontinent-map.json). Content is optional so
+ * cities/places/stories/media can be added over time (or CMS-hydrated)
+ * without touching the UI.
  */
 
-import mapData from "./india-svg.json";
+import mapData from "./subcontinent-map.json";
+import { getStateImages } from "./state-images";
 
 export type MediaImage = {
   src: string;
@@ -18,17 +18,13 @@ export type MediaImage = {
   caption?: string;
 };
 
-export type MediaVideo = {
-  src: string;
-  poster?: string;
-  title?: string;
-};
+export type MediaVideo = { src: string; poster?: string; title?: string };
 
 export type Story = {
   id: string;
   title: string;
-  date?: string; // ISO
-  destination?: string; // place or city
+  date?: string;
+  destination?: string;
   narrative?: string;
   images?: MediaImage[];
   relatedPlaces?: string[];
@@ -67,10 +63,22 @@ export type StateContent = {
   stories?: Story[];
 };
 
+export type AtlasCountry = {
+  id: string;
+  name: string;
+  d: string;
+  cx: number;
+  cy: number;
+};
+
 export type AtlasState = {
-  id: string; // 2-letter code from map data
-  name: string; // display name
-  d: string; // SVG path
+  id: string;
+  name: string;
+  d: string;
+  cx: number;
+  cy: number;
+  w: number;
+  h: number;
   visited: boolean;
   visitedYear?: number;
   content?: StateContent;
@@ -79,41 +87,51 @@ export type AtlasState = {
 const raw = mapData as {
   width: number;
   height: number;
-  states: { id: string; name: string; d: string }[];
+  countries: AtlasCountry[];
+  states: { id: string; name: string; d: string; cx: number; cy: number; w: number; h: number }[];
 };
 
 export const MAP_WIDTH = raw.width;
 export const MAP_HEIGHT = raw.height;
+export const ATLAS_COUNTRIES: AtlasCountry[] = raw.countries;
 
-// A few name tweaks for correctness
-const nameFix: Record<string, string> = {
-  "Arunanchal Pradesh": "Arunachal Pradesh",
-  "Andaman & Nicobar Island": "Andaman & Nicobar Islands",
-  "Dadara & Nagar Havelli": "Dadra & Nagar Haveli",
-  "NCT of Delhi": "Delhi",
-};
-
-// Krish's 24 explored states (matches brand stat). Adjustable — this is
-// structural metadata (which state is highlighted), NOT a fictional story.
+// Krish's 24 explored states.
 const visitedIds = new Set([
   "HP", "UK", "JK", "PB", "HR", "DL", "RJ", "GJ", "MH", "GA",
-  "KA", "KL", "TN", "AP", "TS", "MP", "UP", "BR", "WB", "OD",
+  "KA", "KL", "TN", "AP", "TG", "MP", "UP", "BR", "WB", "OR",
   "SK", "AS", "ML", "AR",
 ]);
 
+function buildContent(id: string): StateContent | undefined {
+  const imgs = getStateImages(id);
+  if (imgs.length === 0) return undefined;
+  const gallery: MediaImage[] = imgs.map((src, i) => ({
+    src,
+    alt: `Photograph ${i + 1}`,
+  }));
+  return { cover: gallery[0], gallery };
+}
+
+const nameFix: Record<string, string> = {
+  Uttaranchal: "Uttarakhand",
+  Orissa: "Odisha",
+  "Andaman and Nicobar": "Andaman & Nicobar Islands",
+  "Dadra and Nagar Haveli": "Dadra & Nagar Haveli",
+};
+
 export const ATLAS_STATES: AtlasState[] = raw.states
   .map((s) => ({
-    id: s.id,
+    ...s,
     name: nameFix[s.name] ?? s.name,
-    d: s.d,
     visited: visitedIds.has(s.id),
+    content: buildContent(s.id),
   }))
   .sort((a, b) => a.name.localeCompare(b.name));
 
 export const ATLAS_STATS = {
   statesExplored: ATLAS_STATES.filter((s) => s.visited).length,
   citiesVisited: 200,
-  countriesExplored: 1,
+  countriesExplored: 3, // India, Nepal, Bhutan
   soloExpeditions: 30,
   communityTrips: 5,
 };
