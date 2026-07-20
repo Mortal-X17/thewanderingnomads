@@ -8,6 +8,7 @@ import { Reveal } from "@/components/site/Reveal";
 import { Counter } from "@/components/site/Counter";
 import { Community } from "@/components/site/Community";
 import { FloatingWhatsApp } from "@/components/site/FloatingWhatsApp";
+import { InstagramCard } from "@/components/site/InstagramCard";
 
 import heroImg from "@/assets/hero-himalaya.jpg";
 import krishAsset from "@/assets/krish-founder.png.asset.json";
@@ -90,6 +91,7 @@ function Home() {
         <WhyKrish />
         <Gallery />
         <Community />
+        <InstagramCard />
         <Testimonials />
         <Certifications />
         <Contact />
@@ -186,7 +188,7 @@ function Hero() {
         >
           <Link
             to="/journeys"
-            className="group inline-flex items-center gap-3 rounded-full bg-white px-6 py-3.5 text-[13.5px] font-medium text-ink transition hover:bg-white/90"
+            className="group inline-flex items-center gap-3 rounded-full bg-white px-6 py-3.5 text-[13.5px] font-medium text-neutral-900 transition hover:bg-white/90"
           >
             Explore Journeys
             <ArrowRight className="h-4 w-4 transition group-hover:translate-x-0.5" />

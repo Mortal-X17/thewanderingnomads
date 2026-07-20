@@ -9,27 +9,23 @@ import {
 } from "@/lib/atlas/data";
 
 /**
- * Muted, earthy palette. Every state gets a stable subtle pigment so
- * boundaries read even with thin strokes; visited states blend that
- * pigment into the forest brand colour.
+ * Elegant, editorial atlas.
+ * - Single highlight for all explored Indian states.
+ * - Muted, uniform fill for unvisited states.
+ * - Nepal & Bhutan get their own subtle neighbour tints.
+ * - Borders adapt to the current theme via var(--ink).
  */
-const EARTH_PIGMENTS = [
-  "#c9a37a", "#b48a5c", "#a58b6f", "#9caa7c", "#8fa38a",
-  "#c7b791", "#b7936a", "#9b8570", "#a9b19a", "#c2a385",
-];
 
-function pigmentFor(id: string) {
-  let h = 0;
-  for (let i = 0; i < id.length; i++) h = (h * 31 + id.charCodeAt(i)) >>> 0;
-  return EARTH_PIGMENTS[h % EARTH_PIGMENTS.length];
+function stateFill(visited: boolean, active: boolean) {
+  if (visited && active) return "color-mix(in oklab, var(--forest) 88%, var(--ink))";
+  if (visited) return "color-mix(in oklab, var(--forest) 78%, transparent)";
+  return "color-mix(in oklab, var(--ink) 6%, var(--card))";
 }
 
-function stateFill(id: string, visited: boolean, active: boolean) {
-  if (visited && active) return "var(--forest)";
-  if (visited)
-    return `color-mix(in oklab, var(--forest) 55%, ${pigmentFor(id)})`;
-  return `color-mix(in oklab, ${pigmentFor(id)} 32%, var(--card))`;
-}
+const NEIGHBOUR_TINT: Record<string, string> = {
+  NP: "color-mix(in oklab, var(--sunrise) 22%, var(--card))",
+  BT: "color-mix(in oklab, var(--river) 18%, var(--card))",
+};
 
 export function IndiaMap({
   selectedId,
@@ -59,19 +55,19 @@ export function IndiaMap({
           </filter>
         </defs>
 
-        {/* Neighbour countries — soft filled shapes behind India */}
+        {/* Neighbour countries — soft, distinct tints */}
         {ATLAS_COUNTRIES.filter((c) => c.id !== "IN").map((c) => (
           <path
             key={c.id}
             d={c.d}
-            fill="color-mix(in oklab, var(--ink) 5%, var(--card))"
-            stroke="color-mix(in oklab, var(--ink) 60%, transparent)"
+            fill={NEIGHBOUR_TINT[c.id] ?? "color-mix(in oklab, var(--ink) 5%, var(--card))"}
+            stroke="color-mix(in oklab, var(--ink) 70%, transparent)"
             strokeWidth={1.8}
             strokeLinejoin="round"
           />
         ))}
 
-        {/* India states — subtle earthy fills, thin borders */}
+        {/* India states — uniform system, crisp thin borders */}
         {ATLAS_STATES.map((s) => {
           const isSelected = s.id === selectedId;
           const isHover = s.id === hoverId;
@@ -94,13 +90,13 @@ export function IndiaMap({
                 }
               }}
               initial={false}
-              animate={{ fill: stateFill(s.id, s.visited, isSelected || isHover) }}
+              animate={{ fill: stateFill(s.visited, isSelected || isHover) }}
               transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
               style={{
                 stroke: isSelected
-                  ? "var(--ink)"
-                  : "color-mix(in oklab, var(--ink) 28%, transparent)",
-                strokeWidth: isSelected ? 1.4 : 0.55,
+                  ? "color-mix(in oklab, var(--ink) 85%, transparent)"
+                  : "color-mix(in oklab, var(--ink) 45%, transparent)",
+                strokeWidth: isSelected ? 1.2 : 0.7,
                 strokeLinejoin: "round",
                 cursor: interactive ? "pointer" : "default",
                 filter: isSelected || isHover ? "url(#visited-glow)" : undefined,
@@ -110,69 +106,70 @@ export function IndiaMap({
           );
         })}
 
-        {/* India country outline — thicker, drawn on top */}
+        {/* India country outline — clearly thicker than state borders */}
         {ATLAS_COUNTRIES.filter((c) => c.id === "IN").map((c) => (
           <path
             key={c.id}
             d={c.d}
             fill="none"
-            stroke="color-mix(in oklab, var(--ink) 78%, transparent)"
-            strokeWidth={2.2}
+            stroke="color-mix(in oklab, var(--ink) 85%, transparent)"
+            strokeWidth={2.4}
             strokeLinejoin="round"
             pointerEvents="none"
           />
         ))}
 
-        {/* State labels — small, elegant, only on shapes big enough to hold them */}
-        {ATLAS_STATES.filter((s) => s.w > 48 && s.h > 34).map((s) => (
-          <text
-            key={`lbl-${s.id}`}
-            x={s.cx}
-            y={s.cy}
-            textAnchor="middle"
-            dominantBaseline="central"
-            className="pointer-events-none select-none"
-            style={{
-              fontSize: Math.max(8.5, Math.min(12, s.w / 8)),
-              fontFamily: "Inter, system-ui, sans-serif",
-              fontWeight: 400,
-              letterSpacing: "0.04em",
-              fill: "color-mix(in oklab, var(--ink) 65%, transparent)",
-            }}
-          >
-            {s.id}
-          </text>
-        ))}
-
-        {/* Country labels — slightly larger, uppercase, spaced */}
-        {ATLAS_COUNTRIES.map((c) => {
-          const isIndia = c.id === "IN";
+        {/* Full-name state labels — small, elegant, only where they fit */}
+        {ATLAS_STATES.filter((s) => s.w > 55 && s.h > 32).map((s) => {
+          const nameLen = s.name.length;
+          // fit font size to the smaller dimension and name length
+          const base = Math.min(s.w / (nameLen * 0.52), s.h / 3.2);
+          const size = Math.max(6.5, Math.min(11, base));
           return (
             <text
-              key={`c-${c.id}`}
-              x={c.cx}
-              y={isIndia ? c.cy + 60 : c.cy}
+              key={`lbl-${s.id}`}
+              x={s.cx}
+              y={s.cy}
               textAnchor="middle"
               dominantBaseline="central"
               className="pointer-events-none select-none"
               style={{
-                fontSize: isIndia ? 22 : 12,
-                fontFamily: '"Instrument Serif", Georgia, serif',
-                letterSpacing: isIndia ? "0.32em" : "0.24em",
-                textTransform: "uppercase",
-                fill: isIndia
-                  ? "color-mix(in oklab, var(--ink) 55%, transparent)"
-                  : "color-mix(in oklab, var(--ink) 55%, transparent)",
+                fontSize: size,
+                fontFamily: "Inter, system-ui, sans-serif",
+                fontWeight: 400,
+                letterSpacing: "0.02em",
+                fill: "color-mix(in oklab, var(--ink) 72%, transparent)",
               }}
             >
-              {c.name}
+              {s.name}
             </text>
           );
         })}
+
+        {/* Country labels — only Nepal & Bhutan (India label suppressed) */}
+        {ATLAS_COUNTRIES.filter((c) => c.id !== "IN").map((c) => (
+          <text
+            key={`c-${c.id}`}
+            x={c.cx}
+            y={c.cy}
+            textAnchor="middle"
+            dominantBaseline="central"
+            className="pointer-events-none select-none"
+            style={{
+              fontSize: 13,
+              fontFamily: '"Instrument Serif", Georgia, serif',
+              letterSpacing: "0.28em",
+              textTransform: "uppercase",
+              fill: "color-mix(in oklab, var(--ink) 70%, transparent)",
+            }}
+          >
+            {c.name}
+          </text>
+        ))}
       </svg>
 
       {hover ? (
-        <div className="pointer-events-none absolute left-1/2 top-3 -translate-x-1/2 rounded-full bg-ink/90 px-3 py-1 text-[11px] font-medium tracking-wide text-snow shadow-lift">
+        <div className="pointer-events-none absolute left-1/2 top-3 -translate-x-1/2 rounded-full bg-ink px-3 py-1 text-[11px] font-medium tracking-wide text-background shadow-lift">
           {hover.name}
         </div>
       ) : null}
@@ -185,13 +182,23 @@ export function IndiaMap({
         <span className="inline-flex items-center gap-2">
           <span
             className="h-2.5 w-4 rounded-sm"
-            style={{ background: "color-mix(in oklab, #b48a5c 32%, var(--card))" }}
+            style={{ background: "color-mix(in oklab, var(--ink) 6%, var(--card))", border: "1px solid color-mix(in oklab, var(--ink) 30%, transparent)" }}
           />
           Awaiting a chapter
         </span>
         <span className="inline-flex items-center gap-2">
-          <span className="h-2.5 w-4 rounded-sm border border-ink/40 bg-transparent" />
-          Neighbour country
+          <span
+            className="h-2.5 w-4 rounded-sm"
+            style={{ background: "color-mix(in oklab, var(--sunrise) 22%, var(--card))" }}
+          />
+          Nepal
+        </span>
+        <span className="inline-flex items-center gap-2">
+          <span
+            className="h-2.5 w-4 rounded-sm"
+            style={{ background: "color-mix(in oklab, var(--river) 18%, var(--card))" }}
+          />
+          Bhutan
         </span>
       </div>
     </div>

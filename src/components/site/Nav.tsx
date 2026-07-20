@@ -2,6 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { ThemeToggle } from "@/components/site/ThemeToggle";
+import { Logo } from "@/components/site/Logo";
 
 const links = [
   { to: "/", label: "Home" },
@@ -37,10 +38,8 @@ export function Nav() {
             : "border border-white/10 bg-white/5 backdrop-blur-[6px]"
         }`}
       >
-        <Link to="/" className="flex items-center gap-2 group">
-          <span className="flex h-8 w-8 items-center justify-center rounded-full border border-white/40 bg-white/20 text-[10px] font-medium text-white tracking-widest backdrop-blur-md group-hover:bg-white/30 transition">
-            WN
-          </span>
+        <Link to="/" className="flex items-center gap-2.5 group">
+          <Logo variant={scrolled ? "dark" : "light"} size={32} />
           <span
             className={`display text-[15px] tracking-tight transition-colors ${
               scrolled ? "text-ink" : "text-white"
