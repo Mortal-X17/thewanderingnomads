@@ -71,12 +71,13 @@ function AtlasPage() {
       {/* Stats */}
       <section className="mx-auto max-w-6xl px-6">
         <Reveal>
-          <div className="grid grid-cols-2 gap-px overflow-hidden rounded-3xl border border-ink/10 bg-ink/10 sm:grid-cols-5">
+          <div className="grid grid-cols-2 gap-px overflow-hidden rounded-3xl border border-ink/10 bg-ink/10 sm:grid-cols-3 lg:grid-cols-6">
             <Stat label="States explored" value={ATLAS_STATS.statesExplored} />
             <Stat label="Cities visited" value={ATLAS_STATS.citiesVisited} suffix="+" />
             <Stat label="Countries explored" value={ATLAS_STATS.countriesExplored} />
             <Stat label="Solo expeditions" value={ATLAS_STATS.soloExpeditions} suffix="+" />
             <Stat label="Community trips" value={ATLAS_STATS.communityTrips} />
+            <CompassStat />
           </div>
         </Reveal>
       </section>
@@ -153,6 +154,30 @@ function Stat({ label, value, suffix }: { label: string; value: number; suffix?:
       </p>
       <p className="mt-1 text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
         {label}
+      </p>
+    </div>
+  );
+}
+
+function CompassStat() {
+  return (
+    <div className="relative flex flex-col items-center justify-center overflow-hidden bg-card p-5 text-center sm:p-6">
+      <svg
+        viewBox="0 0 64 64"
+        className="h-10 w-10 text-ink/70"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.4"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        aria-hidden
+      >
+        <circle cx="32" cy="32" r="24" />
+        <path d="M32 12 L32 16 M32 48 L32 52 M12 32 L16 32 M48 32 L52 32" />
+        <path d="M32 20 L36 34 L32 44 L28 34 Z" fill="currentColor" stroke="none" opacity="0.85" />
+      </svg>
+      <p className="mt-2 text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
+        Always exploring
       </p>
     </div>
   );
