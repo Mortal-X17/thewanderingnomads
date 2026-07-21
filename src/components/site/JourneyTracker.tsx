@@ -187,10 +187,10 @@ export function JourneyTracker({
                 return (
                   <li key={s.label} className="relative">
                     {s.to ? (
-                      <Link to={s.to} {...commonProps}>
+                      <a href={s.to} {...commonProps}>
                         {dot}
                         {tooltip}
-                      </Link>
+                      </a>
                     ) : (
                       <button
                         type="button"
