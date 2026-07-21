@@ -2,28 +2,52 @@ import { motion } from "framer-motion";
 import { Reveal } from "@/components/site/Reveal";
 
 /**
- * Editorial Instagram profile card.
+ * Editorial Instagram profile cards.
  *
- * No scraping, no login — purely a premium invitation to visit the public
- * profile. Metrics and bio are content, not live data; update them here
- * whenever the profile grows.
+ * Two premium glass invitations — Krish's personal handle first, followed by
+ * the company page. No scraping, no login: the metrics and bios are content
+ * captured from the profiles and updated here as they grow.
  */
 
-const PROFILE = {
-  handle: "thewanderingnomads.in",
-  displayName: "The Wandering Nomads",
-  url: "https://instagram.com/thewanderingnomads.in",
-  bio: "Founder-led expeditions across India · Small groups. Real places. Led by Krish.",
-  metrics: [
-    { label: "Posts", value: "180+" },
-    { label: "Followers", value: "12k+" },
-    { label: "Following", value: "320" },
-  ],
-  founder: {
-    handle: "wanderwithkrishh",
-    url: "https://instagram.com/wanderwithkrishh",
-  },
+type Profile = {
+  handle: string;
+  displayName: string;
+  role: string;
+  url: string;
+  bio: string;
+  metrics: { label: string; value: string }[];
+  /** WN monogram styling for the fallback avatar */
+  monogram: string;
 };
+
+const PROFILES: Profile[] = [
+  {
+    handle: "wanderwithkrishh",
+    displayName: "Krish Yadav",
+    role: "Founder · Personal",
+    url: "https://instagram.com/wanderwithkrishh",
+    bio: "Nomadic Adventurer · Ethical Hacker. Raw travel, hitchhiking, camping. Explored 24+ states and 200+ cities across India.",
+    metrics: [
+      { label: "Posts", value: "378" },
+      { label: "Followers", value: "10.3K" },
+      { label: "Following", value: "1,179" },
+    ],
+    monogram: "KY",
+  },
+  {
+    handle: "thewanderingnomads.in",
+    displayName: "The Wandering Nomads",
+    role: "Community · Company",
+    url: "https://instagram.com/thewanderingnomads.in",
+    bio: "A youth travel community focused on raw, offbeat and culture-driven experiences.",
+    metrics: [
+      { label: "Posts", value: "27" },
+      { label: "Followers", value: "288" },
+      { label: "Following", value: "1" },
+    ],
+    monogram: "WN",
+  },
+];
 
 export function InstagramCard() {
   return (
@@ -36,9 +60,9 @@ export function InstagramCard() {
             "radial-gradient(600px 300px at 20% 0%, color-mix(in oklab, var(--sunrise) 18%, transparent), transparent 60%), radial-gradient(700px 340px at 80% 100%, color-mix(in oklab, var(--river) 16%, transparent), transparent 60%)",
         }}
       />
-      <div className="relative mx-auto max-w-4xl px-6">
+      <div className="relative mx-auto max-w-5xl px-6">
         <Reveal>
-          <p className="eyebrow text-center">Instagram · @{PROFILE.handle}</p>
+          <p className="eyebrow text-center">Instagram · Two windows into the road</p>
           <h2 className="display mt-4 text-center text-4xl sm:text-5xl">
             Follow the trail, frame by frame.
           </h2>
@@ -48,89 +72,88 @@ export function InstagramCard() {
           </p>
         </Reveal>
 
-        <Reveal delay={0.1}>
-          <motion.a
-            href={PROFILE.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            whileHover={{ y: -4 }}
-            transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-            className="glass mx-auto mt-12 block max-w-2xl rounded-3xl p-6 sm:p-8"
-            aria-label={`Open ${PROFILE.displayName} on Instagram`}
-          >
-            <div className="flex flex-col items-start gap-6 sm:flex-row sm:items-center">
-              <div className="relative">
-                <div
-                  className="flex h-20 w-20 items-center justify-center rounded-full p-[2px]"
-                  style={{
-                    background:
-                      "conic-gradient(from 210deg, #FEDA75, #FA7E1E, #D62976, #962FBF, #4F5BD5, #FEDA75)",
-                  }}
-                >
-                  <div className="flex h-full w-full items-center justify-center rounded-full bg-background">
-                    <span className="display text-2xl">WN</span>
-                  </div>
-                </div>
-                <span className="absolute -bottom-1 -right-1 flex h-6 w-6 items-center justify-center rounded-full bg-background shadow-soft">
-                  <InstagramIcon className="h-3.5 w-3.5 text-ink" />
-                </span>
-              </div>
-
-              <div className="min-w-0 flex-1">
-                <p className="display text-2xl leading-tight">
-                  {PROFILE.displayName}
-                </p>
-                <p className="mt-0.5 text-sm text-muted-foreground">
-                  @{PROFILE.handle}
-                </p>
-                <p className="mt-3 max-w-md text-sm text-ink/80">
-                  {PROFILE.bio}
-                </p>
-              </div>
-
-              <div className="hidden sm:block">
-                <span className="inline-flex items-center gap-2 rounded-full bg-ink px-5 py-2.5 text-[13px] font-medium text-background transition group-hover:opacity-90">
-                  Follow
-                </span>
-              </div>
-            </div>
-
-            <div className="mt-6 grid grid-cols-3 gap-px overflow-hidden rounded-2xl border border-ink/10 bg-ink/10">
-              {PROFILE.metrics.map((m) => (
-                <div
-                  key={m.label}
-                  className="bg-background/70 py-4 text-center backdrop-blur"
-                >
-                  <p className="display text-xl sm:text-2xl">{m.value}</p>
-                  <p className="mt-0.5 text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
-                    {m.label}
-                  </p>
-                </div>
-              ))}
-            </div>
-
-            <div className="mt-5 flex flex-wrap items-center justify-between gap-3 sm:hidden">
-              <span className="inline-flex items-center gap-2 rounded-full bg-ink px-5 py-2.5 text-[13px] font-medium text-background">
-                Follow on Instagram
-              </span>
-            </div>
-
-            <p className="mt-5 text-center text-[11px] text-muted-foreground">
-              Also follow Krish personally on{" "}
-              <a
-                href={PROFILE.founder.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="underline decoration-ink/30 underline-offset-2 hover:decoration-ink"
-                onClick={(e) => e.stopPropagation()}
-              >
-                @{PROFILE.founder.handle}
-              </a>
-            </p>
-          </motion.a>
-        </Reveal>
+        <div className="mt-12 grid gap-6 md:grid-cols-2">
+          {PROFILES.map((p, i) => (
+            <Reveal key={p.handle} delay={0.05 + i * 0.1}>
+              <ProfileCard profile={p} />
+            </Reveal>
+          ))}
+        </div>
       </div>
     </section>
+  );
+}
+
+function ProfileCard({ profile }: { profile: Profile }) {
+  return (
+    <motion.a
+      href={profile.url}
+      target="_blank"
+      rel="noopener noreferrer"
+      whileHover={{ y: -4 }}
+      transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+      className="group glass block h-full rounded-3xl p-6 sm:p-7"
+      aria-label={`Open @${profile.handle} on Instagram`}
+    >
+      <div className="flex items-start gap-4">
+        <div className="relative shrink-0">
+          <div
+            className="flex h-16 w-16 items-center justify-center rounded-full p-[2px]"
+            style={{
+              background:
+                "conic-gradient(from 210deg, #FEDA75, #FA7E1E, #D62976, #962FBF, #4F5BD5, #FEDA75)",
+            }}
+          >
+            <div className="flex h-full w-full items-center justify-center rounded-full bg-background">
+              <span className="display text-lg">{profile.monogram}</span>
+            </div>
+          </div>
+          <span className="absolute -bottom-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-background shadow-soft">
+            <InstagramIcon className="h-3 w-3 text-ink" />
+          </span>
+        </div>
+
+        <div className="min-w-0 flex-1">
+          <p className="text-[10.5px] uppercase tracking-[0.22em] text-muted-foreground">
+            {profile.role}
+          </p>
+          <p className="display mt-1 truncate text-xl leading-tight">
+            {profile.displayName}
+          </p>
+          <p className="mt-0.5 truncate text-[13px] text-muted-foreground">
+            @{profile.handle}
+          </p>
+        </div>
+      </div>
+
+      <p className="mt-4 text-[13.5px] leading-relaxed text-ink/80">
+        {profile.bio}
+      </p>
+
+      <div className="mt-5 grid grid-cols-3 gap-px overflow-hidden rounded-2xl border border-ink/10 bg-ink/10">
+        {profile.metrics.map((m) => (
+          <div
+            key={m.label}
+            className="bg-background/70 py-3 text-center backdrop-blur"
+          >
+            <p className="display text-lg sm:text-xl">{m.value}</p>
+            <p className="mt-0.5 text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+              {m.label}
+            </p>
+          </div>
+        ))}
+      </div>
+
+      <div className="mt-5 flex items-center justify-between">
+        <span className="text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
+          instagram.com
+        </span>
+        <span className="inline-flex items-center gap-1.5 rounded-full bg-ink px-4 py-2 text-[12px] font-medium text-background transition group-hover:opacity-90">
+          Follow
+          <ArrowUpRight className="h-3 w-3" />
+        </span>
+      </div>
+    </motion.a>
   );
 }
 
@@ -149,6 +172,23 @@ function InstagramIcon({ className }: { className?: string }) {
       <rect x="3" y="3" width="18" height="18" rx="5" />
       <circle cx="12" cy="12" r="4" />
       <circle cx="17.5" cy="6.5" r="0.6" fill="currentColor" />
+    </svg>
+  );
+}
+
+function ArrowUpRight({ className }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className={className}
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden
+    >
+      <path d="M7 17L17 7M8 7h9v9" />
     </svg>
   );
 }

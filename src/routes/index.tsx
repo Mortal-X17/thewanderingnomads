@@ -9,6 +9,7 @@ import { Counter } from "@/components/site/Counter";
 import { Community } from "@/components/site/Community";
 import { FloatingWhatsApp } from "@/components/site/FloatingWhatsApp";
 import { InstagramCard } from "@/components/site/InstagramCard";
+import { JourneyTracker, type TrackerSection } from "@/components/site/JourneyTracker";
 
 import heroImg from "@/assets/hero-himalaya.jpg";
 import krishAsset from "@/assets/krish-founder.png.asset.json";
@@ -96,6 +97,7 @@ function Home() {
         <Certifications />
         <Contact />
       </main>
+      <JourneyTracker sections={HOME_SECTIONS} />
       <Footer />
       <FloatingWhatsApp />
       <div
@@ -109,6 +111,16 @@ function Home() {
     </div>
   );
 }
+
+const HOME_SECTIONS: TrackerSection[] = [
+  { label: "Hero", id: "hero" },
+  { label: "Founder Story", id: "about" },
+  { label: "Featured Journeys", id: "journeys" },
+  { label: "Travel Atlas", to: "/atlas" },
+  { label: "Gallery", id: "gallery" },
+  { label: "Testimonials", id: "testimonials" },
+  { label: "Contact", id: "contact" },
+];
 
 function ScrollProgress() {
   const { scrollYProgress } = useScroll();
@@ -133,7 +145,7 @@ function Hero() {
   const overlay = useTransform(scrollYProgress, [0, 1], [0.35, 0.7]);
 
   return (
-    <section ref={ref} className="relative h-[100svh] w-full overflow-hidden bg-ink">
+    <section id="hero" ref={ref} className="relative h-[100svh] w-full overflow-hidden bg-ink">
       <motion.div style={{ y, scale }} className="absolute inset-0">
         <img
           src={heroImg}
@@ -623,7 +635,7 @@ const testimonials = [
 
 function Testimonials() {
   return (
-    <section className="relative bg-background py-24 sm:py-36">
+    <section id="testimonials" className="relative bg-background py-24 sm:py-36">
       <div className="mx-auto max-w-6xl px-6">
         <Reveal>
           <p className="eyebrow">In their words</p>
