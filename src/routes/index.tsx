@@ -97,6 +97,7 @@ function Home() {
         <Certifications />
         <Contact />
       </main>
+      <JourneyTracker sections={HOME_SECTIONS} />
       <Footer />
       <FloatingWhatsApp />
       <div
@@ -110,6 +111,16 @@ function Home() {
     </div>
   );
 }
+
+const HOME_SECTIONS: TrackerSection[] = [
+  { label: "Hero", id: "hero" },
+  { label: "Founder Story", id: "about" },
+  { label: "Featured Journeys", id: "journeys" },
+  { label: "Travel Atlas", to: "/atlas" },
+  { label: "Gallery", id: "gallery" },
+  { label: "Testimonials", id: "testimonials" },
+  { label: "Contact", id: "contact" },
+];
 
 function ScrollProgress() {
   const { scrollYProgress } = useScroll();
@@ -134,7 +145,7 @@ function Hero() {
   const overlay = useTransform(scrollYProgress, [0, 1], [0.35, 0.7]);
 
   return (
-    <section ref={ref} className="relative h-[100svh] w-full overflow-hidden bg-ink">
+    <section id="hero" ref={ref} className="relative h-[100svh] w-full overflow-hidden bg-ink">
       <motion.div style={{ y, scale }} className="absolute inset-0">
         <img
           src={heroImg}
