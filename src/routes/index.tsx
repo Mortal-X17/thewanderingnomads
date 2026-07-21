@@ -9,6 +9,7 @@ import { Counter } from "@/components/site/Counter";
 import { Community } from "@/components/site/Community";
 import { FloatingWhatsApp } from "@/components/site/FloatingWhatsApp";
 import { InstagramCard } from "@/components/site/InstagramCard";
+import { JourneyTracker, type TrackerSection } from "@/components/site/JourneyTracker";
 
 import heroImg from "@/assets/hero-himalaya.jpg";
 import krishAsset from "@/assets/krish-founder.png.asset.json";
