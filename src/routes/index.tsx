@@ -635,7 +635,7 @@ const testimonials = [
 
 function Testimonials() {
   return (
-    <section className="relative bg-background py-24 sm:py-36">
+    <section id="testimonials" className="relative bg-background py-24 sm:py-36">
       <div className="mx-auto max-w-6xl px-6">
         <Reveal>
           <p className="eyebrow">In their words</p>
