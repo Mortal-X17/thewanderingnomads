@@ -42,10 +42,12 @@ function Unit({ value, label }: { value: string; label: string }) {
 
 export function LaunchScreen({ onLaunch }: { onLaunch?: () => void }) {
   const reduced = useReducedMotion();
+  const [mounted, setMounted] = useState(false);
   const [remaining, setRemaining] = useState<Remaining>(() => getRemaining());
   const fired = useRef(false);
 
   useEffect(() => {
+    setMounted(true);
     const tick = () => {
       const next = getRemaining();
       setRemaining(next);
