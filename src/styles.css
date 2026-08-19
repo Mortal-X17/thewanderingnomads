@@ -46,6 +46,12 @@
   --color-snow: var(--snow);
   --color-ink: var(--ink);
 
+  /* Pre-launch countdown atmosphere (theme-independent) */
+  --color-launch-ink: var(--launch-ink);
+  --color-launch-mist: var(--launch-mist);
+  --color-launch-snow: var(--launch-snow);
+  --color-launch-gold: var(--launch-gold);
+
   --font-display: "Instrument Serif", "Fraunces", ui-serif, Georgia, serif;
   --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
 
@@ -94,7 +100,14 @@
   --stone: oklch(0.62 0.015 250);
   --fog: oklch(0.93 0.008 240);
   --sunrise: oklch(0.82 0.10 60);
+
+  /* Pre-launch countdown atmosphere — fixed in both themes */
+  --launch-ink: oklch(0.13 0.03 255);
+  --launch-mist: oklch(0.80 0.03 240);
+  --launch-snow: oklch(0.98 0.005 95);
+  --launch-gold: oklch(0.82 0.10 70);
 }
+
 
 .dark {
   /* Inverted neutrals — semantic tokens (snow/ink/bg/card/muted) flip
