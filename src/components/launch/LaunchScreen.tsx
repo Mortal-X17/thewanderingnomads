@@ -191,7 +191,7 @@ export function LaunchScreen({ onLaunch }: { onLaunch?: () => void }) {
               {UNITS.map(({ key, label }) => (
                 <Unit
                   key={key}
-                  value={pad(remaining[key], key === "days" ? 2 : 2)}
+                  value={mounted ? pad(remaining[key], 2) : pad(0, 2)}
                   label={label}
                 />
               ))}
