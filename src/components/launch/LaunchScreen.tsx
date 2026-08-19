@@ -42,10 +42,12 @@ function Unit({ value, label }: { value: string; label: string }) {
 
 export function LaunchScreen({ onLaunch }: { onLaunch?: () => void }) {
   const reduced = useReducedMotion();
+  const [mounted, setMounted] = useState(false);
   const [remaining, setRemaining] = useState<Remaining>(() => getRemaining());
   const fired = useRef(false);
 
   useEffect(() => {
+    setMounted(true);
     const tick = () => {
       const next = getRemaining();
       setRemaining(next);
@@ -139,14 +141,16 @@ export function LaunchScreen({ onLaunch }: { onLaunch?: () => void }) {
             className="absolute inset-0 -z-10 rounded-full"
             style={{
               background:
-                "radial-gradient(circle, color-mix(in oklab, var(--launch-snow) 26%, transparent), transparent 70%)",
-              filter: "blur(22px)",
+                "radial-gradient(circle, color-mix(in oklab, var(--launch-snow) 22%, transparent), transparent 70%)",
+              filter: "blur(24px)",
             }}
           />
           <img
             src={logoAsset.url}
-            alt="The Wandering Nomads"
-            className="h-20 w-20 rounded-full object-contain sm:h-24 sm:w-24"
+            alt="The Wandering Nomads official logo"
+            width={256}
+            height={256}
+            className="h-32 w-32 rounded-full border border-launch-snow/20 object-contain shadow-2xl shadow-launch-ink/40 sm:h-40 sm:w-40 md:h-44 md:w-44"
           />
         </motion.div>
 
@@ -187,7 +191,7 @@ export function LaunchScreen({ onLaunch }: { onLaunch?: () => void }) {
               {UNITS.map(({ key, label }) => (
                 <Unit
                   key={key}
-                  value={pad(remaining[key], key === "days" ? 2 : 2)}
+                  value={mounted ? pad(remaining[key], 2) : pad(0, 2)}
                   label={label}
                 />
               ))}
