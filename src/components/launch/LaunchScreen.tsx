@@ -141,16 +141,16 @@ export function LaunchScreen({ onLaunch }: { onLaunch?: () => void }) {
             className="absolute inset-0 -z-10 rounded-full"
             style={{
               background:
-                "radial-gradient(circle, color-mix(in oklab, var(--launch-snow) 18%, transparent), transparent 70%)",
-              filter: "blur(18px)",
+                "radial-gradient(circle, color-mix(in oklab, var(--launch-snow) 22%, transparent), transparent 70%)",
+              filter: "blur(24px)",
             }}
           />
           <img
             src={logoAsset.url}
             alt="The Wandering Nomads official logo"
-            width={192}
-            height={192}
-            className="h-24 w-24 rounded-full border border-launch-snow/20 object-contain shadow-2xl shadow-launch-ink/40 sm:h-28 sm:w-28"
+            width={256}
+            height={256}
+            className="h-32 w-32 rounded-full border border-launch-snow/20 object-contain shadow-2xl shadow-launch-ink/40 sm:h-40 sm:w-40 md:h-44 md:w-44"
           />
         </motion.div>
 
