@@ -7,10 +7,17 @@ import {
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
-import { useEffect, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { LaunchScreen } from "../components/launch/LaunchScreen";
+import {
+  PREVIEW_PARAM,
+  PREVIEW_STORAGE_KEY,
+  PREVIEW_TOKEN,
+  isPreLaunch,
+} from "../lib/launch";
 
 function NotFoundComponent() {
   return (
@@ -135,9 +142,33 @@ function RootShell({ children }: { children: ReactNode }) {
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
 
+  // Evaluated identically on the server and the client, so pre-launch visitors
+  // never receive the real site's markup — no flash, no overlay.
+  const [gated, setGated] = useState(() => isPreLaunch());
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    try {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get(PREVIEW_PARAM) === PREVIEW_TOKEN) {
+        window.sessionStorage.setItem(PREVIEW_STORAGE_KEY, PREVIEW_TOKEN);
+      }
+      if (window.sessionStorage.getItem(PREVIEW_STORAGE_KEY) === PREVIEW_TOKEN) {
+        setGated(false);
+      }
+    } catch {
+      /* storage unavailable — stay gated */
+    }
+  }, []);
+
+  if (gated) {
+    return <LaunchScreen onLaunch={() => setGated(false)} />;
+  }
+
   return (
     <QueryClientProvider client={queryClient}>
       <Outlet />
     </QueryClientProvider>
   );
 }
+
