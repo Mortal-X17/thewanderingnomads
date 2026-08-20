@@ -21,6 +21,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AdminIndexRouteImport } from './routes/admin/index'
 import { Route as AdminSiteRouteImport } from './routes/admin/site'
 import { Route as AdminPagesRouteImport } from './routes/admin/pages'
+import { Route as AdminJourneysRouteImport } from './routes/admin/journeys'
 import { Route as AdminDesignRouteImport } from './routes/admin/design'
 import { Route as Char91DotwellKnownChar93OauthProtectedResourceRouteImport } from './routes/[.well-known]/oauth-protected-resource'
 import { Route as Char91DotmcpChar93ListToolsRouteImport } from './routes/[.mcp]/list-tools'
@@ -87,6 +88,11 @@ const AdminPagesRoute = AdminPagesRouteImport.update({
   path: '/pages',
   getParentRoute: () => AdminRouteRoute,
 } as any)
+const AdminJourneysRoute = AdminJourneysRouteImport.update({
+  id: '/journeys',
+  path: '/journeys',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
 const AdminDesignRoute = AdminDesignRouteImport.update({
   id: '/design',
   path: '/design',
@@ -129,6 +135,7 @@ export interface FileRoutesByFullPath {
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/admin/design': typeof AdminDesignRoute
+  '/admin/journeys': typeof AdminJourneysRoute
   '/admin/pages': typeof AdminPagesRoute
   '/admin/site': typeof AdminSiteRoute
   '/admin/': typeof AdminIndexRoute
@@ -147,6 +154,7 @@ export interface FileRoutesByTo {
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/admin/design': typeof AdminDesignRoute
+  '/admin/journeys': typeof AdminJourneysRoute
   '/admin/pages': typeof AdminPagesRoute
   '/admin/site': typeof AdminSiteRoute
   '/admin': typeof AdminIndexRoute
@@ -167,6 +175,7 @@ export interface FileRoutesById {
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/admin/design': typeof AdminDesignRoute
+  '/admin/journeys': typeof AdminJourneysRoute
   '/admin/pages': typeof AdminPagesRoute
   '/admin/site': typeof AdminSiteRoute
   '/admin/': typeof AdminIndexRoute
@@ -188,6 +197,7 @@ export interface FileRouteTypes {
     | '/.mcp/list-tools'
     | '/.well-known/oauth-protected-resource'
     | '/admin/design'
+    | '/admin/journeys'
     | '/admin/pages'
     | '/admin/site'
     | '/admin/'
@@ -206,6 +216,7 @@ export interface FileRouteTypes {
     | '/.mcp/list-tools'
     | '/.well-known/oauth-protected-resource'
     | '/admin/design'
+    | '/admin/journeys'
     | '/admin/pages'
     | '/admin/site'
     | '/admin'
@@ -225,6 +236,7 @@ export interface FileRouteTypes {
     | '/.mcp/list-tools'
     | '/.well-known/oauth-protected-resource'
     | '/admin/design'
+    | '/admin/journeys'
     | '/admin/pages'
     | '/admin/site'
     | '/admin/'
@@ -334,6 +346,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminPagesRouteImport
       parentRoute: typeof AdminRouteRoute
     }
+    '/admin/journeys': {
+      id: '/admin/journeys'
+      path: '/journeys'
+      fullPath: '/admin/journeys'
+      preLoaderRoute: typeof AdminJourneysRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
     '/admin/design': {
       id: '/admin/design'
       path: '/design'
@@ -374,6 +393,7 @@ declare module '@tanstack/react-router' {
 
 interface AdminRouteRouteChildren {
   AdminDesignRoute: typeof AdminDesignRoute
+  AdminJourneysRoute: typeof AdminJourneysRoute
   AdminPagesRoute: typeof AdminPagesRoute
   AdminSiteRoute: typeof AdminSiteRoute
   AdminIndexRoute: typeof AdminIndexRoute
@@ -381,6 +401,7 @@ interface AdminRouteRouteChildren {
 
 const AdminRouteRouteChildren: AdminRouteRouteChildren = {
   AdminDesignRoute: AdminDesignRoute,
+  AdminJourneysRoute: AdminJourneysRoute,
   AdminPagesRoute: AdminPagesRoute,
   AdminSiteRoute: AdminSiteRoute,
   AdminIndexRoute: AdminIndexRoute,
