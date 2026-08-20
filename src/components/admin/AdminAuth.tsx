@@ -1,11 +1,29 @@
 import { useState } from "react";
 import { Loader2, ShieldCheck } from "lucide-react";
 import { toast } from "sonner";
+import { useServerFn } from "@tanstack/react-start";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { claimOwner, signInAdmin, signUpOwner } from "@/lib/cms/admin";
+import { signInAdmin } from "@/lib/cms/admin";
+import { bootstrapOwner } from "@/lib/cms/bootstrap.functions";
+
+function friendlyMessage(error: unknown) {
+  const raw =
+    error instanceof Error
+      ? error.message
+      : typeof error === "string"
+        ? error
+        : "Something went wrong";
+  if (/only request this after|rate limit|too many requests/i.test(raw)) {
+    return "Too many attempts — please wait a minute and try again.";
+  }
+  if (/invalid login credentials/i.test(raw)) {
+    return "Incorrect email or password.";
+  }
+  return raw;
+}
 
 /**
  * Inline sign-in for the dashboard. Owner registration is only offered while
@@ -22,13 +40,14 @@ export function AdminAuth({
   const [password, setPassword] = useState("");
   const [busy, setBusy] = useState(false);
   const showSetup = adminExists === false;
+  const createOwner = useServerFn(bootstrapOwner);
 
   const run = async (action: () => Promise<void>) => {
     setBusy(true);
     try {
       await action();
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : "Something went wrong");
+      toast.error(friendlyMessage(error));
     } finally {
       setBusy(false);
     }
@@ -37,10 +56,9 @@ export function AdminAuth({
   const submit = () =>
     run(async () => {
       if (showSetup) {
-        const { error } = await signUpOwner(email, password);
+        await createOwner({ data: { email, password } });
+        const { error } = await signInAdmin(email, password);
         if (error) throw error;
-        const { error: claimError } = await claimOwner();
-        if (claimError) throw claimError;
         toast.success("Owner account created");
         return;
       }
@@ -48,6 +66,7 @@ export function AdminAuth({
       if (error) throw error;
       toast.success("Welcome back");
     });
+
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
