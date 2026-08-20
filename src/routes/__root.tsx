@@ -4,6 +4,7 @@ import {
   Link,
   createRootRouteWithContext,
   useRouter,
+  useRouterState,
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
@@ -12,6 +13,8 @@ import { useEffect, useState, type ReactNode } from "react";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { LaunchScreen } from "../components/launch/LaunchScreen";
+import { DesignTokens } from "../components/site/DesignTokens";
+import { getLaunchState } from "../lib/cms/content.functions";
 import {
   PREVIEW_PARAM,
   PREVIEW_STORAGE_KEY,
@@ -141,10 +144,12 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
 
   // Evaluated identically on the server and the client, so pre-launch visitors
   // never receive the real site's markup — no flash, no overlay.
-  const [gated, setGated] = useState(() => isPreLaunch());
+  const [bypassed, setBypassed] = useState(false);
+  const [launchOverride, setLaunchOverride] = useState<"pre_launch" | "live" | null>(null);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -154,19 +159,42 @@ function RootComponent() {
         window.sessionStorage.setItem(PREVIEW_STORAGE_KEY, PREVIEW_TOKEN);
       }
       if (window.sessionStorage.getItem(PREVIEW_STORAGE_KEY) === PREVIEW_TOKEN) {
-        setGated(false);
+        setBypassed(true);
       }
     } catch {
       /* storage unavailable — stay gated */
     }
   }, []);
 
+  // The owner can flip the site live from the dashboard without a code change.
+  useEffect(() => {
+    let active = true;
+    getLaunchState()
+      .then((state) => {
+        if (active && state.launch_status) setLaunchOverride(state.launch_status);
+      })
+      .catch(() => {
+        /* keep the scheduled behaviour */
+      });
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  // The dashboard is a private surface and is never covered by the countdown.
+  const isStudio = pathname.startsWith("/admin");
+  const gated =
+    !isStudio &&
+    !bypassed &&
+    (launchOverride === null ? isPreLaunch() : launchOverride === "pre_launch");
+
   if (gated) {
-    return <LaunchScreen onLaunch={() => setGated(false)} />;
+    return <LaunchScreen onLaunch={() => setBypassed(true)} />;
   }
 
   return (
     <QueryClientProvider client={queryClient}>
+      {isStudio ? null : <DesignTokens />}
       <Outlet />
     </QueryClientProvider>
   );

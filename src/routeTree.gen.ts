@@ -16,7 +16,16 @@ import { Route as GalleryRouteImport } from './routes/gallery'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as AtlasRouteImport } from './routes/atlas'
 import { Route as AboutRouteImport } from './routes/about'
+import { Route as AdminRouteRouteImport } from './routes/admin/route'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AdminIndexRouteImport } from './routes/admin/index'
+import { Route as AdminSiteRouteImport } from './routes/admin/site'
+import { Route as AdminPagesRouteImport } from './routes/admin/pages'
+import { Route as AdminMediaRouteImport } from './routes/admin/media'
+import { Route as AdminJourneysRouteImport } from './routes/admin/journeys'
+import { Route as AdminGalleryRouteImport } from './routes/admin/gallery'
+import { Route as AdminDesignRouteImport } from './routes/admin/design'
+import { Route as AdminAtlasRouteImport } from './routes/admin/atlas'
 import { Route as Char91DotwellKnownChar93OauthProtectedResourceRouteImport } from './routes/[.well-known]/oauth-protected-resource'
 import { Route as Char91DotmcpChar93ListToolsRouteImport } from './routes/[.mcp]/list-tools'
 import { Route as Char91DotmcpChar93InvokeToolToolRouteImport } from './routes/[.mcp]/invoke-tool/$tool'
@@ -57,10 +66,55 @@ const AboutRoute = AboutRouteImport.update({
   path: '/about',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminRouteRoute = AdminRouteRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
+} as any)
+const AdminIndexRoute = AdminIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminSiteRoute = AdminSiteRouteImport.update({
+  id: '/site',
+  path: '/site',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminPagesRoute = AdminPagesRouteImport.update({
+  id: '/pages',
+  path: '/pages',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminMediaRoute = AdminMediaRouteImport.update({
+  id: '/media',
+  path: '/media',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminJourneysRoute = AdminJourneysRouteImport.update({
+  id: '/journeys',
+  path: '/journeys',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminGalleryRoute = AdminGalleryRouteImport.update({
+  id: '/gallery',
+  path: '/gallery',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminDesignRoute = AdminDesignRouteImport.update({
+  id: '/design',
+  path: '/design',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminAtlasRoute = AdminAtlasRouteImport.update({
+  id: '/atlas',
+  path: '/atlas',
+  getParentRoute: () => AdminRouteRoute,
 } as any)
 const Char91DotwellKnownChar93OauthProtectedResourceRoute =
   Char91DotwellKnownChar93OauthProtectedResourceRouteImport.update({
@@ -88,6 +142,7 @@ const ApiPublicMediaSplatRoute = ApiPublicMediaSplatRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteRouteWithChildren
   '/about': typeof AboutRoute
   '/atlas': typeof AtlasRoute
   '/contact': typeof ContactRoute
@@ -97,6 +152,14 @@ export interface FileRoutesByFullPath {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
+  '/admin/atlas': typeof AdminAtlasRoute
+  '/admin/design': typeof AdminDesignRoute
+  '/admin/gallery': typeof AdminGalleryRoute
+  '/admin/journeys': typeof AdminJourneysRoute
+  '/admin/media': typeof AdminMediaRoute
+  '/admin/pages': typeof AdminPagesRoute
+  '/admin/site': typeof AdminSiteRoute
+  '/admin/': typeof AdminIndexRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
   '/api/public/media/$': typeof ApiPublicMediaSplatRoute
 }
@@ -111,12 +174,21 @@ export interface FileRoutesByTo {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
+  '/admin/atlas': typeof AdminAtlasRoute
+  '/admin/design': typeof AdminDesignRoute
+  '/admin/gallery': typeof AdminGalleryRoute
+  '/admin/journeys': typeof AdminJourneysRoute
+  '/admin/media': typeof AdminMediaRoute
+  '/admin/pages': typeof AdminPagesRoute
+  '/admin/site': typeof AdminSiteRoute
+  '/admin': typeof AdminIndexRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
   '/api/public/media/$': typeof ApiPublicMediaSplatRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteRouteWithChildren
   '/about': typeof AboutRoute
   '/atlas': typeof AtlasRoute
   '/contact': typeof ContactRoute
@@ -126,6 +198,14 @@ export interface FileRoutesById {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
+  '/admin/atlas': typeof AdminAtlasRoute
+  '/admin/design': typeof AdminDesignRoute
+  '/admin/gallery': typeof AdminGalleryRoute
+  '/admin/journeys': typeof AdminJourneysRoute
+  '/admin/media': typeof AdminMediaRoute
+  '/admin/pages': typeof AdminPagesRoute
+  '/admin/site': typeof AdminSiteRoute
+  '/admin/': typeof AdminIndexRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
   '/api/public/media/$': typeof ApiPublicMediaSplatRoute
 }
@@ -133,6 +213,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/admin'
     | '/about'
     | '/atlas'
     | '/contact'
@@ -142,6 +223,14 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/.mcp/list-tools'
     | '/.well-known/oauth-protected-resource'
+    | '/admin/atlas'
+    | '/admin/design'
+    | '/admin/gallery'
+    | '/admin/journeys'
+    | '/admin/media'
+    | '/admin/pages'
+    | '/admin/site'
+    | '/admin/'
     | '/.mcp/invoke-tool/$tool'
     | '/api/public/media/$'
   fileRoutesByTo: FileRoutesByTo
@@ -156,11 +245,20 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/.mcp/list-tools'
     | '/.well-known/oauth-protected-resource'
+    | '/admin/atlas'
+    | '/admin/design'
+    | '/admin/gallery'
+    | '/admin/journeys'
+    | '/admin/media'
+    | '/admin/pages'
+    | '/admin/site'
+    | '/admin'
     | '/.mcp/invoke-tool/$tool'
     | '/api/public/media/$'
   id:
     | '__root__'
     | '/'
+    | '/admin'
     | '/about'
     | '/atlas'
     | '/contact'
@@ -170,12 +268,21 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/.mcp/list-tools'
     | '/.well-known/oauth-protected-resource'
+    | '/admin/atlas'
+    | '/admin/design'
+    | '/admin/gallery'
+    | '/admin/journeys'
+    | '/admin/media'
+    | '/admin/pages'
+    | '/admin/site'
+    | '/admin/'
     | '/.mcp/invoke-tool/$tool'
     | '/api/public/media/$'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdminRouteRoute: typeof AdminRouteRouteWithChildren
   AboutRoute: typeof AboutRoute
   AtlasRoute: typeof AtlasRoute
   ContactRoute: typeof ContactRoute
@@ -240,12 +347,75 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AboutRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/admin/': {
+      id: '/admin/'
+      path: '/'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/admin/site': {
+      id: '/admin/site'
+      path: '/site'
+      fullPath: '/admin/site'
+      preLoaderRoute: typeof AdminSiteRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/admin/pages': {
+      id: '/admin/pages'
+      path: '/pages'
+      fullPath: '/admin/pages'
+      preLoaderRoute: typeof AdminPagesRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/admin/media': {
+      id: '/admin/media'
+      path: '/media'
+      fullPath: '/admin/media'
+      preLoaderRoute: typeof AdminMediaRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/admin/journeys': {
+      id: '/admin/journeys'
+      path: '/journeys'
+      fullPath: '/admin/journeys'
+      preLoaderRoute: typeof AdminJourneysRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/admin/gallery': {
+      id: '/admin/gallery'
+      path: '/gallery'
+      fullPath: '/admin/gallery'
+      preLoaderRoute: typeof AdminGalleryRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/admin/design': {
+      id: '/admin/design'
+      path: '/design'
+      fullPath: '/admin/design'
+      preLoaderRoute: typeof AdminDesignRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/admin/atlas': {
+      id: '/admin/atlas'
+      path: '/atlas'
+      fullPath: '/admin/atlas'
+      preLoaderRoute: typeof AdminAtlasRouteImport
+      parentRoute: typeof AdminRouteRoute
     }
     '/.well-known/oauth-protected-resource': {
       id: '/.well-known/oauth-protected-resource'
@@ -278,8 +448,35 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface AdminRouteRouteChildren {
+  AdminAtlasRoute: typeof AdminAtlasRoute
+  AdminDesignRoute: typeof AdminDesignRoute
+  AdminGalleryRoute: typeof AdminGalleryRoute
+  AdminJourneysRoute: typeof AdminJourneysRoute
+  AdminMediaRoute: typeof AdminMediaRoute
+  AdminPagesRoute: typeof AdminPagesRoute
+  AdminSiteRoute: typeof AdminSiteRoute
+  AdminIndexRoute: typeof AdminIndexRoute
+}
+
+const AdminRouteRouteChildren: AdminRouteRouteChildren = {
+  AdminAtlasRoute: AdminAtlasRoute,
+  AdminDesignRoute: AdminDesignRoute,
+  AdminGalleryRoute: AdminGalleryRoute,
+  AdminJourneysRoute: AdminJourneysRoute,
+  AdminMediaRoute: AdminMediaRoute,
+  AdminPagesRoute: AdminPagesRoute,
+  AdminSiteRoute: AdminSiteRoute,
+  AdminIndexRoute: AdminIndexRoute,
+}
+
+const AdminRouteRouteWithChildren = AdminRouteRoute._addFileChildren(
+  AdminRouteRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdminRouteRoute: AdminRouteRouteWithChildren,
   AboutRoute: AboutRoute,
   AtlasRoute: AtlasRoute,
   ContactRoute: ContactRoute,

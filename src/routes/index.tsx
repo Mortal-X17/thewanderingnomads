@@ -10,6 +10,7 @@ import { Community } from "@/components/site/Community";
 import { FloatingWhatsApp } from "@/components/site/FloatingWhatsApp";
 import { InstagramCard } from "@/components/site/InstagramCard";
 import { JourneyTracker, type TrackerSection } from "@/components/site/JourneyTracker";
+import { useContent, useSection } from "@/lib/cms/useContent";
 
 import heroImg from "@/assets/hero-himalaya.jpg";
 import krishAsset from "@/assets/krish-founder.png.asset.json";
@@ -136,6 +137,7 @@ function ScrollProgress() {
 
 function Hero() {
   const ref = useRef<HTMLDivElement>(null);
+  const copy = useSection("home", "hero");
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start start", "end start"],
@@ -168,7 +170,7 @@ function Hero() {
           transition={{ duration: 0.9, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
           className="eyebrow text-white/70"
         >
-          Founder-Led Expeditions · Since 2024
+          {copy?.subtitle ?? "Founder-Led Expeditions · Since 2024"}
         </motion.p>
 
         <motion.h1
@@ -177,9 +179,15 @@ function Hero() {
           transition={{ duration: 1.1, delay: 0.55, ease: [0.22, 1, 0.36, 1] }}
           className="display mt-6 max-w-4xl text-[13vw] leading-[0.95] text-white sm:text-7xl md:text-[88px]"
         >
-          Journeys that begin
-          <br />
-          <em className="italic text-white/85">where the road ends.</em>
+          {copy?.heading ? (
+            copy.heading
+          ) : (
+            <>
+              Journeys that begin
+              <br />
+              <em className="italic text-white/85">where the road ends.</em>
+            </>
+          )}
         </motion.h1>
 
         <motion.p
@@ -188,8 +196,8 @@ function Hero() {
           transition={{ duration: 0.9, delay: 0.9, ease: [0.22, 1, 0.36, 1] }}
           className="mt-8 max-w-xl text-[15px] leading-relaxed text-white/80 sm:text-base"
         >
-          Small groups. Real places. Every expedition personally led by Krish —
-          across Kashmir, Spiti, Jibhi and the far corners of India.
+          {copy?.description ??
+            "Small groups. Real places. Every expedition personally led by Krish — across Kashmir, Spiti, Jibhi and the far corners of India."}
         </motion.p>
 
         <motion.div
@@ -370,7 +378,7 @@ function About() {
 
 /* ---------------- FEATURED JOURNEYS ---------------- */
 
-const journeys = [
+const defaultJourneys = [
   {
     slug: "kashmir",
     name: "Kashmir",
@@ -440,6 +448,22 @@ const journeys = [
 ];
 
 function Journeys() {
+  const { journeys: cmsJourneys } = useContent();
+  const journeys =
+    cmsJourneys.length > 0
+      ? cmsJourneys.map((j) => ({
+          slug: j.slug,
+          name: j.destination || j.title,
+          tag: j.best_season ? `${j.best_season}` : "Expedition",
+          img: j.hero_image_url ?? heroImg,
+          desc: j.short_description ?? "",
+          duration: j.duration ?? "—",
+          season: j.best_season ?? "—",
+          group: j.price ?? "—",
+          difficulty: j.difficulty ?? "—",
+        }))
+      : defaultJourneys;
+
   return (
     <section id="journeys" className="relative bg-snow py-24 sm:py-36 border-t border-ink/8">
       <div className="mx-auto max-w-6xl px-6">
@@ -498,7 +522,9 @@ function Journeys() {
                       <dd className="mt-1 text-ink">{j.season}</dd>
                     </div>
                     <div>
-                      <dt className="uppercase tracking-[0.16em] text-muted-foreground">Group</dt>
+                      <dt className="uppercase tracking-[0.16em] text-muted-foreground">
+                        {cmsJourneys.length > 0 ? "From" : "Group"}
+                      </dt>
                       <dd className="mt-1 text-ink">{j.group}</dd>
                     </div>
                     <div>
@@ -568,7 +594,7 @@ function WhyKrish() {
 
 /* ---------------- GALLERY ---------------- */
 
-const gallery = [
+const defaultGallery = [
   { src: gCampfire, loc: "Chandratal · 4,300 m", cls: "row-span-2" },
   { src: gTrail, loc: "Pine trail · Himachal", cls: "" },
   { src: gLake, loc: "Alpine lake · Spiti", cls: "" },
@@ -578,6 +604,16 @@ const gallery = [
 ];
 
 function Gallery() {
+  const { gallery: cmsGallery } = useContent();
+  const gallery =
+    cmsGallery.length > 0
+      ? cmsGallery.slice(0, 6).map((g, i) => ({
+          src: g.url,
+          loc: g.caption ?? g.location ?? g.alt_text ?? "",
+          cls: i === 0 || i === 3 ? "row-span-2" : "",
+        }))
+      : defaultGallery;
+
   return (
     <section id="gallery" className="relative bg-snow py-24 sm:py-36 border-t border-ink/8">
       <div className="mx-auto max-w-6xl px-6">
@@ -615,7 +651,7 @@ function Gallery() {
 
 /* ---------------- TESTIMONIALS ---------------- */
 
-const testimonials = [
+const defaultTestimonials = [
   {
     q: "Krish doesn't lead a tour — he shares a home. Kashmir wasn't a destination, it was a week of belonging.",
     n: "A traveller",
@@ -634,6 +670,12 @@ const testimonials = [
 ];
 
 function Testimonials() {
+  const { testimonials: cmsTestimonials } = useContent();
+  const hasReal = cmsTestimonials.length > 0;
+  const testimonials = hasReal
+    ? cmsTestimonials.map((t) => ({ q: t.review, n: t.name, r: t.trip ?? "" }))
+    : defaultTestimonials;
+
   return (
     <section id="testimonials" className="relative bg-background py-24 sm:py-36">
       <div className="mx-auto max-w-6xl px-6">
@@ -669,11 +711,13 @@ function Testimonials() {
             </Reveal>
           ))}
         </div>
-        <Reveal delay={0.1}>
-          <p className="mt-8 text-xs text-muted-foreground">
-            Placeholder quotes. Real traveller stories will be added as the community grows.
-          </p>
-        </Reveal>
+        {hasReal ? null : (
+          <Reveal delay={0.1}>
+            <p className="mt-8 text-xs text-muted-foreground">
+              Placeholder quotes. Real traveller stories will be added as the community grows.
+            </p>
+          </Reveal>
+        )}
       </div>
     </section>
   );

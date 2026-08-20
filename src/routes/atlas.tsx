@@ -7,6 +7,8 @@ import { Reveal } from "@/components/site/Reveal";
 import { IndiaMap } from "@/components/atlas/IndiaMap";
 import { StatePanel } from "@/components/atlas/StatePanel";
 import { ATLAS_STATES, ATLAS_STATS, type AtlasState } from "@/lib/atlas/data";
+import { mergeAtlasStates } from "@/lib/atlas/cms";
+import { useContent } from "@/lib/cms/useContent";
 
 export const Route = createFileRoute("/atlas")({
   head: () => ({
@@ -29,12 +31,29 @@ export const Route = createFileRoute("/atlas")({
 });
 
 function AtlasPage() {
-  const [selected, setSelected] = useState<AtlasState | null>(null);
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const { regions, destinations, stories, gallery } = useContent();
+
+  const states = useMemo(
+    () => mergeAtlasStates(regions, destinations, stories, gallery),
+    [regions, destinations, stories, gallery],
+  );
 
   const visited = useMemo(
-    () => ATLAS_STATES.filter((s) => s.visited).sort((a, b) => a.name.localeCompare(b.name)),
-    [],
+    () => states.filter((s) => s.visited).sort((a, b) => a.name.localeCompare(b.name)),
+    [states],
   );
+
+  const selected: AtlasState | null = selectedId
+    ? (states.find((s) => s.id === selectedId) ?? null)
+    : null;
+
+  const countryRegions = regions.filter((r) => r.kind === "country");
+  const stats = {
+    statesExplored: visited.length || ATLAS_STATS.statesExplored,
+    citiesVisited: destinations.length || ATLAS_STATS.citiesVisited,
+    countriesExplored: countryRegions.length || ATLAS_STATS.countriesExplored,
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -72,9 +91,9 @@ function AtlasPage() {
       <section className="mx-auto max-w-6xl px-6">
         <Reveal>
           <div className="grid grid-cols-2 gap-px overflow-hidden rounded-3xl border border-ink/10 bg-ink/10 sm:grid-cols-3 lg:grid-cols-6">
-            <Stat label="States explored" value={ATLAS_STATS.statesExplored} />
-            <Stat label="Cities visited" value={ATLAS_STATS.citiesVisited} suffix="+" />
-            <Stat label="Countries explored" value={ATLAS_STATS.countriesExplored} />
+            <Stat label="States explored" value={stats.statesExplored} />
+            <Stat label="Cities visited" value={stats.citiesVisited} suffix="+" />
+            <Stat label="Countries explored" value={stats.countriesExplored} />
             <Stat label="Solo expeditions" value={ATLAS_STATS.soloExpeditions} suffix="+" />
             <Stat label="Community trips" value={ATLAS_STATS.communityTrips} />
             <CompassStat />
@@ -93,8 +112,9 @@ function AtlasPage() {
               </p>
               <div className="mt-4">
                 <IndiaMap
-                  selectedId={selected?.id ?? null}
-                  onSelect={(s) => setSelected(s)}
+                  selectedId={selectedId}
+                  onSelect={(s) => setSelectedId(s.id)}
+                  states={states}
                 />
               </div>
             </div>
@@ -110,7 +130,7 @@ function AtlasPage() {
                 {visited.map((s) => (
                   <li key={s.id}>
                     <button
-                      onClick={() => setSelected(s)}
+                      onClick={() => setSelectedId(s.id)}
                       className="group flex w-full items-center gap-2 rounded-md py-1 text-left text-ink/80 transition hover:text-ink"
                     >
                       <motion.span
@@ -138,7 +158,7 @@ function AtlasPage() {
         </div>
       </section>
 
-      <StatePanel state={selected} onClose={() => setSelected(null)} />
+      <StatePanel state={selected} onClose={() => setSelectedId(null)} />
 
       <Footer />
     </div>
