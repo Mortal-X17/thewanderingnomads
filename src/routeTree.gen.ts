@@ -22,6 +22,7 @@ import { Route as AdminIndexRouteImport } from './routes/admin/index'
 import { Route as AdminSiteRouteImport } from './routes/admin/site'
 import { Route as AdminPagesRouteImport } from './routes/admin/pages'
 import { Route as AdminJourneysRouteImport } from './routes/admin/journeys'
+import { Route as AdminGalleryRouteImport } from './routes/admin/gallery'
 import { Route as AdminDesignRouteImport } from './routes/admin/design'
 import { Route as AdminAtlasRouteImport } from './routes/admin/atlas'
 import { Route as Char91DotwellKnownChar93OauthProtectedResourceRouteImport } from './routes/[.well-known]/oauth-protected-resource'
@@ -94,6 +95,11 @@ const AdminJourneysRoute = AdminJourneysRouteImport.update({
   path: '/journeys',
   getParentRoute: () => AdminRouteRoute,
 } as any)
+const AdminGalleryRoute = AdminGalleryRouteImport.update({
+  id: '/gallery',
+  path: '/gallery',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
 const AdminDesignRoute = AdminDesignRouteImport.update({
   id: '/design',
   path: '/design',
@@ -142,6 +148,7 @@ export interface FileRoutesByFullPath {
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/admin/atlas': typeof AdminAtlasRoute
   '/admin/design': typeof AdminDesignRoute
+  '/admin/gallery': typeof AdminGalleryRoute
   '/admin/journeys': typeof AdminJourneysRoute
   '/admin/pages': typeof AdminPagesRoute
   '/admin/site': typeof AdminSiteRoute
@@ -162,6 +169,7 @@ export interface FileRoutesByTo {
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/admin/atlas': typeof AdminAtlasRoute
   '/admin/design': typeof AdminDesignRoute
+  '/admin/gallery': typeof AdminGalleryRoute
   '/admin/journeys': typeof AdminJourneysRoute
   '/admin/pages': typeof AdminPagesRoute
   '/admin/site': typeof AdminSiteRoute
@@ -184,6 +192,7 @@ export interface FileRoutesById {
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/admin/atlas': typeof AdminAtlasRoute
   '/admin/design': typeof AdminDesignRoute
+  '/admin/gallery': typeof AdminGalleryRoute
   '/admin/journeys': typeof AdminJourneysRoute
   '/admin/pages': typeof AdminPagesRoute
   '/admin/site': typeof AdminSiteRoute
@@ -207,6 +216,7 @@ export interface FileRouteTypes {
     | '/.well-known/oauth-protected-resource'
     | '/admin/atlas'
     | '/admin/design'
+    | '/admin/gallery'
     | '/admin/journeys'
     | '/admin/pages'
     | '/admin/site'
@@ -227,6 +237,7 @@ export interface FileRouteTypes {
     | '/.well-known/oauth-protected-resource'
     | '/admin/atlas'
     | '/admin/design'
+    | '/admin/gallery'
     | '/admin/journeys'
     | '/admin/pages'
     | '/admin/site'
@@ -248,6 +259,7 @@ export interface FileRouteTypes {
     | '/.well-known/oauth-protected-resource'
     | '/admin/atlas'
     | '/admin/design'
+    | '/admin/gallery'
     | '/admin/journeys'
     | '/admin/pages'
     | '/admin/site'
@@ -365,6 +377,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminJourneysRouteImport
       parentRoute: typeof AdminRouteRoute
     }
+    '/admin/gallery': {
+      id: '/admin/gallery'
+      path: '/gallery'
+      fullPath: '/admin/gallery'
+      preLoaderRoute: typeof AdminGalleryRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
     '/admin/design': {
       id: '/admin/design'
       path: '/design'
@@ -413,6 +432,7 @@ declare module '@tanstack/react-router' {
 interface AdminRouteRouteChildren {
   AdminAtlasRoute: typeof AdminAtlasRoute
   AdminDesignRoute: typeof AdminDesignRoute
+  AdminGalleryRoute: typeof AdminGalleryRoute
   AdminJourneysRoute: typeof AdminJourneysRoute
   AdminPagesRoute: typeof AdminPagesRoute
   AdminSiteRoute: typeof AdminSiteRoute
@@ -422,6 +442,7 @@ interface AdminRouteRouteChildren {
 const AdminRouteRouteChildren: AdminRouteRouteChildren = {
   AdminAtlasRoute: AdminAtlasRoute,
   AdminDesignRoute: AdminDesignRoute,
+  AdminGalleryRoute: AdminGalleryRoute,
   AdminJourneysRoute: AdminJourneysRoute,
   AdminPagesRoute: AdminPagesRoute,
   AdminSiteRoute: AdminSiteRoute,
