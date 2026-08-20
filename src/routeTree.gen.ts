@@ -21,6 +21,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AdminIndexRouteImport } from './routes/admin/index'
 import { Route as AdminSiteRouteImport } from './routes/admin/site'
 import { Route as AdminPagesRouteImport } from './routes/admin/pages'
+import { Route as AdminMediaRouteImport } from './routes/admin/media'
 import { Route as AdminJourneysRouteImport } from './routes/admin/journeys'
 import { Route as AdminGalleryRouteImport } from './routes/admin/gallery'
 import { Route as AdminDesignRouteImport } from './routes/admin/design'
@@ -90,6 +91,11 @@ const AdminPagesRoute = AdminPagesRouteImport.update({
   path: '/pages',
   getParentRoute: () => AdminRouteRoute,
 } as any)
+const AdminMediaRoute = AdminMediaRouteImport.update({
+  id: '/media',
+  path: '/media',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
 const AdminJourneysRoute = AdminJourneysRouteImport.update({
   id: '/journeys',
   path: '/journeys',
@@ -150,6 +156,7 @@ export interface FileRoutesByFullPath {
   '/admin/design': typeof AdminDesignRoute
   '/admin/gallery': typeof AdminGalleryRoute
   '/admin/journeys': typeof AdminJourneysRoute
+  '/admin/media': typeof AdminMediaRoute
   '/admin/pages': typeof AdminPagesRoute
   '/admin/site': typeof AdminSiteRoute
   '/admin/': typeof AdminIndexRoute
@@ -171,6 +178,7 @@ export interface FileRoutesByTo {
   '/admin/design': typeof AdminDesignRoute
   '/admin/gallery': typeof AdminGalleryRoute
   '/admin/journeys': typeof AdminJourneysRoute
+  '/admin/media': typeof AdminMediaRoute
   '/admin/pages': typeof AdminPagesRoute
   '/admin/site': typeof AdminSiteRoute
   '/admin': typeof AdminIndexRoute
@@ -194,6 +202,7 @@ export interface FileRoutesById {
   '/admin/design': typeof AdminDesignRoute
   '/admin/gallery': typeof AdminGalleryRoute
   '/admin/journeys': typeof AdminJourneysRoute
+  '/admin/media': typeof AdminMediaRoute
   '/admin/pages': typeof AdminPagesRoute
   '/admin/site': typeof AdminSiteRoute
   '/admin/': typeof AdminIndexRoute
@@ -218,6 +227,7 @@ export interface FileRouteTypes {
     | '/admin/design'
     | '/admin/gallery'
     | '/admin/journeys'
+    | '/admin/media'
     | '/admin/pages'
     | '/admin/site'
     | '/admin/'
@@ -239,6 +249,7 @@ export interface FileRouteTypes {
     | '/admin/design'
     | '/admin/gallery'
     | '/admin/journeys'
+    | '/admin/media'
     | '/admin/pages'
     | '/admin/site'
     | '/admin'
@@ -261,6 +272,7 @@ export interface FileRouteTypes {
     | '/admin/design'
     | '/admin/gallery'
     | '/admin/journeys'
+    | '/admin/media'
     | '/admin/pages'
     | '/admin/site'
     | '/admin/'
@@ -370,6 +382,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminPagesRouteImport
       parentRoute: typeof AdminRouteRoute
     }
+    '/admin/media': {
+      id: '/admin/media'
+      path: '/media'
+      fullPath: '/admin/media'
+      preLoaderRoute: typeof AdminMediaRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
     '/admin/journeys': {
       id: '/admin/journeys'
       path: '/journeys'
@@ -434,6 +453,7 @@ interface AdminRouteRouteChildren {
   AdminDesignRoute: typeof AdminDesignRoute
   AdminGalleryRoute: typeof AdminGalleryRoute
   AdminJourneysRoute: typeof AdminJourneysRoute
+  AdminMediaRoute: typeof AdminMediaRoute
   AdminPagesRoute: typeof AdminPagesRoute
   AdminSiteRoute: typeof AdminSiteRoute
   AdminIndexRoute: typeof AdminIndexRoute
@@ -444,6 +464,7 @@ const AdminRouteRouteChildren: AdminRouteRouteChildren = {
   AdminDesignRoute: AdminDesignRoute,
   AdminGalleryRoute: AdminGalleryRoute,
   AdminJourneysRoute: AdminJourneysRoute,
+  AdminMediaRoute: AdminMediaRoute,
   AdminPagesRoute: AdminPagesRoute,
   AdminSiteRoute: AdminSiteRoute,
   AdminIndexRoute: AdminIndexRoute,
