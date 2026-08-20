@@ -30,12 +30,16 @@ const NEIGHBOUR_TINT: Record<string, string> = {
 export function IndiaMap({
   selectedId,
   onSelect,
+  states,
 }: {
   selectedId: string | null;
   onSelect: (state: AtlasState) => void;
+  /** Optional override (e.g. CMS-hydrated states). Defaults to the built-in atlas. */
+  states?: AtlasState[];
 }) {
+  const allStates = states ?? ATLAS_STATES;
   const [hoverId, setHoverId] = useState<string | null>(null);
-  const hover = hoverId ? ATLAS_STATES.find((s) => s.id === hoverId) : null;
+  const hover = hoverId ? allStates.find((s) => s.id === hoverId) : null;
 
   return (
     <div className="relative w-full">
@@ -68,7 +72,7 @@ export function IndiaMap({
         ))}
 
         {/* India states — uniform system, crisp thin borders */}
-        {ATLAS_STATES.map((s) => {
+        {allStates.map((s) => {
           const isSelected = s.id === selectedId;
           const isHover = s.id === hoverId;
           const interactive = s.visited;
@@ -120,7 +124,7 @@ export function IndiaMap({
         ))}
 
         {/* Full-name state labels — small, elegant, only where they fit */}
-        {ATLAS_STATES.filter((s) => s.w > 55 && s.h > 32).map((s) => {
+        {allStates.filter((s) => s.w > 55 && s.h > 32).map((s) => {
           const nameLen = s.name.length;
           // fit font size to the smaller dimension and name length
           const base = Math.min(s.w / (nameLen * 0.52), s.h / 3.2);
