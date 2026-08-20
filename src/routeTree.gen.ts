@@ -23,6 +23,7 @@ import { Route as AdminSiteRouteImport } from './routes/admin/site'
 import { Route as AdminPagesRouteImport } from './routes/admin/pages'
 import { Route as AdminJourneysRouteImport } from './routes/admin/journeys'
 import { Route as AdminDesignRouteImport } from './routes/admin/design'
+import { Route as AdminAtlasRouteImport } from './routes/admin/atlas'
 import { Route as Char91DotwellKnownChar93OauthProtectedResourceRouteImport } from './routes/[.well-known]/oauth-protected-resource'
 import { Route as Char91DotmcpChar93ListToolsRouteImport } from './routes/[.mcp]/list-tools'
 import { Route as Char91DotmcpChar93InvokeToolToolRouteImport } from './routes/[.mcp]/invoke-tool/$tool'
@@ -98,6 +99,11 @@ const AdminDesignRoute = AdminDesignRouteImport.update({
   path: '/design',
   getParentRoute: () => AdminRouteRoute,
 } as any)
+const AdminAtlasRoute = AdminAtlasRouteImport.update({
+  id: '/atlas',
+  path: '/atlas',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
 const Char91DotwellKnownChar93OauthProtectedResourceRoute =
   Char91DotwellKnownChar93OauthProtectedResourceRouteImport.update({
     id: '/.well-known/oauth-protected-resource',
@@ -134,6 +140,7 @@ export interface FileRoutesByFullPath {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
+  '/admin/atlas': typeof AdminAtlasRoute
   '/admin/design': typeof AdminDesignRoute
   '/admin/journeys': typeof AdminJourneysRoute
   '/admin/pages': typeof AdminPagesRoute
@@ -153,6 +160,7 @@ export interface FileRoutesByTo {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
+  '/admin/atlas': typeof AdminAtlasRoute
   '/admin/design': typeof AdminDesignRoute
   '/admin/journeys': typeof AdminJourneysRoute
   '/admin/pages': typeof AdminPagesRoute
@@ -174,6 +182,7 @@ export interface FileRoutesById {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
+  '/admin/atlas': typeof AdminAtlasRoute
   '/admin/design': typeof AdminDesignRoute
   '/admin/journeys': typeof AdminJourneysRoute
   '/admin/pages': typeof AdminPagesRoute
@@ -196,6 +205,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/.mcp/list-tools'
     | '/.well-known/oauth-protected-resource'
+    | '/admin/atlas'
     | '/admin/design'
     | '/admin/journeys'
     | '/admin/pages'
@@ -215,6 +225,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/.mcp/list-tools'
     | '/.well-known/oauth-protected-resource'
+    | '/admin/atlas'
     | '/admin/design'
     | '/admin/journeys'
     | '/admin/pages'
@@ -235,6 +246,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/.mcp/list-tools'
     | '/.well-known/oauth-protected-resource'
+    | '/admin/atlas'
     | '/admin/design'
     | '/admin/journeys'
     | '/admin/pages'
@@ -360,6 +372,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminDesignRouteImport
       parentRoute: typeof AdminRouteRoute
     }
+    '/admin/atlas': {
+      id: '/admin/atlas'
+      path: '/atlas'
+      fullPath: '/admin/atlas'
+      preLoaderRoute: typeof AdminAtlasRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
     '/.well-known/oauth-protected-resource': {
       id: '/.well-known/oauth-protected-resource'
       path: '/.well-known/oauth-protected-resource'
@@ -392,6 +411,7 @@ declare module '@tanstack/react-router' {
 }
 
 interface AdminRouteRouteChildren {
+  AdminAtlasRoute: typeof AdminAtlasRoute
   AdminDesignRoute: typeof AdminDesignRoute
   AdminJourneysRoute: typeof AdminJourneysRoute
   AdminPagesRoute: typeof AdminPagesRoute
@@ -400,6 +420,7 @@ interface AdminRouteRouteChildren {
 }
 
 const AdminRouteRouteChildren: AdminRouteRouteChildren = {
+  AdminAtlasRoute: AdminAtlasRoute,
   AdminDesignRoute: AdminDesignRoute,
   AdminJourneysRoute: AdminJourneysRoute,
   AdminPagesRoute: AdminPagesRoute,
