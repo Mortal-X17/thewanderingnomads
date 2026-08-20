@@ -30,6 +30,13 @@ export type AdminTable =
 
 type Row = Record<string, unknown>;
 
+/**
+ * Loosely-typed handle for generic (table-name-driven) CRUD helpers below.
+ * Authorization is still enforced by row-level security on every request.
+ */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const db = supabase as any;
+
 export function useAdminSession() {
   const [session, setSession] = useState<Session | null>(null);
   const [isAdmin, setIsAdmin] = useState(false);
@@ -102,7 +109,7 @@ export async function logAudit(entry: {
   const { data } = await supabase.auth.getSession();
   const user = data.session?.user;
   if (!user) return;
-  await supabase.from("audit_log").insert({
+  await db.from("audit_log").insert({
     user_id: user.id,
     actor_email: user.email ?? null,
     entity: entry.entity,
@@ -113,14 +120,14 @@ export async function logAudit(entry: {
 }
 
 export async function listRows(table: AdminTable, orderBy = "sort_order") {
-  const query = supabase.from(table).select("*");
+  const query = db.from(table).select("*");
   const { data, error } = await query.order(orderBy, { ascending: true });
   if (error) throw error;
   return (data ?? []) as Row[];
 }
 
 export async function getSingleton(table: AdminTable) {
-  const { data, error } = await supabase.from(table).select("*").eq("id", "default").maybeSingle();
+  const { data, error } = await db.from(table).select("*").eq("id", "default").maybeSingle();
   if (error) throw error;
   return (data ?? {}) as Row;
 }
@@ -134,20 +141,20 @@ export async function saveSingleton(table: AdminTable, values: Row) {
 }
 
 export async function insertRow(table: AdminTable, values: Row) {
-  const { data, error } = await supabase.from(table).insert(values).select("id").single();
+  const { data, error } = await db.from(table).insert(values).select("id").single();
   if (error) throw error;
   await logAudit({ entity: table, entityId: (data as { id: string }).id, action: "create" });
   return data as { id: string };
 }
 
 export async function updateRow(table: AdminTable, id: string, values: Row) {
-  const { error } = await supabase.from(table).update(values).eq("id", id);
+  const { error } = await db.from(table).update(values).eq("id", id);
   if (error) throw error;
   await logAudit({ entity: table, entityId: id, action: "update" });
 }
 
 export async function deleteRow(table: AdminTable, id: string, summary?: string) {
-  const { error } = await supabase.from(table).delete().eq("id", id);
+  const { error } = await db.from(table).delete().eq("id", id);
   if (error) throw error;
   await logAudit({ entity: table, entityId: id, action: "delete", summary });
 }
@@ -157,8 +164,8 @@ export async function swapOrder(table: AdminTable, a: Row, b: Row) {
   const bId = b["id"] as string;
   const aOrder = Number(a["sort_order"] ?? 0);
   const bOrder = Number(b["sort_order"] ?? 0);
-  await supabase.from(table).update({ sort_order: bOrder }).eq("id", aId);
-  await supabase.from(table).update({ sort_order: aOrder }).eq("id", bId);
+  await db.from(table).update({ sort_order: bOrder }).eq("id", aId);
+  await db.from(table).update({ sort_order: aOrder }).eq("id", bId);
   await logAudit({ entity: table, entityId: aId, action: "reorder" });
 }
 
@@ -248,7 +255,7 @@ export async function uploadMedia(file: File, folder = "library"): Promise<Media
 
 export async function deleteMedia(record: MediaRecord) {
   await supabase.storage.from("media").remove([record.path]);
-  const { error } = await supabase.from("media").delete().eq("id", record.id);
+  const { error } = await db.from("media").delete().eq("id", record.id);
   if (error) throw error;
   await logAudit({ entity: "media", entityId: record.id, action: "delete", summary: record.filename });
 }
