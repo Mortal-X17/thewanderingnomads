@@ -20,6 +20,7 @@ import { Route as AdminRouteRouteImport } from './routes/admin/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AdminIndexRouteImport } from './routes/admin/index'
 import { Route as AdminSiteRouteImport } from './routes/admin/site'
+import { Route as AdminPagesRouteImport } from './routes/admin/pages'
 import { Route as AdminDesignRouteImport } from './routes/admin/design'
 import { Route as Char91DotwellKnownChar93OauthProtectedResourceRouteImport } from './routes/[.well-known]/oauth-protected-resource'
 import { Route as Char91DotmcpChar93ListToolsRouteImport } from './routes/[.mcp]/list-tools'
@@ -81,6 +82,11 @@ const AdminSiteRoute = AdminSiteRouteImport.update({
   path: '/site',
   getParentRoute: () => AdminRouteRoute,
 } as any)
+const AdminPagesRoute = AdminPagesRouteImport.update({
+  id: '/pages',
+  path: '/pages',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
 const AdminDesignRoute = AdminDesignRouteImport.update({
   id: '/design',
   path: '/design',
@@ -123,6 +129,7 @@ export interface FileRoutesByFullPath {
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/admin/design': typeof AdminDesignRoute
+  '/admin/pages': typeof AdminPagesRoute
   '/admin/site': typeof AdminSiteRoute
   '/admin/': typeof AdminIndexRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
@@ -140,6 +147,7 @@ export interface FileRoutesByTo {
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/admin/design': typeof AdminDesignRoute
+  '/admin/pages': typeof AdminPagesRoute
   '/admin/site': typeof AdminSiteRoute
   '/admin': typeof AdminIndexRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
@@ -159,6 +167,7 @@ export interface FileRoutesById {
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/admin/design': typeof AdminDesignRoute
+  '/admin/pages': typeof AdminPagesRoute
   '/admin/site': typeof AdminSiteRoute
   '/admin/': typeof AdminIndexRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
@@ -179,6 +188,7 @@ export interface FileRouteTypes {
     | '/.mcp/list-tools'
     | '/.well-known/oauth-protected-resource'
     | '/admin/design'
+    | '/admin/pages'
     | '/admin/site'
     | '/admin/'
     | '/.mcp/invoke-tool/$tool'
@@ -196,6 +206,7 @@ export interface FileRouteTypes {
     | '/.mcp/list-tools'
     | '/.well-known/oauth-protected-resource'
     | '/admin/design'
+    | '/admin/pages'
     | '/admin/site'
     | '/admin'
     | '/.mcp/invoke-tool/$tool'
@@ -214,6 +225,7 @@ export interface FileRouteTypes {
     | '/.mcp/list-tools'
     | '/.well-known/oauth-protected-resource'
     | '/admin/design'
+    | '/admin/pages'
     | '/admin/site'
     | '/admin/'
     | '/.mcp/invoke-tool/$tool'
@@ -315,6 +327,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminSiteRouteImport
       parentRoute: typeof AdminRouteRoute
     }
+    '/admin/pages': {
+      id: '/admin/pages'
+      path: '/pages'
+      fullPath: '/admin/pages'
+      preLoaderRoute: typeof AdminPagesRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
     '/admin/design': {
       id: '/admin/design'
       path: '/design'
@@ -355,12 +374,14 @@ declare module '@tanstack/react-router' {
 
 interface AdminRouteRouteChildren {
   AdminDesignRoute: typeof AdminDesignRoute
+  AdminPagesRoute: typeof AdminPagesRoute
   AdminSiteRoute: typeof AdminSiteRoute
   AdminIndexRoute: typeof AdminIndexRoute
 }
 
 const AdminRouteRouteChildren: AdminRouteRouteChildren = {
   AdminDesignRoute: AdminDesignRoute,
+  AdminPagesRoute: AdminPagesRoute,
   AdminSiteRoute: AdminSiteRoute,
   AdminIndexRoute: AdminIndexRoute,
 }
