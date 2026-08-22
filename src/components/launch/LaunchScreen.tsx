@@ -171,13 +171,11 @@ export function LaunchScreen({ onLaunch }: { onLaunch?: () => void }) {
               style={{ color: "var(--launch-snow)" }}
             >
               A new journey
-
               <br />
               begins soon.
             </h1>
             <p className="mx-auto mt-5 max-w-md text-sm leading-relaxed text-launch-mist">
-              Founder-led expeditions across the Himalaya and beyond. The trail
-              opens on launch day.
+              Founder-led expeditions across the Himalaya and beyond. The trail opens on launch day.
             </p>
           </motion.div>
 

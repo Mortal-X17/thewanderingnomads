@@ -112,7 +112,12 @@ function JourneysAdmin() {
               fields: [
                 { key: "url", label: "Image", type: "image", required: true },
                 { key: "caption", label: "Caption", type: "text" },
-                { key: "alt_text", label: "Alt text", type: "text", help: "Describes the photo for screen readers." },
+                {
+                  key: "alt_text",
+                  label: "Alt text",
+                  type: "text",
+                  help: "Describes the photo for screen readers.",
+                },
               ],
             }}
           />

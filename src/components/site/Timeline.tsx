@@ -82,8 +82,7 @@ export function Timeline() {
               aria-hidden
               className="absolute -left-[3px] top-2 hidden h-2 w-2 rounded-full bg-forest ring-4 ring-background sm:block"
               style={{
-                boxShadow:
-                  "0 0 0 6px color-mix(in oklab, var(--forest) 12%, transparent)",
+                boxShadow: "0 0 0 6px color-mix(in oklab, var(--forest) 12%, transparent)",
               }}
             />
             <h3 className="display text-[26px] sm:text-[30px] leading-[1.05] text-ink text-balance">

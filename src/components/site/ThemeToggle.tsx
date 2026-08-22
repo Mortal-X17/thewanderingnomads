@@ -34,8 +34,7 @@ export function ThemeToggle({ variant = "light" }: { variant?: "light" | "dark" 
   };
 
   const onDark = mounted && theme === "dark";
-  const base =
-    "inline-flex h-9 w-9 items-center justify-center rounded-full border transition";
+  const base = "inline-flex h-9 w-9 items-center justify-center rounded-full border transition";
   const styles =
     variant === "light" && !onDark
       ? "border-white/25 bg-white/5 text-white hover:bg-white/15"

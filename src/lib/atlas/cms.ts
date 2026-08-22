@@ -26,7 +26,11 @@ export function mergeAtlasStates(
 
     const regionGallery = gallery
       .filter((g) => g.region_id === region.id)
-      .map((g) => ({ src: g.url, alt: g.alt_text ?? g.caption ?? state.name, caption: g.caption ?? undefined }));
+      .map((g) => ({
+        src: g.url,
+        alt: g.alt_text ?? g.caption ?? state.name,
+        caption: g.caption ?? undefined,
+      }));
 
     const cover = region.cover_image_url
       ? { src: region.cover_image_url, alt: `${state.name} cover` }

@@ -124,31 +124,33 @@ export function IndiaMap({
         ))}
 
         {/* Full-name state labels — small, elegant, only where they fit */}
-        {allStates.filter((s) => s.w > 55 && s.h > 32).map((s) => {
-          const nameLen = s.name.length;
-          // fit font size to the smaller dimension and name length
-          const base = Math.min(s.w / (nameLen * 0.52), s.h / 3.2);
-          const size = Math.max(6.5, Math.min(11, base));
-          return (
-            <text
-              key={`lbl-${s.id}`}
-              x={s.cx}
-              y={s.cy}
-              textAnchor="middle"
-              dominantBaseline="central"
-              className="pointer-events-none select-none"
-              style={{
-                fontSize: size,
-                fontFamily: "Inter, system-ui, sans-serif",
-                fontWeight: 400,
-                letterSpacing: "0.02em",
-                fill: "color-mix(in oklab, var(--ink) 72%, transparent)",
-              }}
-            >
-              {s.name}
-            </text>
-          );
-        })}
+        {allStates
+          .filter((s) => s.w > 55 && s.h > 32)
+          .map((s) => {
+            const nameLen = s.name.length;
+            // fit font size to the smaller dimension and name length
+            const base = Math.min(s.w / (nameLen * 0.52), s.h / 3.2);
+            const size = Math.max(6.5, Math.min(11, base));
+            return (
+              <text
+                key={`lbl-${s.id}`}
+                x={s.cx}
+                y={s.cy}
+                textAnchor="middle"
+                dominantBaseline="central"
+                className="pointer-events-none select-none"
+                style={{
+                  fontSize: size,
+                  fontFamily: "Inter, system-ui, sans-serif",
+                  fontWeight: 400,
+                  letterSpacing: "0.02em",
+                  fill: "color-mix(in oklab, var(--ink) 72%, transparent)",
+                }}
+              >
+                {s.name}
+              </text>
+            );
+          })}
 
         {/* Country labels — only Nepal & Bhutan (India label suppressed) */}
         {ATLAS_COUNTRIES.filter((c) => c.id !== "IN").map((c) => (
@@ -186,7 +188,10 @@ export function IndiaMap({
         <span className="inline-flex items-center gap-2">
           <span
             className="h-2.5 w-4 rounded-sm"
-            style={{ background: "color-mix(in oklab, var(--ink) 6%, var(--card))", border: "1px solid color-mix(in oklab, var(--ink) 30%, transparent)" }}
+            style={{
+              background: "color-mix(in oklab, var(--ink) 6%, var(--card))",
+              border: "1px solid color-mix(in oklab, var(--ink) 30%, transparent)",
+            }}
           />
           Awaiting a chapter
         </span>

@@ -73,7 +73,10 @@ export function SingletonEditor({
           </CardHeader>
           <CardContent className="grid gap-4 sm:grid-cols-2">
             {group.fields.map((field) => (
-              <div key={field.key} className={field.type === "textarea" ? "sm:col-span-2" : undefined}>
+              <div
+                key={field.key}
+                className={field.type === "textarea" ? "sm:col-span-2" : undefined}
+              >
                 <FieldInput
                   field={field}
                   value={values[field.key]}

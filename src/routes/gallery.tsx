@@ -26,14 +26,15 @@ function GalleryPage() {
           <Reveal>
             <p className="eyebrow">Gallery</p>
             <h1 className="display mt-4 text-5xl leading-[1.02] sm:text-6xl md:text-7xl">
-              Field notes from<br />
+              Field notes from
+              <br />
               <em className="italic text-muted-foreground">the trail.</em>
             </h1>
           </Reveal>
           <Reveal delay={0.1}>
             <p className="mt-10 max-w-2xl text-[16px] leading-relaxed text-muted-foreground">
-              The full gallery lives on the home page for now. A dedicated
-              archive with locations and dates is being prepared.
+              The full gallery lives on the home page for now. A dedicated archive with locations
+              and dates is being prepared.
             </p>
           </Reveal>
           <Reveal delay={0.15}>

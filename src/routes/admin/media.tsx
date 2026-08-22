@@ -17,13 +17,7 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { useMediaList } from "@/components/admin/MediaPicker";
-import {
-  deleteMedia,
-  mediaUsage,
-  updateRow,
-  uploadMedia,
-  type MediaRecord,
-} from "@/lib/cms/admin";
+import { deleteMedia, mediaUsage, updateRow, uploadMedia, type MediaRecord } from "@/lib/cms/admin";
 
 export const Route = createFileRoute("/admin/media")({
   component: MediaAdmin,
@@ -164,7 +158,10 @@ function MediaAdmin() {
         </ul>
       )}
 
-      <AlertDialog open={pending !== null} onOpenChange={(open) => (open ? null : setPending(null))}>
+      <AlertDialog
+        open={pending !== null}
+        onOpenChange={(open) => (open ? null : setPending(null))}
+      >
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>Delete this file?</AlertDialogTitle>

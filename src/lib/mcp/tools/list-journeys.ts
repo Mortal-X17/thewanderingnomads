@@ -32,8 +32,7 @@ const journeys = [
     season: "Mar — Nov",
     group: "6–10",
     difficulty: "Easy",
-    summary:
-      "Wooden houses, misty pine forests, and a small stream that never stops singing.",
+    summary: "Wooden houses, misty pine forests, and a small stream that never stops singing.",
   },
   {
     slug: "valley-of-flowers",
@@ -43,8 +42,7 @@ const journeys = [
     season: "Jul — Aug",
     group: "6–8",
     difficulty: "Moderate",
-    summary:
-      "An alpine meadow that bursts into colour for only a few weeks a year.",
+    summary: "An alpine meadow that bursts into colour for only a few weeks a year.",
   },
   {
     slug: "rajasthan",
@@ -54,8 +52,7 @@ const journeys = [
     season: "Oct — Mar",
     group: "8–12",
     difficulty: "Easy",
-    summary:
-      "Dunes at dusk, forts at dawn, and the honesty of home-cooked thalis in between.",
+    summary: "Dunes at dusk, forts at dawn, and the honesty of home-cooked thalis in between.",
   },
   {
     slug: "rishikesh",

@@ -59,7 +59,6 @@ export function RichTextEditor({
           "rich-text-editor max-w-none min-h-[120px] rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-within:outline-none focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2",
         "data-placeholder": placeholder,
       },
-
     },
     onUpdate: ({ editor }) => {
       const html = editor.getHTML();

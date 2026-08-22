@@ -49,8 +49,7 @@ function PagesAdmin() {
             config={{
               table: "page_sections",
               title: "Section copy",
-              description:
-                "Every headline, subtitle and button on the homepage and inner pages.",
+              description: "Every headline, subtitle and button on the homepage and inner pages.",
               labelKey: "heading",
               subtitleKey: "section_key",
               orderable: true,
