@@ -1,6 +1,12 @@
 import { useMemo, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useSortable, SortableContext, verticalListSortingStrategy, sortableKeyboardCoordinates, arrayMove } from "@dnd-kit/sortable";
+import {
+  useSortable,
+  SortableContext,
+  verticalListSortingStrategy,
+  sortableKeyboardCoordinates,
+  arrayMove,
+} from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import {
   DndContext,
@@ -11,15 +17,7 @@ import {
   useSensors,
   type DragEndEvent,
 } from "@dnd-kit/core";
-import {
-  Copy,
-  GripVertical,
-  Loader2,
-  Pencil,
-  Plus,
-  Search,
-  Trash2,
-} from "lucide-react";
+import { Copy, GripVertical, Loader2, Pencil, Plus, Search, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 
 import { Badge } from "@/components/ui/badge";
@@ -55,6 +53,16 @@ import {
 
 type Row = Record<string, unknown>;
 
+function rowLabel(config: CollectionConfig, row: Row): string {
+  if (config.labelFor) return config.labelFor(row);
+  return String(row[config.labelKey] ?? "Untitled");
+}
+
+function rowSubtitle(config: CollectionConfig, row: Row): string {
+  if (config.subtitleFor) return config.subtitleFor(row);
+  return config.subtitleKey ? String(row[config.subtitleKey] ?? "") : "";
+}
+
 export type CollectionConfig = {
   table: AdminTable;
   title: string;
@@ -63,6 +71,10 @@ export type CollectionConfig = {
   /** Column rendered as the row title. */
   labelKey: string;
   subtitleKey?: string;
+  /** Resolve the row title from related data (e.g. a joined host name). */
+  labelFor?: (row: Row) => string;
+  /** Resolve the row subtitle from related data. */
+  subtitleFor?: (row: Row) => string;
   /** Show drag-handle reorder controls (requires a sort_order column). */
   orderable?: boolean;
   /** Show a status badge from this column ("draft" | "published"). */
@@ -97,7 +109,11 @@ export function CollectionManager({ config }: { config: CollectionConfig }) {
     if (!term) return filtered;
     const keys = config.searchKeys ?? [config.labelKey];
     return filtered.filter((row) =>
-      keys.some((key) => String(row[key] ?? "").toLowerCase().includes(term)),
+      keys.some((key) =>
+        String(row[key] ?? "")
+          .toLowerCase()
+          .includes(term),
+      ),
     );
   }, [rows, query, config]);
 
@@ -107,7 +123,6 @@ export function CollectionManager({ config }: { config: CollectionConfig }) {
     useSensor(PointerSensor, { activationConstraint: { distance: 4 } }),
     useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates }),
   );
-
 
   const invalidate = () => {
     void queryClient.invalidateQueries({ queryKey: ["admin", config.table] });
@@ -137,8 +152,7 @@ export function CollectionManager({ config }: { config: CollectionConfig }) {
   });
 
   const remove = useMutation({
-    mutationFn: (row: Row) =>
-      deleteRow(config.table, row["id"] as string, String(row[config.labelKey] ?? "")),
+    mutationFn: (row: Row) => deleteRow(config.table, row["id"] as string, rowLabel(config, row)),
     onSuccess: () => {
       invalidate();
       setPendingDelete(null);
@@ -233,11 +247,7 @@ export function CollectionManager({ config }: { config: CollectionConfig }) {
           {config.emptyLabel ?? "Nothing here yet."}
         </div>
       ) : (
-        <DndContext
-          sensors={sensors}
-          collisionDetection={closestCenter}
-          onDragEnd={handleDragEnd}
-        >
+        <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
           <SortableContext items={itemIds} strategy={verticalListSortingStrategy}>
             <ul className="divide-y divide-border rounded-lg border border-border">
               {visible.map((row) => (
@@ -317,8 +327,8 @@ export function CollectionManager({ config }: { config: CollectionConfig }) {
           <AlertDialogHeader>
             <AlertDialogTitle>Delete this entry?</AlertDialogTitle>
             <AlertDialogDescription>
-              “{String(pendingDelete?.[config.labelKey] ?? "This entry")}” will be removed from the
-              website immediately. This cannot be undone.
+              “{pendingDelete ? rowLabel(config, pendingDelete) : "This entry"}” will be removed
+              from the website immediately. This cannot be undone.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
@@ -353,14 +363,10 @@ function SortableRow({
   onDelete: () => void;
   onDuplicate: () => void;
 }) {
-  const {
-    attributes,
-    listeners,
-    setNodeRef,
-    transform,
-    transition,
-    isDragging,
-  } = useSortable({ id: String(row["id"]), disabled: !orderable || reordering });
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
+    id: String(row["id"]),
+    disabled: !orderable || reordering,
+  });
 
   const style = {
     transform: CSS.Transform.toString(transform),
@@ -389,13 +395,9 @@ function SortableRow({
         </Button>
       ) : null}
       <div className="min-w-0 flex-1">
-        <p className="truncate text-sm font-medium">
-          {String(row[config.labelKey] ?? "Untitled")}
-        </p>
-        {config.subtitleKey ? (
-          <p className="truncate text-xs text-muted-foreground">
-            {String(row[config.subtitleKey] ?? "")}
-          </p>
+        <p className="truncate text-sm font-medium">{rowLabel(config, row)}</p>
+        {config.subtitleKey || config.subtitleFor ? (
+          <p className="truncate text-xs text-muted-foreground">{rowSubtitle(config, row)}</p>
         ) : null}
       </div>
       {config.statusKey ? (
@@ -417,4 +419,3 @@ function SortableRow({
     </li>
   );
 }
-

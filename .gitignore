@@ -16,6 +16,12 @@ dist-ssr
 .nitro
 *.local
 
+# Environment — never commit secrets. The current .env holds only the public
+# (publishable) Supabase key; keep the service-role key out of git entirely.
+.env
+.env.*
+!.env.example
+
 # Wrangler / Cloudflare
 .wrangler/
 .dev.vars

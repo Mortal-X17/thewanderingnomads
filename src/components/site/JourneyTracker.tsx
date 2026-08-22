@@ -51,9 +51,7 @@ export function JourneyTracker({
 
   // Detect the active in-page section with IntersectionObserver.
   useEffect(() => {
-    const trackable = sections
-      .map((s, i) => ({ s, i }))
-      .filter(({ s }) => s.id);
+    const trackable = sections.map((s, i) => ({ s, i })).filter(({ s }) => s.id);
     if (trackable.length === 0) return;
 
     const elements = trackable
@@ -140,11 +138,7 @@ export function JourneyTracker({
                         ease: [0.22, 1, 0.36, 1],
                       }}
                       className={`block rounded-full ${
-                        isActive
-                          ? "bg-forest"
-                          : isDone
-                            ? "bg-ink/45"
-                            : "bg-ink/15"
+                        isActive ? "bg-forest" : isDone ? "bg-ink/45" : "bg-ink/15"
                       }`}
                       style={{
                         width: isActive ? 8 : 5,
@@ -192,11 +186,7 @@ export function JourneyTracker({
                         {tooltip}
                       </a>
                     ) : (
-                      <button
-                        type="button"
-                        onClick={() => scrollTo(s.id)}
-                        {...commonProps}
-                      >
+                      <button type="button" onClick={() => scrollTo(s.id)} {...commonProps}>
                         {dot}
                         {tooltip}
                       </button>

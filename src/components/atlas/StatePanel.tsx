@@ -5,18 +5,11 @@ import { RichText } from "@/components/site/RichText";
 import { EmptyBlock } from "./EmptyBlock";
 import { Gallery } from "./Gallery";
 
-
 /**
  * Expandable panel that renders a state's chapter.
  * Every block gracefully degrades to a premium empty state.
  */
-export function StatePanel({
-  state,
-  onClose,
-}: {
-  state: AtlasState | null;
-  onClose: () => void;
-}) {
+export function StatePanel({ state, onClose }: { state: AtlasState | null; onClose: () => void }) {
   useEffect(() => {
     if (!state) return;
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
@@ -59,7 +52,13 @@ export function StatePanel({
                 aria-label="Close"
                 className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-ink/12 text-ink/70 transition hover:bg-ink/5"
               >
-                <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.8">
+                <svg
+                  viewBox="0 0 24 24"
+                  className="h-4 w-4"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.8"
+                >
                   <path d="M6 6l12 12M18 6l-12 12" strokeLinecap="round" />
                 </svg>
               </button>
@@ -134,7 +133,6 @@ function StateBody({ state }: { state: AtlasState }) {
         )}
       </Section>
 
-
       {/* Journal */}
       <Section eyebrow="Travel journal">
         {c?.journal ? (
@@ -148,7 +146,6 @@ function StateBody({ state }: { state: AtlasState }) {
         )}
       </Section>
 
-
       {/* Gallery */}
       <Section eyebrow="Gallery">
         <Gallery images={c?.gallery} />
@@ -159,10 +156,7 @@ function StateBody({ state }: { state: AtlasState }) {
         {c?.cities && c.cities.length > 0 ? (
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
             {c.cities.map((city) => (
-              <div
-                key={city.id}
-                className="rounded-2xl border border-ink/10 bg-card p-5"
-              >
+              <div key={city.id} className="rounded-2xl border border-ink/10 bg-card p-5">
                 <p className="display text-xl">{city.name}</p>
                 {city.summary ? (
                   <RichText html={city.summary} className="mt-2 text-sm text-muted-foreground" />
@@ -193,11 +187,7 @@ function StateBody({ state }: { state: AtlasState }) {
         <ListBlock label="Hidden gems" items={c?.hiddenGems} />
         <ListBlock label="Food experiences" items={c?.food} />
         <ListBlock label="Travel tips" items={c?.tips} />
-        <SoftBlock
-          label="Videos"
-          content={c?.videos && c.videos.length ? undefined : undefined}
-          emptyTitle="Cinematic reels will live here."
-        />
+        <SoftBlock label="Videos" emptyTitle="Cinematic reels will live here." />
       </div>
 
       {/* Related expeditions */}
@@ -251,7 +241,6 @@ function SoftBlock({
     </div>
   );
 }
-
 
 function ListBlock({ label, items }: { label: string; items?: string[] }) {
   if (!items || items.length === 0) {

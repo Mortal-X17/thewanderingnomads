@@ -80,8 +80,8 @@ function AtlasPage() {
           </Reveal>
           <Reveal delay={0.2}>
             <p className="mx-auto mt-6 max-w-2xl text-base text-muted-foreground sm:text-lg">
-              Explore India through Krish's journeys. Every highlighted state represents
-              adventures, memories, and stories waiting to be discovered.
+              Explore India through Krish's journeys. Every highlighted state represents adventures,
+              memories, and stories waiting to be discovered.
             </p>
           </Reveal>
         </div>
@@ -107,9 +107,7 @@ function AtlasPage() {
           <Reveal>
             <div className="rounded-3xl border border-ink/8 bg-card p-4 sm:p-6">
               <p className="eyebrow mb-2">India</p>
-              <p className="display text-2xl text-ink/90">
-                Tap a state to open its chapter.
-              </p>
+              <p className="display text-2xl text-ink/90">Tap a state to open its chapter.</p>
               <div className="mt-4">
                 <IndiaMap
                   selectedId={selectedId}
@@ -148,9 +146,8 @@ function AtlasPage() {
               <div className="mt-8 rounded-2xl border border-dashed border-ink/12 p-4">
                 <p className="eyebrow">Coming soon</p>
                 <p className="mt-2 text-sm text-ink/70">
-                  As Krish's journeys extend beyond India, this atlas will grow into a
-                  World Atlas — countries, states, cities, and stories, all in one
-                  living archive.
+                  As Krish's journeys extend beyond India, this atlas will grow into a World Atlas —
+                  countries, states, cities, and stories, all in one living archive.
                 </p>
               </div>
             </div>
@@ -172,9 +169,7 @@ function Stat({ label, value, suffix }: { label: string; value: number; suffix?:
         {value}
         {suffix ?? ""}
       </p>
-      <p className="mt-1 text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
-        {label}
-      </p>
+      <p className="mt-1 text-[11px] uppercase tracking-[0.18em] text-muted-foreground">{label}</p>
     </div>
   );
 }

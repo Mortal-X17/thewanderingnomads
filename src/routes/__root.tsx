@@ -15,12 +15,7 @@ import { reportLovableError } from "../lib/lovable-error-reporting";
 import { LaunchScreen } from "../components/launch/LaunchScreen";
 import { DesignTokens } from "../components/site/DesignTokens";
 import { getLaunchState } from "../lib/cms/content.functions";
-import {
-  PREVIEW_PARAM,
-  PREVIEW_STORAGE_KEY,
-  PREVIEW_TOKEN,
-  isPreLaunch,
-} from "../lib/launch";
+import { PREVIEW_PARAM, PREVIEW_STORAGE_KEY, PREVIEW_TOKEN, isPreLaunch } from "../lib/launch";
 
 function NotFoundComponent() {
   return (
@@ -55,9 +50,7 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
       <div className="max-w-md text-center">
         <h1 className="display text-4xl">Something interrupted the journey.</h1>
-        <p className="mt-3 text-sm text-muted-foreground">
-          Try again, or head back to base camp.
-        </p>
+        <p className="mt-3 text-sm text-muted-foreground">Try again, or head back to base camp.</p>
         <div className="mt-8 flex flex-wrap justify-center gap-3">
           <button
             onClick={() => {
@@ -103,9 +96,21 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: "The Wandering Nomads — By KRISH" },
-      { name: "twitter:description", content: "Founder-led expeditions across India's most breathtaking destinations—crafted with trust, community, and unforgettable experiences." },
-      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/3fa00827-bd68-4f6b-9816-22dc609dc567" },
-      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/3fa00827-bd68-4f6b-9816-22dc609dc567" },
+      {
+        name: "twitter:description",
+        content:
+          "Founder-led expeditions across India's most breathtaking destinations—crafted with trust, community, and unforgettable experiences.",
+      },
+      {
+        property: "og:image",
+        content:
+          "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/3fa00827-bd68-4f6b-9816-22dc609dc567",
+      },
+      {
+        name: "twitter:image",
+        content:
+          "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/3fa00827-bd68-4f6b-9816-22dc609dc567",
+      },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
@@ -199,4 +204,3 @@ function RootComponent() {
     </QueryClientProvider>
   );
 }
-

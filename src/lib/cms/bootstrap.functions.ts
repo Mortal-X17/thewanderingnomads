@@ -10,7 +10,9 @@ import { createServerFn } from "@tanstack/react-start";
  */
 export const bootstrapOwner = createServerFn({ method: "POST" })
   .inputValidator((data: { email: string; password: string }) => {
-    const email = String(data?.email ?? "").trim().toLowerCase();
+    const email = String(data?.email ?? "")
+      .trim()
+      .toLowerCase();
     const password = String(data?.password ?? "");
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) throw new Error("Enter a valid email address.");
     if (password.length < 8) throw new Error("Password must be at least 8 characters.");
@@ -51,7 +53,8 @@ export const bootstrapOwner = createServerFn({ method: "POST" })
         password: data.password,
         email_confirm: true,
       });
-      if (error || !created.user) throw new Error(error?.message ?? "Could not create the owner account.");
+      if (error || !created.user)
+        throw new Error(error?.message ?? "Could not create the owner account.");
       userId = created.user.id;
     }
 

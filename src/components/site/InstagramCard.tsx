@@ -67,8 +67,8 @@ export function InstagramCard() {
             Follow the trail, frame by frame.
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-center text-muted-foreground">
-            Slow, cinematic dispatches from the road — the people, the light,
-            the quiet moments between destinations.
+            Slow, cinematic dispatches from the road — the people, the light, the quiet moments
+            between destinations.
           </p>
         </Reveal>
 
@@ -117,25 +117,16 @@ function ProfileCard({ profile }: { profile: Profile }) {
           <p className="text-[10.5px] uppercase tracking-[0.22em] text-muted-foreground">
             {profile.role}
           </p>
-          <p className="display mt-1 truncate text-xl leading-tight">
-            {profile.displayName}
-          </p>
-          <p className="mt-0.5 truncate text-[13px] text-muted-foreground">
-            @{profile.handle}
-          </p>
+          <p className="display mt-1 truncate text-xl leading-tight">{profile.displayName}</p>
+          <p className="mt-0.5 truncate text-[13px] text-muted-foreground">@{profile.handle}</p>
         </div>
       </div>
 
-      <p className="mt-4 text-[13.5px] leading-relaxed text-ink/80">
-        {profile.bio}
-      </p>
+      <p className="mt-4 text-[13.5px] leading-relaxed text-ink/80">{profile.bio}</p>
 
       <div className="mt-5 grid grid-cols-3 gap-px overflow-hidden rounded-2xl border border-ink/10 bg-ink/10">
         {profile.metrics.map((m) => (
-          <div
-            key={m.label}
-            className="bg-background/70 py-3 text-center backdrop-blur"
-          >
+          <div key={m.label} className="bg-background/70 py-3 text-center backdrop-blur">
             <p className="display text-lg sm:text-xl">{m.value}</p>
             <p className="mt-0.5 text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
               {m.label}

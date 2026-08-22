@@ -38,13 +38,7 @@ export function Gallery({
   }, [open, shown]);
 
   if (!images || images.length === 0) {
-    return (
-      <EmptyBlock
-        label="Gallery"
-        title={emptyTitle}
-        hint={emptyHint}
-      />
-    );
+    return <EmptyBlock label="Gallery" title={emptyTitle} hint={emptyHint} />;
   }
 
   return (
@@ -104,12 +98,33 @@ export function Gallery({
             exit={{ opacity: 0 }}
             onClick={() => setOpen(null)}
             className="fixed inset-0 z-[100] flex items-center justify-center bg-black/85 p-4 backdrop-blur"
+            role="dialog"
+            aria-modal="true"
+            aria-label={shown[open].alt || "Image viewer"}
           >
+            <button
+              type="button"
+              onClick={() => setOpen(null)}
+              aria-label="Close"
+              className="absolute right-4 top-4 z-10 inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white transition hover:bg-white/20"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                className="h-5 w-5"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.8"
+                aria-hidden
+              >
+                <path d="M6 6l12 12M18 6l-12 12" strokeLinecap="round" />
+              </svg>
+            </button>
             <motion.img
               key={shown[open].src}
               initial={{ scale: 0.98, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.98, opacity: 0 }}
+              onClick={(e) => e.stopPropagation()}
               src={shown[open].src}
               alt={shown[open].alt}
               className="max-h-[90vh] max-w-[92vw] rounded-lg object-contain"

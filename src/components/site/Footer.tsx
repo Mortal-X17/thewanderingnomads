@@ -1,18 +1,33 @@
 import { Link } from "@tanstack/react-router";
 
 import { useContent } from "@/lib/cms/useContent";
+import { CONTACT_EMAIL, PHONE_DISPLAY } from "@/lib/site";
 
 export function Footer() {
   const { settings, social } = useContent();
-  const email = settings?.contact_email ?? "wanderwithkrish@gmail.com";
-  const phone = settings?.contact_phone ?? "+91 90052 15255";
+  const email = settings?.contact_email ?? CONTACT_EMAIL;
+  const phone = settings?.contact_phone ?? PHONE_DISPLAY;
   const phoneDigits = phone.replace(/[^0-9]/g, "");
   const socialLinks =
     social.length > 0
       ? social
       : [
-          { id: "s1", platform: "instagram", label: "@thewanderingnomads.in", handle: null, url: "https://instagram.com/thewanderingnomads.in", sort_order: 0 },
-          { id: "s2", platform: "instagram", label: "@wanderwithkrishh", handle: null, url: "https://instagram.com/wanderwithkrishh", sort_order: 1 },
+          {
+            id: "s1",
+            platform: "instagram",
+            label: "@thewanderingnomads.in",
+            handle: null,
+            url: "https://instagram.com/thewanderingnomads.in",
+            sort_order: 0,
+          },
+          {
+            id: "s2",
+            platform: "instagram",
+            label: "@wanderwithkrishh",
+            handle: null,
+            url: "https://instagram.com/wanderwithkrishh",
+            sort_order: 1,
+          },
         ];
 
   return (
@@ -29,19 +44,18 @@ export function Footer() {
               </span>
             </div>
             <p className="mt-5 max-w-sm text-sm leading-relaxed text-muted-foreground">
-              A founder-led expedition brand — small groups, real places,
-              journeys personally led by Krish across the Himalayas and beyond.
+              A founder-led expedition brand — small groups, real places, journeys personally led by
+              Krish across the Himalayas and beyond.
             </p>
-            <p className="mt-6 text-xs text-muted-foreground">
-              Jaipur, Rajasthan · India
-            </p>
+            <p className="mt-6 text-xs text-muted-foreground">Jaipur, Rajasthan · India</p>
           </div>
 
           <FooterCol title="Explore">
             <FLink to="/">Home</FLink>
-            <FLink to="/about">About Krish</FLink>
-            <FLink to="/journeys">Journeys</FLink>
+            <FLink to="/upcoming-trips">Upcoming Trips</FLink>
+            <FLink to="/atlas">Travel Atlas</FLink>
             <FLink to="/gallery">Gallery</FLink>
+            <FLink to="/about">About Krish</FLink>
           </FooterCol>
 
           <FooterCol title="Contact">

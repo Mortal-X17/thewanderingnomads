@@ -6,10 +6,10 @@ import { Logo } from "@/components/site/Logo";
 
 const links = [
   { to: "/", label: "Home" },
-  { to: "/about", label: "About" },
-  { to: "/journeys", label: "Journeys" },
+  { to: "/upcoming-trips", label: "Trips" },
   { to: "/atlas", label: "Atlas" },
   { to: "/gallery", label: "Gallery" },
+  { to: "/about", label: "About" },
   { to: "/contact", label: "Contact" },
 ] as const;
 
@@ -33,9 +33,7 @@ export function Nav() {
     >
       <nav
         className={`flex w-full max-w-6xl items-center justify-between rounded-full px-4 py-2.5 transition-all duration-500 sm:px-6 sm:py-3 ${
-          scrolled
-            ? "glass"
-            : "border border-white/10 bg-white/5 backdrop-blur-[6px]"
+          scrolled ? "glass" : "border border-white/10 bg-white/5 backdrop-blur-[6px]"
         }`}
       >
         <Link to="/" className="flex items-center gap-2.5 group">
@@ -55,14 +53,10 @@ export function Nav() {
               <Link
                 to={l.to}
                 className={`relative rounded-full px-4 py-2 text-[13px] font-medium transition-colors ${
-                  scrolled
-                    ? "text-ink/70 hover:text-ink"
-                    : "text-white/80 hover:text-white"
+                  scrolled ? "text-ink/70 hover:text-ink" : "text-white/80 hover:text-white"
                 }`}
                 activeProps={{
-                  className: scrolled
-                    ? "text-ink bg-ink/5"
-                    : "text-white bg-white/15",
+                  className: scrolled ? "text-ink bg-ink/5" : "text-white bg-white/15",
                 }}
                 activeOptions={{ exact: l.to === "/" }}
               >
@@ -75,11 +69,9 @@ export function Nav() {
         <div className="hidden items-center gap-2 md:flex">
           <ThemeToggle variant={scrolled ? "dark" : "light"} />
           <Link
-            to="/contact"
+            to="/upcoming-trips"
             className={`inline-flex items-center rounded-full px-4 py-2 text-[13px] font-medium transition ${
-              scrolled
-                ? "bg-ink text-snow hover:opacity-90"
-                : "bg-white text-ink hover:bg-white/90"
+              scrolled ? "bg-ink text-snow hover:opacity-90" : "bg-white text-ink hover:bg-white/90"
             }`}
           >
             Book Now
@@ -89,29 +81,27 @@ export function Nav() {
         <div className="flex items-center gap-2 md:hidden">
           <ThemeToggle variant={scrolled ? "dark" : "light"} />
 
-        <button
-          onClick={() => setOpen((v) => !v)}
-          className={`md:hidden inline-flex h-9 w-9 items-center justify-center rounded-full border transition ${
-            scrolled
-              ? "border-ink/15 text-ink"
-              : "border-white/25 text-white"
-          }`}
-          aria-label="Toggle menu"
-          aria-expanded={open}
-        >
-          <span className="relative block h-3 w-4">
-            <span
-              className={`absolute left-0 top-0 h-px w-4 bg-current transition-transform ${
-                open ? "translate-y-[6px] rotate-45" : ""
-              }`}
-            />
-            <span
-              className={`absolute left-0 bottom-0 h-px w-4 bg-current transition-transform ${
-                open ? "-translate-y-[6px] -rotate-45" : ""
-              }`}
-            />
-          </span>
-        </button>
+          <button
+            onClick={() => setOpen((v) => !v)}
+            className={`md:hidden inline-flex h-9 w-9 items-center justify-center rounded-full border transition ${
+              scrolled ? "border-ink/15 text-ink" : "border-white/25 text-white"
+            }`}
+            aria-label="Toggle menu"
+            aria-expanded={open}
+          >
+            <span className="relative block h-3 w-4">
+              <span
+                className={`absolute left-0 top-0 h-px w-4 bg-current transition-transform ${
+                  open ? "translate-y-[6px] rotate-45" : ""
+                }`}
+              />
+              <span
+                className={`absolute left-0 bottom-0 h-px w-4 bg-current transition-transform ${
+                  open ? "-translate-y-[6px] -rotate-45" : ""
+                }`}
+              />
+            </span>
+          </button>
         </div>
       </nav>
 
@@ -138,7 +128,7 @@ export function Nav() {
               ))}
               <li className="mt-2 border-t border-ink/5 pt-2">
                 <Link
-                  to="/contact"
+                  to="/upcoming-trips"
                   onClick={() => setOpen(false)}
                   className="block rounded-2xl bg-ink px-4 py-3 text-center text-[14px] font-medium text-snow"
                 >

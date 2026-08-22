@@ -8,10 +8,7 @@ export default defineTool({
   description:
     "Fetch full details for a single featured journey by its slug (e.g. 'kashmir', 'spiti', 'jibhi', 'valley-of-flowers', 'rajasthan', 'rishikesh').",
   inputSchema: {
-    slug: z
-      .string()
-      .min(1)
-      .describe("Journey slug, lowercase and hyphenated (e.g. 'kashmir')."),
+    slug: z.string().min(1).describe("Journey slug, lowercase and hyphenated (e.g. 'kashmir')."),
   },
   annotations: {
     readOnlyHint: true,

@@ -67,7 +67,6 @@ export function AdminAuth({
       toast.success("Welcome back");
     });
 
-
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
       <div className="w-full max-w-sm rounded-2xl border border-border bg-card p-8 shadow-sm">
@@ -75,9 +74,7 @@ export function AdminAuth({
           <ShieldCheck className="h-4 w-4" />
           <p className="eyebrow">Studio</p>
         </div>
-        <h1 className="display mt-3 text-3xl">
-          {showSetup ? "Create owner account" : "Sign in"}
-        </h1>
+        <h1 className="display mt-3 text-3xl">{showSetup ? "Create owner account" : "Sign in"}</h1>
         <p className="mt-2 text-sm text-muted-foreground">
           {signedIn
             ? "This account doesn't have dashboard access. Sign in with the owner account."

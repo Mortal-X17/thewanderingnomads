@@ -35,9 +35,7 @@ export function EmptyBlock({
           <span className="eyebrow">{label}</span>
         </div>
         <p className="display text-xl sm:text-2xl text-ink/85">{title}</p>
-        {hint ? (
-          <p className="text-sm text-muted-foreground max-w-md">{hint}</p>
-        ) : null}
+        {hint ? <p className="text-sm text-muted-foreground max-w-md">{hint}</p> : null}
       </div>
     </div>
   );

@@ -1,5 +1,6 @@
 import { createFileRoute, Link, Outlet, useRouterState } from "@tanstack/react-router";
 import {
+  CalendarDays,
   Compass,
   Image as ImageIcon,
   LayoutDashboard,
@@ -9,6 +10,7 @@ import {
   Palette,
   Settings,
   Sparkles,
+  Users,
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -36,7 +38,9 @@ const NAV: NavItem[] = [
   { to: "/admin/site", label: "Site & SEO", icon: Settings },
   { to: "/admin/design", label: "Design", icon: Palette },
   { to: "/admin/pages", label: "Pages & story", icon: Sparkles },
-  { to: "/admin/journeys", label: "Journeys", icon: Mountain },
+  { to: "/admin/journeys", label: "Trips", icon: Mountain },
+  { to: "/admin/batches", label: "Trip Batches", icon: CalendarDays },
+  { to: "/admin/hosts", label: "Hosts", icon: Users },
   { to: "/admin/atlas", label: "Travel Atlas", icon: Map },
   { to: "/admin/gallery", label: "Gallery", icon: ImageIcon },
   { to: "/admin/media", label: "Media", icon: Compass },

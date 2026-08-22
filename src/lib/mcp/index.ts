@@ -11,11 +11,5 @@ export default defineMcp({
   version: "0.1.0",
   instructions:
     "Public tools for The Wandering Nomads — a founder-led expedition brand run by Krish across the Indian Himalayas and beyond. Use `list_journeys` and `get_journey` to browse expeditions, `about_founder` for Krish's story, `contact_info` to reach him, and `brand_stats` for headline numbers. All data is public and read-only.",
-  tools: [
-    listJourneysTool,
-    getJourneyTool,
-    aboutFounderTool,
-    contactInfoTool,
-    brandStatsTool,
-  ],
+  tools: [listJourneysTool, getJourneyTool, aboutFounderTool, contactInfoTool, brandStatsTool],
 });

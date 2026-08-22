@@ -22,7 +22,11 @@ export function Community() {
 
         <div className="mt-14 grid grid-cols-12 gap-3 sm:gap-4">
           <Reveal className="col-span-12 sm:col-span-7">
-            <Frame src={gCampfire} alt="Campfire evening under a clear Himalayan sky" ratio="16/10" />
+            <Frame
+              src={gCampfire}
+              alt="Campfire evening under a clear Himalayan sky"
+              ratio="16/10"
+            />
           </Reveal>
           <Reveal delay={0.08} className="col-span-6 sm:col-span-5">
             <Frame src={gLocal} alt="Sharing a meal with a local host in Kashmir" ratio="4/5" />
@@ -40,8 +44,8 @@ export function Community() {
 
         <Reveal delay={0.15}>
           <p className="mt-10 max-w-lg text-[14.5px] leading-relaxed text-muted-foreground">
-            Every expedition ends the same way — new friendships, shared silences,
-            and a group photo no one wants to leave.
+            Every expedition ends the same way — new friendships, shared silences, and a group photo
+            no one wants to leave.
           </p>
         </Reveal>
       </div>
@@ -49,15 +53,7 @@ export function Community() {
   );
 }
 
-function Frame({
-  src,
-  alt,
-  ratio,
-}: {
-  src: string;
-  alt: string;
-  ratio: string;
-}) {
+function Frame({ src, alt, ratio }: { src: string; alt: string; ratio: string }) {
   return (
     <figure
       className="group relative overflow-hidden rounded-[24px] hairline bg-muted"
