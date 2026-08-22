@@ -2,8 +2,11 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { Nav } from "@/components/site/Nav";
 import { Footer } from "@/components/site/Footer";
 import { Reveal } from "@/components/site/Reveal";
+import { RichText } from "@/components/site/RichText";
 import { Timeline } from "@/components/site/Timeline";
 import { FloatingWhatsApp } from "@/components/site/FloatingWhatsApp";
+import { useContent } from "@/lib/cms/useContent";
+
 
 export const Route = createFileRoute("/about")({
   head: () => ({
