@@ -7,7 +7,6 @@ import { Timeline } from "@/components/site/Timeline";
 import { FloatingWhatsApp } from "@/components/site/FloatingWhatsApp";
 import { useContent } from "@/lib/cms/useContent";
 
-
 export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
@@ -50,20 +49,12 @@ function AboutPage() {
           </Reveal>
           <Reveal delay={0.1}>
             <div className="mt-10 max-w-[58ch] text-[16.5px] leading-[1.7] text-muted-foreground">
-              {about?.biography ? (
-                <RichText html={about.biography} />
-              ) : (
-                <p>{defaultIntro}</p>
-              )}
+              {about?.biography ? <RichText html={about.biography} /> : <p>{defaultIntro}</p>}
             </div>
           </Reveal>
         </div>
 
-
-        <section
-          aria-label="Krish's journey"
-          className="mx-auto mt-20 max-w-3xl px-6"
-        >
+        <section aria-label="Krish's journey" className="mx-auto mt-20 max-w-3xl px-6">
           <Timeline />
         </section>
 
@@ -71,7 +62,7 @@ function AboutPage() {
           <Reveal delay={0.05}>
             <div className="flex flex-wrap items-center gap-3">
               <Link
-                to="/journeys"
+                to="/upcoming-trips"
                 className="inline-flex items-center rounded-full bg-ink px-6 py-3.5 text-[13.5px] font-medium text-snow transition hover:opacity-90 focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
               >
                 See the journeys

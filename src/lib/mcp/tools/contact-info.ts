@@ -1,11 +1,13 @@
 import { defineTool } from "@lovable.dev/mcp-js";
 
+import { CONTACT_EMAIL, PHONE_DISPLAY, waLink } from "@/lib/site";
+
 const contact = {
   brand: "The Wandering Nomads",
   founder: "Krishnakant Yadav (Krish)",
-  email: "wanderwithkrish@gmail.com",
-  phone: "+91 90052 15255",
-  whatsapp: "https://wa.me/919005215255",
+  email: CONTACT_EMAIL,
+  phone: PHONE_DISPLAY,
+  whatsapp: waLink(),
   instagramCompany: "https://instagram.com/thewanderingnomads.in",
   instagramFounder: "https://instagram.com/wanderwithkrishh",
   basedIn: "Jaipur, Rajasthan, India",

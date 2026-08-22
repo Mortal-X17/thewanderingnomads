@@ -24,15 +24,3 @@ export function useSection(page: string, key: string): PageSection | undefined {
   const { sections } = useContent();
   return findSection(sections, page, key);
 }
-
-/** First matching social link URL, with a fallback for pre-CMS defaults. */
-export function pickSocial(
-  links: PublicContent["social"],
-  platform: string,
-  fallback: string,
-  match?: (handle: string | null) => boolean,
-): string {
-  const candidates = links.filter((l) => l.platform === platform);
-  const found = match ? candidates.find((l) => match(l.handle)) : candidates[0];
-  return found?.url ?? fallback;
-}

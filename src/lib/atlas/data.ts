@@ -33,7 +33,16 @@ export type Story = {
 export type Place = {
   id: string;
   name: string;
-  kind?: "temple" | "trek" | "viewpoint" | "cafe" | "village" | "monument" | "beach" | "market" | "other";
+  kind?:
+    | "temple"
+    | "trek"
+    | "viewpoint"
+    | "cafe"
+    | "village"
+    | "monument"
+    | "beach"
+    | "market"
+    | "other";
   summary?: string;
   images?: MediaImage[];
   tips?: string[];
@@ -97,9 +106,30 @@ export const ATLAS_COUNTRIES: AtlasCountry[] = raw.countries;
 
 // Krish's 24 explored states.
 const visitedIds = new Set([
-  "HP", "UK", "JK", "PB", "HR", "DL", "RJ", "GJ", "MH", "GA",
-  "KA", "KL", "TN", "AP", "TG", "MP", "UP", "BR", "WB", "OR",
-  "SK", "AS", "ML", "AR",
+  "HP",
+  "UK",
+  "JK",
+  "PB",
+  "HR",
+  "DL",
+  "RJ",
+  "GJ",
+  "MH",
+  "GA",
+  "KA",
+  "KL",
+  "TN",
+  "AP",
+  "TG",
+  "MP",
+  "UP",
+  "BR",
+  "WB",
+  "OR",
+  "SK",
+  "AS",
+  "ML",
+  "AR",
 ]);
 
 function buildContent(id: string): StateContent | undefined {
@@ -135,7 +165,3 @@ export const ATLAS_STATS = {
   soloExpeditions: 30,
   communityTrips: 5,
 };
-
-export function getState(id: string): AtlasState | undefined {
-  return ATLAS_STATES.find((s) => s.id === id);
-}

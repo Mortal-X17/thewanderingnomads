@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { Nav } from "@/components/site/Nav";
 import { Footer } from "@/components/site/Footer";
 import { Reveal } from "@/components/site/Reveal";
+import { CONTACT_EMAIL, PHONE_DISPLAY, WHATSAPP_NUMBER, waLink } from "@/lib/site";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
@@ -37,11 +38,19 @@ function ContactPage() {
           </Reveal>
 
           <div className="mt-14 grid gap-8 sm:grid-cols-2">
-            <Row label="Email" href="mailto:wanderwithkrish@gmail.com" v="wanderwithkrish@gmail.com" />
-            <Row label="WhatsApp" href="https://wa.me/919005215255" v="+91 90052 15255" />
-            <Row label="Phone" href="tel:+919005215255" v="+91 90052 15255" />
-            <Row label="Instagram — Company" href="https://instagram.com/thewanderingnomads.in" v="@thewanderingnomads.in" />
-            <Row label="Instagram — Founder" href="https://instagram.com/wanderwithkrishh" v="@wanderwithkrishh" />
+            <Row label="Email" href={`mailto:${CONTACT_EMAIL}`} v={CONTACT_EMAIL} />
+            <Row label="WhatsApp" href={waLink()} v={PHONE_DISPLAY} />
+            <Row label="Phone" href={`tel:+${WHATSAPP_NUMBER}`} v={PHONE_DISPLAY} />
+            <Row
+              label="Instagram — Company"
+              href="https://instagram.com/thewanderingnomads.in"
+              v="@thewanderingnomads.in"
+            />
+            <Row
+              label="Instagram — Founder"
+              href="https://instagram.com/wanderwithkrishh"
+              v="@wanderwithkrishh"
+            />
             <Row label="Based in" v="Jaipur, Rajasthan, India" />
           </div>
 
@@ -67,7 +76,12 @@ function Row({ label, v, href }: { label: string; v: string; href?: string }) {
         <p className="text-[11px] uppercase tracking-[0.18em] text-muted-foreground">{label}</p>
         <p className="mt-3 text-[18px] text-ink">
           {href ? (
-            <a href={href} className="border-b border-ink/20 pb-0.5 transition hover:border-ink" target="_blank" rel="noreferrer">
+            <a
+              href={href}
+              className="border-b border-ink/20 pb-0.5 transition hover:border-ink"
+              target="_blank"
+              rel="noreferrer"
+            >
               {v}
             </a>
           ) : (
