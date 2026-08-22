@@ -253,3 +253,102 @@
 @utility marquee-fade {
   mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
 }
+
+/* CMS rich text — shared between editor and public render */
+.cms-content,
+.rich-text-editor {
+  line-height: 1.65;
+}
+
+.cms-content > * + *,
+.rich-text-editor > * + * {
+  margin-top: 0.75em;
+}
+
+.cms-content h1,
+.rich-text-editor h1,
+.cms-content h2,
+.rich-text-editor h2 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  color: var(--foreground);
+}
+
+.cms-content h1,
+.rich-text-editor h1 {
+  font-size: 1.35em;
+}
+
+.cms-content h2,
+.rich-text-editor h2 {
+  font-size: 1.15em;
+}
+
+.cms-content ul,
+.rich-text-editor ul,
+.cms-content ol,
+.rich-text-editor ol {
+  padding-left: 1.25em;
+}
+
+.cms-content ul,
+.rich-text-editor ul {
+  list-style-type: disc;
+}
+
+.cms-content ol,
+.rich-text-editor ol {
+  list-style-type: decimal;
+}
+
+.cms-content blockquote,
+.rich-text-editor blockquote {
+  border-left: 2px solid var(--border);
+  padding-left: 1em;
+  font-style: italic;
+  color: var(--muted-foreground);
+}
+
+.cms-content a,
+.rich-text-editor a {
+  color: var(--forest);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.cms-content strong,
+.rich-text-editor strong {
+  font-weight: 600;
+  color: var(--foreground);
+}
+
+.cms-content em,
+.rich-text-editor em {
+  font-style: italic;
+}
+
+.cms-content p:empty::after,
+.rich-text-editor p:empty::after {
+  content: "";
+  display: inline-block;
+}
+
+.rich-text-editor p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  float: left;
+  color: var(--muted-foreground);
+  pointer-events: none;
+  height: 0;
+}
+
+.rich-text-editor ul,
+.rich-text-editor ol {
+  padding-left: 1.25em;
+}
+
+.rich-text-editor.ProseMirror:focus {
+  outline: none;
+}
+

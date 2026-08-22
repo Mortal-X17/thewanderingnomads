@@ -159,6 +159,16 @@ export async function deleteRow(table: AdminTable, id: string, summary?: string)
   await logAudit({ entity: table, entityId: id, action: "delete", summary });
 }
 
+export async function reorderRows(table: AdminTable, orderedIds: string[]) {
+  const updates = orderedIds.map((id, index) =>
+    db.from(table).update({ sort_order: index + 1 }).eq("id", id),
+  );
+  const results = await Promise.all(updates);
+  const firstError = results.find((r) => r.error)?.error;
+  if (firstError) throw firstError;
+  await logAudit({ entity: table, entityId: "multiple", action: "reorder" });
+}
+
 export async function swapOrder(table: AdminTable, a: Row, b: Row) {
   const aId = a["id"] as string;
   const bId = b["id"] as string;
@@ -168,6 +178,7 @@ export async function swapOrder(table: AdminTable, a: Row, b: Row) {
   await db.from(table).update({ sort_order: aOrder }).eq("id", bId);
   await logAudit({ entity: table, entityId: aId, action: "reorder" });
 }
+
 
 const ALLOWED_MIME = [
   "image/jpeg",

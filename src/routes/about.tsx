@@ -2,8 +2,11 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { Nav } from "@/components/site/Nav";
 import { Footer } from "@/components/site/Footer";
 import { Reveal } from "@/components/site/Reveal";
+import { RichText } from "@/components/site/RichText";
 import { Timeline } from "@/components/site/Timeline";
 import { FloatingWhatsApp } from "@/components/site/FloatingWhatsApp";
+import { useContent } from "@/lib/cms/useContent";
+
 
 export const Route = createFileRoute("/about")({
   head: () => ({
@@ -28,27 +31,34 @@ export const Route = createFileRoute("/about")({
 });
 
 function AboutPage() {
+  const { about } = useContent();
+
+  const defaultIntro =
+    "Krishnakant Yadav — Krish — has spent nine months on the road across India. Not for a list of places, but for the people at the end of each road. What follows is his journey, in eight short chapters.";
+
   return (
     <div className="min-h-screen bg-background">
       <Nav />
       <main className="pt-40 pb-32">
         <div className="mx-auto max-w-3xl px-6">
           <Reveal>
-            <p className="eyebrow">The founder</p>
+            <p className="eyebrow">{about?.founder_title ?? "The founder"}</p>
             <h1 className="display mt-5 text-5xl leading-[1.02] sm:text-6xl md:text-7xl text-balance">
               A founder, not a<br />
               <em className="italic text-muted-foreground">travel brand.</em>
             </h1>
           </Reveal>
           <Reveal delay={0.1}>
-            <p className="mt-10 max-w-[58ch] text-[16.5px] leading-[1.7] text-muted-foreground">
-              Krishnakant Yadav — Krish — has spent nine months on the road
-              across India. Not for a list of places, but for the people at
-              the end of each road. What follows is his journey, in eight
-              short chapters.
-            </p>
+            <div className="mt-10 max-w-[58ch] text-[16.5px] leading-[1.7] text-muted-foreground">
+              {about?.biography ? (
+                <RichText html={about.biography} />
+              ) : (
+                <p>{defaultIntro}</p>
+              )}
+            </div>
           </Reveal>
         </div>
+
 
         <section
           aria-label="Krish's journey"

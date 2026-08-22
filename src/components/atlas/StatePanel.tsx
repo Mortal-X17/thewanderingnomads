@@ -1,8 +1,10 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect } from "react";
 import type { AtlasState } from "@/lib/atlas/data";
+import { RichText } from "@/components/site/RichText";
 import { EmptyBlock } from "./EmptyBlock";
 import { Gallery } from "./Gallery";
+
 
 /**
  * Expandable panel that renders a state's chapter.
@@ -122,7 +124,7 @@ function StateBody({ state }: { state: AtlasState }) {
       {/* Overview */}
       <Section eyebrow="Overview">
         {c?.overview ? (
-          <p className="text-lg leading-relaxed text-ink/85">{c.overview}</p>
+          <RichText html={c.overview} className="text-lg leading-relaxed text-ink/85" />
         ) : (
           <EmptyBlock
             label="Journey overview"
@@ -132,12 +134,11 @@ function StateBody({ state }: { state: AtlasState }) {
         )}
       </Section>
 
+
       {/* Journal */}
       <Section eyebrow="Travel journal">
         {c?.journal ? (
-          <p className="whitespace-pre-line text-[15px] leading-relaxed text-ink/80">
-            {c.journal}
-          </p>
+          <RichText html={c.journal} className="text-[15px] leading-relaxed text-ink/80" />
         ) : (
           <EmptyBlock
             label="Personal journal"
@@ -146,6 +147,7 @@ function StateBody({ state }: { state: AtlasState }) {
           />
         )}
       </Section>
+
 
       {/* Gallery */}
       <Section eyebrow="Gallery">
@@ -163,7 +165,7 @@ function StateBody({ state }: { state: AtlasState }) {
               >
                 <p className="display text-xl">{city.name}</p>
                 {city.summary ? (
-                  <p className="mt-2 text-sm text-muted-foreground">{city.summary}</p>
+                  <RichText html={city.summary} className="mt-2 text-sm text-muted-foreground" />
                 ) : null}
                 {city.places && city.places.length > 0 ? (
                   <ul className="mt-3 space-y-1 text-sm text-ink/75">
@@ -245,10 +247,11 @@ function SoftBlock({
   return (
     <div className="rounded-2xl border border-ink/10 bg-card p-5">
       <p className="eyebrow">{label}</p>
-      <p className="mt-3 text-sm text-ink/80">{content}</p>
+      <RichText html={content} className="mt-3 text-sm text-ink/80" />
     </div>
   );
 }
+
 
 function ListBlock({ label, items }: { label: string; items?: string[] }) {
   if (!items || items.length === 0) {

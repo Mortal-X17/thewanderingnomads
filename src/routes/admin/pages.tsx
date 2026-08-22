@@ -17,7 +17,7 @@ const ABOUT_GROUPS: SingletonGroup[] = [
       { key: "founder_title", label: "Title", type: "text" },
       { key: "secondary_identity", label: "Secondary identity", type: "text" },
       { key: "founder_image_url", label: "Portrait", type: "image" },
-      { key: "biography", label: "Biography", type: "textarea", rows: 8 },
+      { key: "biography", label: "Biography", type: "rich-text", rows: 8 },
       { key: "achievements", label: "Achievements", type: "tags" },
       { key: "certifications", label: "Certifications", type: "tags" },
       { key: "cta_label", label: "Button label", type: "text" },
@@ -81,7 +81,7 @@ function PagesAdmin() {
                 },
                 { key: "heading", label: "Heading", type: "text" },
                 { key: "subtitle", label: "Subtitle / eyebrow", type: "text" },
-                { key: "description", label: "Description", type: "textarea", rows: 5 },
+                { key: "description", label: "Description", type: "rich-text", rows: 5 },
                 { key: "cta_label", label: "Primary button label", type: "text" },
                 { key: "cta_href", label: "Primary button link", type: "url" },
                 { key: "secondary_cta_label", label: "Secondary button label", type: "text" },
@@ -110,7 +110,7 @@ function PagesAdmin() {
               fields: [
                 { key: "year", label: "Year", type: "text" },
                 { key: "title", label: "Title", type: "text", required: true },
-                { key: "description", label: "Description", type: "textarea", rows: 4 },
+                { key: "description", label: "Description", type: "rich-text", rows: 4 },
               ],
             }}
           />
