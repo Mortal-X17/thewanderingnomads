@@ -12,6 +12,7 @@ import { InstagramCard } from "@/components/site/InstagramCard";
 import { JourneyTracker, type TrackerSection } from "@/components/site/JourneyTracker";
 import { RichText } from "@/components/site/RichText";
 import { useContent, useSection } from "@/lib/cms/useContent";
+import { CONTACT_EMAIL, PHONE_DISPLAY, WHATSAPP_NUMBER, waLink } from "@/lib/site";
 
 import heroImg from "@/assets/hero-himalaya.jpg";
 import krishAsset from "@/assets/krish-founder.png.asset.json";
@@ -205,7 +206,6 @@ function Hero() {
           />
         </motion.p>
 
-
         <motion.div
           initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
@@ -213,7 +213,7 @@ function Hero() {
           className="mt-10 flex flex-wrap items-center gap-3"
         >
           <Link
-            to="/journeys"
+            to="/upcoming-trips"
             className="group inline-flex items-center gap-3 rounded-full bg-white px-6 py-3.5 text-[13.5px] font-medium text-neutral-900 transition hover:bg-white/90"
           >
             Explore Journeys
@@ -310,12 +310,36 @@ function Stats() {
 
 function About() {
   const chapters = [
-    { k: "01", t: "A small village", d: "Born in Deoria, Uttar Pradesh — curious about a world beyond the fields." },
-    { k: "02", t: "Jaipur", d: "Moved for university. Sharpened communication. Started saying yes to the road." },
-    { k: "03", t: "The first solo trip", d: "One backpack. One decision. Thousands of kilometres of hitchhiking followed." },
-    { k: "04", t: "Living with locals", d: "Stayed inside Kashmiri homes. Ate what they ate. Listened more than spoke." },
-    { k: "05", t: "24+ states, 200+ cities", d: "India revealed itself slowly — not in landmarks, but in people." },
-    { k: "06", t: "The Wandering Nomads", d: "A community for young travellers who want the real thing, led by someone they trust." },
+    {
+      k: "01",
+      t: "A small village",
+      d: "Born in Deoria, Uttar Pradesh — curious about a world beyond the fields.",
+    },
+    {
+      k: "02",
+      t: "Jaipur",
+      d: "Moved for university. Sharpened communication. Started saying yes to the road.",
+    },
+    {
+      k: "03",
+      t: "The first solo trip",
+      d: "One backpack. One decision. Thousands of kilometres of hitchhiking followed.",
+    },
+    {
+      k: "04",
+      t: "Living with locals",
+      d: "Stayed inside Kashmiri homes. Ate what they ate. Listened more than spoke.",
+    },
+    {
+      k: "05",
+      t: "24+ states, 200+ cities",
+      d: "India revealed itself slowly — not in landmarks, but in people.",
+    },
+    {
+      k: "06",
+      t: "The Wandering Nomads",
+      d: "A community for young travellers who want the real thing, led by someone they trust.",
+    },
   ];
 
   return (
@@ -327,7 +351,6 @@ function About() {
               <FounderPortrait src={krishImg} />
             </Reveal>
           </div>
-
 
           <div>
             <Reveal>
@@ -343,10 +366,9 @@ function About() {
 
             <Reveal delay={0.1}>
               <p className="mt-8 max-w-lg text-[15.5px] leading-relaxed text-muted-foreground">
-                Krish is not a tour operator. He is the reason people join. Every
-                expedition is led by him — the same person you write to, the same
-                person who plans the route, and the one who sits with you around
-                the fire at 11,000 feet.
+                Krish is not a tour operator. He is the reason people join. Every expedition is led
+                by him — the same person you write to, the same person who plans the route, and the
+                one who sits with you around the fire at 11,000 feet.
               </p>
             </Reveal>
 
@@ -369,9 +391,9 @@ function About() {
             <Reveal delay={0.1}>
               <div className="mt-12 rounded-3xl bg-muted/50 p-6 hairline">
                 <p className="text-[13.5px] leading-relaxed text-ink/80">
-                  Alongside travel, Krish is a certified ethical hacker and
-                  cybersecurity professional — a quieter part of his story, but
-                  one that shapes the discipline behind every expedition.
+                  Alongside travel, Krish is a certified ethical hacker and cybersecurity
+                  professional — a quieter part of his story, but one that shapes the discipline
+                  behind every expedition.
                 </p>
               </div>
             </Reveal>
@@ -484,7 +506,7 @@ function Journeys() {
           </Reveal>
           <Reveal delay={0.1}>
             <Link
-              to="/journeys"
+              to="/upcoming-trips"
               className="group inline-flex items-center gap-2 text-[13px] font-medium text-ink"
             >
               View all expeditions
@@ -520,8 +542,10 @@ function Journeys() {
                   </div>
                 </div>
                 <div className="flex flex-1 flex-col p-6">
-                  <RichText html={j.desc} className="text-[14.5px] leading-[1.65] text-muted-foreground" />
-
+                  <RichText
+                    html={j.desc}
+                    className="text-[14.5px] leading-[1.65] text-muted-foreground"
+                  />
 
                   <dl className="mt-6 grid grid-cols-3 gap-3 border-t border-ink/8 pt-5 text-[11px]">
                     <div>
@@ -564,7 +588,10 @@ function Journeys() {
 const why = [
   { t: "Personally Led", d: "Every expedition. Not a hired guide. The founder is with you." },
   { t: "Hidden Gems", d: "Trails and villages built from nine months of on-ground travel." },
-  { t: "Authentic Local Stays", d: "Where possible, we stay with families — not in identical hotels." },
+  {
+    t: "Authentic Local Stays",
+    d: "Where possible, we stay with families — not in identical hotels.",
+  },
   { t: "Budget-Smart", d: "Priced for young travellers. Nothing hidden, nothing padded." },
   { t: "Small Groups", d: "Deliberately small. So the mountain still feels like the mountain." },
   { t: "Community First", d: "You leave with new friends, not a group of strangers on a bus." },
@@ -587,7 +614,9 @@ function WhyKrish() {
           {why.map((w, i) => (
             <Reveal key={w.t} delay={i * 0.05}>
               <div className="group relative h-full rounded-[24px] hairline bg-card p-7 lift">
-                <span className="display text-sm text-ink/30">{String(i + 1).padStart(2, "0")}</span>
+                <span className="display text-sm text-ink/30">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
                 <h3 className="display mt-6 text-2xl text-ink">{w.t}</h3>
                 <p className="mt-3 text-[14.5px] leading-relaxed text-muted-foreground">{w.d}</p>
               </div>
@@ -733,8 +762,14 @@ function Testimonials() {
 /* ---------------- CERTIFICATIONS ---------------- */
 
 const certs = [
-  { t: "Certified Ethical Hacker", d: "Cybersecurity discipline that shapes every logistics decision." },
-  { t: "Cybersecurity Professional", d: "Formal training and independent practice since university." },
+  {
+    t: "Certified Ethical Hacker",
+    d: "Cybersecurity discipline that shapes every logistics decision.",
+  },
+  {
+    t: "Cybersecurity Professional",
+    d: "Formal training and independent practice since university.",
+  },
   { t: "JECRC University", d: "Alumni. Recognised within the JECRC community." },
   { t: "Founder-Led Since 2024", d: "Every expedition personally led — never outsourced." },
 ];
@@ -794,11 +829,19 @@ function Contact() {
             </Reveal>
             <Reveal delay={0.1}>
               <div className="mt-12 grid gap-6 text-[14.5px] sm:grid-cols-2">
-                <ContactLine label="Email" href="mailto:wanderwithkrish@gmail.com" v="wanderwithkrish@gmail.com" />
-                <ContactLine label="WhatsApp" href="https://wa.me/919005215255" v="+91 90052 15255" />
-                <ContactLine label="Phone" href="tel:+919005215255" v="+91 90052 15255" />
-                <ContactLine label="Instagram" href="https://instagram.com/thewanderingnomads.in" v="@thewanderingnomads.in" />
-                <ContactLine label="Founder" href="https://instagram.com/wanderwithkrishh" v="@wanderwithkrishh" />
+                <ContactLine label="Email" href={`mailto:${CONTACT_EMAIL}`} v={CONTACT_EMAIL} />
+                <ContactLine label="WhatsApp" href={waLink()} v={PHONE_DISPLAY} />
+                <ContactLine label="Phone" href={`tel:+${WHATSAPP_NUMBER}`} v={PHONE_DISPLAY} />
+                <ContactLine
+                  label="Instagram"
+                  href="https://instagram.com/thewanderingnomads.in"
+                  v="@thewanderingnomads.in"
+                />
+                <ContactLine
+                  label="Founder"
+                  href="https://instagram.com/wanderwithkrishh"
+                  v="@wanderwithkrishh"
+                />
                 <ContactLine label="Based in" v="Jaipur, Rajasthan" />
               </div>
             </Reveal>
@@ -851,7 +894,12 @@ function ContactLine({ label, v, href }: { label: string; v: string; href?: stri
       <p className="text-[11px] uppercase tracking-[0.18em] text-snow/50">{label}</p>
       <p className="mt-2">
         {href ? (
-          <a href={href} className="border-b border-snow/20 pb-0.5 transition hover:border-snow" target="_blank" rel="noreferrer">
+          <a
+            href={href}
+            className="border-b border-snow/20 pb-0.5 transition hover:border-snow"
+            target="_blank"
+            rel="noreferrer"
+          >
             {inner}
           </a>
         ) : (
@@ -961,9 +1009,6 @@ function FounderPortrait({ src }: { src: string }) {
   );
 }
 
-
-
-
 /* ---------------- ICONS ---------------- */
 
 function ArrowRight({ className = "" }: { className?: string }) {
@@ -1000,4 +1045,3 @@ function stripTags(html: string) {
   div.innerHTML = html;
   return div.textContent || div.innerText || "";
 }
-

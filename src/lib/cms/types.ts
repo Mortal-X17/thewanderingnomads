@@ -88,6 +88,14 @@ export type Milestone = {
   sort_order: number;
 };
 
+/** A single day/step of a trip itinerary (stored as jsonb on `journeys.itinerary`). */
+export type ItineraryStep = {
+  day?: number | string;
+  title?: string;
+  description?: string;
+  items?: string[];
+};
+
 export type JourneyRecord = {
   id: string;
   slug: string;
@@ -101,6 +109,7 @@ export type JourneyRecord = {
   best_season: string | null;
   is_available: boolean;
   highlights: string[];
+  itinerary: ItineraryStep[];
   travel_info: string | null;
   notes: string | null;
   cta_label: string | null;
@@ -171,6 +180,46 @@ export type TestimonialRecord = {
   sort_order: number;
 };
 
+/** A trip leader / host. First-class entity — Krish is Host #1, not a hardcoded dependency. */
+export type HostRecord = {
+  id: string;
+  slug: string;
+  name: string;
+  photo_url: string | null;
+  short_bio: string | null;
+  bio: string | null;
+  home_location: string | null;
+  languages: string[];
+  specializations: string[];
+  certifications: string[];
+  years_active: number | null;
+  instagram_url: string | null;
+  youtube_url: string | null;
+  linkedin_url: string | null;
+  sort_order: number;
+};
+
+/** A specific departure of a Trip (journey). Reusable trip info stays on the Trip. */
+export type TripBatchRecord = {
+  id: string;
+  trip_id: string;
+  start_date: string;
+  end_date: string | null;
+  capacity: number | null;
+  seats_remaining: number | null;
+  batch_type: string | null;
+  status: ContentStatus;
+  sort_order: number;
+};
+
+/** Many-to-many assignment of a Host to a Trip Batch, as Lead Host or Co-Host. */
+export type TripBatchHostRecord = {
+  id: string;
+  batch_id: string;
+  host_id: string;
+  role: "lead" | "co_host";
+};
+
 export type PublicContent = {
   ok: boolean;
   settings: SiteSettings | null;
@@ -185,6 +234,9 @@ export type PublicContent = {
   destinations: AtlasDestinationRecord[];
   stories: AtlasStoryRecord[];
   testimonials: TestimonialRecord[];
+  hosts: HostRecord[];
+  batches: TripBatchRecord[];
+  batchHosts: TripBatchHostRecord[];
 };
 
 export const EMPTY_CONTENT: PublicContent = {
@@ -201,6 +253,9 @@ export const EMPTY_CONTENT: PublicContent = {
   destinations: [],
   stories: [],
   testimonials: [],
+  hosts: [],
+  batches: [],
+  batchHosts: [],
 };
 
 /** Find a page section by page + key. */

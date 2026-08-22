@@ -11,7 +11,9 @@ export const Route = createFileRoute("/admin/")({
 });
 
 const COUNTS = [
-  { table: "journeys", label: "Journeys", to: "/admin/journeys" },
+  { table: "journeys", label: "Trips", to: "/admin/journeys" },
+  { table: "trip_batches", label: "Trip batches", to: "/admin/batches" },
+  { table: "hosts", label: "Hosts", to: "/admin/hosts" },
   { table: "atlas_regions", label: "Atlas regions", to: "/admin/atlas" },
   { table: "gallery_images", label: "Gallery images", to: "/admin/gallery" },
   { table: "testimonials", label: "Testimonials", to: "/admin/pages" },
@@ -67,9 +69,7 @@ function AdminOverview() {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="display text-3xl tabular-nums">
-                  {stats.data?.[item.table] ?? "—"}
-                </p>
+                <p className="display text-3xl tabular-nums">{stats.data?.[item.table] ?? "—"}</p>
               </CardContent>
             </Card>
           </Link>

@@ -50,6 +50,9 @@ export const getPublicContent = createServerFn({ method: "GET" }).handler(
         destinations,
         stories,
         testimonials,
+        hosts,
+        batches,
+        batchHosts,
       ] = await Promise.all([
         supabase.from("site_settings").select("*").eq("id", "default").maybeSingle(),
         supabase.from("design_settings").select("*").eq("id", "default").maybeSingle(),
@@ -63,6 +66,9 @@ export const getPublicContent = createServerFn({ method: "GET" }).handler(
         supabase.from("atlas_destinations").select("*").order("sort_order"),
         supabase.from("atlas_stories").select("*").order("sort_order"),
         supabase.from("testimonials").select("*").order("sort_order"),
+        supabase.from("hosts").select("*").order("sort_order"),
+        supabase.from("trip_batches").select("*").order("start_date"),
+        supabase.from("trip_batch_hosts").select("*"),
       ]);
 
       return {
@@ -79,6 +85,9 @@ export const getPublicContent = createServerFn({ method: "GET" }).handler(
         destinations: (destinations.data ?? []) as PublicContent["destinations"],
         stories: (stories.data ?? []) as PublicContent["stories"],
         testimonials: (testimonials.data ?? []) as PublicContent["testimonials"],
+        hosts: (hosts.data ?? []) as PublicContent["hosts"],
+        batches: (batches.data ?? []) as PublicContent["batches"],
+        batchHosts: (batchHosts.data ?? []) as PublicContent["batchHosts"],
       };
     } catch (error) {
       console.error("[cms] public content read failed", error);

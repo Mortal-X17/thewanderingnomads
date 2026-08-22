@@ -1,6 +1,8 @@
 import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { X } from "lucide-react";
 
+import { listRows, type AdminTable } from "@/lib/cms/admin";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -26,7 +28,9 @@ export type FieldType =
   | "tags"
   | "image"
   | "color"
-  | "url";
+  | "url"
+  | "date"
+  | "relation";
 
 export type FieldDef = {
   key: string;
@@ -40,8 +44,9 @@ export type FieldDef = {
   max?: number;
   step?: number;
   rows?: number;
+  /** When type is "relation", load options from another table. */
+  relation?: { table: AdminTable; labelKey: string };
 };
-
 
 export type FormValues = Record<string, unknown>;
 
@@ -63,16 +68,22 @@ export function validate(fields: FieldDef[], values: FormValues) {
         continue;
       }
     }
-    if ((field.type === "url" || field.key.endsWith("_url") || field.key.endsWith("_href")) &&
-      typeof value === "string" && value.trim() !== "" && !URLISH.test(value.trim())) {
+    if (
+      (field.type === "url" || field.key.endsWith("_url") || field.key.endsWith("_href")) &&
+      typeof value === "string" &&
+      value.trim() !== "" &&
+      !URLISH.test(value.trim())
+    ) {
       errors[field.key] =
         "Enter a full link (https://…, mailto:…, tel:… ) or a site path starting with /.";
     }
     if (field.type === "number" && value !== "" && value !== null && value !== undefined) {
       const n = Number(value);
       if (Number.isNaN(n)) errors[field.key] = "Enter a number.";
-      else if (field.min !== undefined && n < field.min) errors[field.key] = `Minimum is ${field.min}.`;
-      else if (field.max !== undefined && n > field.max) errors[field.key] = `Maximum is ${field.max}.`;
+      else if (field.min !== undefined && n < field.min)
+        errors[field.key] = `Minimum is ${field.min}.`;
+      else if (field.max !== undefined && n > field.max)
+        errors[field.key] = `Maximum is ${field.max}.`;
     }
   }
   return errors;
@@ -129,7 +140,11 @@ export function FieldInput({
           </SelectContent>
         </Select>
       ) : field.type === "tags" ? (
-        <TagsInput value={(value as string[]) ?? []} onChange={onChange} placeholder={field.placeholder} />
+        <TagsInput
+          value={(value as string[]) ?? []}
+          onChange={onChange}
+          placeholder={field.placeholder}
+        />
       ) : field.type === "image" ? (
         <MediaPicker value={(value as string) ?? ""} onChange={(url) => onChange(url)} />
       ) : field.type === "color" ? (
@@ -143,6 +158,19 @@ export function FieldInput({
           />
           <Input value={(value as string) ?? ""} onChange={(e) => onChange(e.target.value)} />
         </div>
+      ) : field.type === "date" ? (
+        <Input
+          id={id}
+          type="date"
+          value={(value as string) ?? ""}
+          onChange={(e) => onChange(e.target.value === "" ? null : e.target.value)}
+        />
+      ) : field.type === "relation" ? (
+        <RelationSelect
+          field={field}
+          value={(value as string) ?? ""}
+          onChange={(v) => onChange(v)}
+        />
       ) : (
         <Input
           id={id}
@@ -153,11 +181,16 @@ export function FieldInput({
           value={value === null || value === undefined ? "" : String(value)}
           placeholder={field.placeholder}
           onChange={(e) =>
-            onChange(field.type === "number" ? (e.target.value === "" ? null : Number(e.target.value)) : e.target.value)
+            onChange(
+              field.type === "number"
+                ? e.target.value === ""
+                  ? null
+                  : Number(e.target.value)
+                : e.target.value,
+            )
           }
         />
       )}
-
 
       {error ? (
         <p className="text-xs text-destructive">{error}</p>
@@ -165,6 +198,38 @@ export function FieldInput({
         <p className="text-xs text-muted-foreground">{field.help}</p>
       ) : null}
     </div>
+  );
+}
+
+function RelationSelect({
+  field,
+  value,
+  onChange,
+}: {
+  field: FieldDef;
+  value: string;
+  onChange: (next: string) => void;
+}) {
+  const rel = field.relation;
+  const { data: rows = [] } = useQuery({
+    queryKey: ["admin", rel?.table, "options"],
+    queryFn: () => (rel ? listRows(rel.table, "sort_order") : Promise.resolve([])),
+    enabled: Boolean(rel),
+  });
+
+  return (
+    <Select value={value} onValueChange={onChange}>
+      <SelectTrigger>
+        <SelectValue placeholder="Choose…" />
+      </SelectTrigger>
+      <SelectContent>
+        {(rows as Record<string, unknown>[]).map((row) => (
+          <SelectItem key={String(row["id"])} value={String(row["id"])}>
+            {String(row[rel?.labelKey ?? "name"] ?? "Untitled")}
+          </SelectItem>
+        ))}
+      </SelectContent>
+    </Select>
   );
 }
 

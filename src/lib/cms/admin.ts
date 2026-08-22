@@ -25,6 +25,9 @@ export type AdminTable =
   | "atlas_stories"
   | "gallery_images"
   | "testimonials"
+  | "hosts"
+  | "trip_batches"
+  | "trip_batch_hosts"
   | "media"
   | "audit_log";
 
@@ -83,19 +86,6 @@ export async function signInAdmin(email: string, password: string) {
   return supabase.auth.signInWithPassword({ email, password });
 }
 
-export async function signUpOwner(email: string, password: string) {
-  return supabase.auth.signUp({
-    email,
-    password,
-    options: { emailRedirectTo: `${window.location.origin}/admin` },
-  });
-}
-
-/** Grants admin only when no administrator exists yet (enforced in the database). */
-export async function claimOwner() {
-  return supabase.rpc("claim_first_admin");
-}
-
 export async function signOutAdmin() {
   await supabase.auth.signOut();
 }
@@ -133,9 +123,7 @@ export async function getSingleton(table: AdminTable) {
 }
 
 export async function saveSingleton(table: AdminTable, values: Row) {
-  const { error } = await supabase
-    .from(table)
-    .upsert({ ...values, id: "default" }, { onConflict: "id" });
+  const { error } = await db.from(table).upsert({ ...values, id: "default" }, { onConflict: "id" });
   if (error) throw error;
   await logAudit({ entity: table, entityId: "default", action: "update" });
 }
@@ -161,24 +149,16 @@ export async function deleteRow(table: AdminTable, id: string, summary?: string)
 
 export async function reorderRows(table: AdminTable, orderedIds: string[]) {
   const updates = orderedIds.map((id, index) =>
-    db.from(table).update({ sort_order: index + 1 }).eq("id", id),
+    db
+      .from(table)
+      .update({ sort_order: index + 1 })
+      .eq("id", id),
   );
   const results = await Promise.all(updates);
   const firstError = results.find((r) => r.error)?.error;
   if (firstError) throw firstError;
   await logAudit({ entity: table, entityId: "multiple", action: "reorder" });
 }
-
-export async function swapOrder(table: AdminTable, a: Row, b: Row) {
-  const aId = a["id"] as string;
-  const bId = b["id"] as string;
-  const aOrder = Number(a["sort_order"] ?? 0);
-  const bOrder = Number(b["sort_order"] ?? 0);
-  await db.from(table).update({ sort_order: bOrder }).eq("id", aId);
-  await db.from(table).update({ sort_order: aOrder }).eq("id", bId);
-  await logAudit({ entity: table, entityId: aId, action: "reorder" });
-}
-
 
 const ALLOWED_MIME = [
   "image/jpeg",
@@ -260,7 +240,12 @@ export async function uploadMedia(file: File, folder = "library"): Promise<Media
     .single();
   if (error) throw error;
 
-  await logAudit({ entity: "media", entityId: (data as MediaRecord).id, action: "upload", summary: file.name });
+  await logAudit({
+    entity: "media",
+    entityId: (data as MediaRecord).id,
+    action: "upload",
+    summary: file.name,
+  });
   return data as MediaRecord;
 }
 
@@ -268,7 +253,12 @@ export async function deleteMedia(record: MediaRecord) {
   await supabase.storage.from("media").remove([record.path]);
   const { error } = await db.from("media").delete().eq("id", record.id);
   if (error) throw error;
-  await logAudit({ entity: "media", entityId: record.id, action: "delete", summary: record.filename });
+  await logAudit({
+    entity: "media",
+    entityId: record.id,
+    action: "delete",
+    summary: record.filename,
+  });
 }
 
 /** Counts references to a media URL across content tables. */
@@ -280,10 +270,11 @@ export async function mediaUsage(url: string) {
     { label: "Atlas covers", table: "atlas_regions", column: "cover_image_url" },
     { label: "Page sections", table: "page_sections", column: "image_url" },
     { label: "Testimonial avatars", table: "testimonials", column: "avatar_url" },
+    { label: "Host photos", table: "hosts", column: "photo_url" },
   ];
   const usage: { label: string; count: number }[] = [];
   for (const check of checks) {
-    const { count } = await supabase
+    const { count } = await db
       .from(check.table)
       .select("id", { count: "exact", head: true })
       .eq(check.column, url);
