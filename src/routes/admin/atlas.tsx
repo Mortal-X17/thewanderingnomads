@@ -65,11 +65,11 @@ function AtlasAdmin() {
             { key: "visited", label: "Explored", type: "boolean" },
             { key: "visited_year", label: "Year explored", type: "number", min: 1990, max: 2100 },
             { key: "cover_image_url", label: "Cover image", type: "image" },
-            { key: "overview", label: "Overview", type: "textarea", rows: 4 },
-            { key: "journal", label: "Travel journal", type: "textarea", rows: 8 },
-            { key: "favorite_memory", label: "Favourite memory", type: "textarea", rows: 3 },
-            { key: "culture", label: "Culture & people", type: "textarea", rows: 4 },
-            { key: "founder_note", label: "Founder note", type: "textarea", rows: 3 },
+            { key: "overview", label: "Overview", type: "rich-text", rows: 4 },
+            { key: "journal", label: "Travel journal", type: "rich-text", rows: 8 },
+            { key: "favorite_memory", label: "Favourite memory", type: "rich-text", rows: 3 },
+            { key: "culture", label: "Culture & people", type: "rich-text", rows: 4 },
+            { key: "founder_note", label: "Founder note", type: "rich-text", rows: 3 },
             { key: "food", label: "Food to try", type: "tags" },
             { key: "tips", label: "Travel tips", type: "tags" },
             { key: "hidden_gems", label: "Hidden gems", type: "tags" },
@@ -130,7 +130,7 @@ function AtlasAdmin() {
                         { value: "other", label: "Other" },
                       ],
                     },
-                    { key: "summary", label: "Summary", type: "textarea", rows: 4 },
+                    { key: "summary", label: "Summary", type: "rich-text", rows: 4 },
                     { key: "tips", label: "Tips", type: "tags" },
                   ],
                 }}
@@ -150,7 +150,7 @@ function AtlasAdmin() {
                   fields: [
                     { key: "title", label: "Title", type: "text", required: true },
                     { key: "story_date", label: "Date", type: "text", placeholder: "2025-11-02" },
-                    { key: "narrative", label: "Narrative", type: "textarea", rows: 10 },
+                    { key: "narrative", label: "Narrative", type: "rich-text", rows: 10 },
                   ],
                 }}
               />

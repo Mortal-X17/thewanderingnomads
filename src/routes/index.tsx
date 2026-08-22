@@ -10,6 +10,7 @@ import { Community } from "@/components/site/Community";
 import { FloatingWhatsApp } from "@/components/site/FloatingWhatsApp";
 import { InstagramCard } from "@/components/site/InstagramCard";
 import { JourneyTracker, type TrackerSection } from "@/components/site/JourneyTracker";
+import { RichText } from "@/components/site/RichText";
 import { useContent, useSection } from "@/lib/cms/useContent";
 
 import heroImg from "@/assets/hero-himalaya.jpg";
@@ -196,9 +197,14 @@ function Hero() {
           transition={{ duration: 0.9, delay: 0.9, ease: [0.22, 1, 0.36, 1] }}
           className="mt-8 max-w-xl text-[15px] leading-relaxed text-white/80 sm:text-base"
         >
-          {copy?.description ??
-            "Small groups. Real places. Every expedition personally led by Krish — across Kashmir, Spiti, Jibhi and the far corners of India."}
+          <RichText
+            html={
+              copy?.description ??
+              "Small groups. Real places. Every expedition personally led by Krish — across Kashmir, Spiti, Jibhi and the far corners of India."
+            }
+          />
         </motion.p>
+
 
         <motion.div
           initial={{ opacity: 0, y: 14 }}
@@ -494,7 +500,7 @@ function Journeys() {
                 <div className="relative aspect-[4/5] overflow-hidden">
                   <img
                     src={j.img}
-                    alt={`${j.name} — ${j.desc}`}
+                    alt={`${j.name} — ${stripTags(j.desc)}`}
                     className="h-full w-full object-cover transition duration-[1200ms] ease-out group-hover:scale-[1.06]"
                     loading="lazy"
                     width={1400}
@@ -514,7 +520,8 @@ function Journeys() {
                   </div>
                 </div>
                 <div className="flex flex-1 flex-col p-6">
-                  <p className="text-[14.5px] leading-[1.65] text-muted-foreground">{j.desc}</p>
+                  <RichText html={j.desc} className="text-[14.5px] leading-[1.65] text-muted-foreground" />
+
 
                   <dl className="mt-6 grid grid-cols-3 gap-3 border-t border-ink/8 pt-5 text-[11px]">
                     <div>
@@ -986,3 +993,11 @@ function MapIcon({ className = "" }: { className?: string }) {
     </svg>
   );
 }
+
+function stripTags(html: string) {
+  if (typeof window === "undefined") return html;
+  const div = document.createElement("div");
+  div.innerHTML = html;
+  return div.textContent || div.innerText || "";
+}
+

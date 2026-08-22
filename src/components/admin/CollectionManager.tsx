@@ -1,9 +1,19 @@
 import { useMemo, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useSortable, SortableContext, verticalListSortingStrategy, sortableKeyboardCoordinates, arrayMove } from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 import {
-  ArrowDown,
-  ArrowUp,
+  DndContext,
+  closestCenter,
+  KeyboardSensor,
+  PointerSensor,
+  useSensor,
+  useSensors,
+  type DragEndEvent,
+} from "@dnd-kit/core";
+import {
   Copy,
+  GripVertical,
   Loader2,
   Pencil,
   Plus,
@@ -38,7 +48,7 @@ import {
   deleteRow,
   insertRow,
   listRows,
-  swapOrder,
+  reorderRows,
   updateRow,
   type AdminTable,
 } from "@/lib/cms/admin";
@@ -53,7 +63,7 @@ export type CollectionConfig = {
   /** Column rendered as the row title. */
   labelKey: string;
   subtitleKey?: string;
-  /** Show up/down reorder controls (requires a sort_order column). */
+  /** Show drag-handle reorder controls (requires a sort_order column). */
   orderable?: boolean;
   /** Show a status badge from this column ("draft" | "published"). */
   statusKey?: string;
@@ -90,6 +100,14 @@ export function CollectionManager({ config }: { config: CollectionConfig }) {
       keys.some((key) => String(row[key] ?? "").toLowerCase().includes(term)),
     );
   }, [rows, query, config]);
+
+  const itemIds = useMemo(() => visible.map((row) => String(row["id"])), [visible]);
+
+  const sensors = useSensors(
+    useSensor(PointerSensor, { activationConstraint: { distance: 4 } }),
+    useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates }),
+  );
+
 
   const invalidate = () => {
     void queryClient.invalidateQueries({ queryKey: ["admin", config.table] });
@@ -151,16 +169,23 @@ export function CollectionManager({ config }: { config: CollectionConfig }) {
     onError: (error: Error) => toast.error(error.message || "Could not duplicate"),
   });
 
-  const move = useMutation({
-    mutationFn: async ({ index, direction }: { index: number; direction: -1 | 1 }) => {
-      const target = visible[index + direction];
-      const current = visible[index];
-      if (!target || !current) return;
-      await swapOrder(config.table, current, target);
+  const reorder = useMutation({
+    mutationFn: async (orderedIds: string[]) => {
+      await reorderRows(config.table, orderedIds);
     },
     onSuccess: invalidate,
     onError: (error: Error) => toast.error(error.message || "Could not reorder"),
   });
+
+  const handleDragEnd = (event: DragEndEvent) => {
+    const { active, over } = event;
+    if (!over || active.id === over.id) return;
+    const oldIndex = visible.findIndex((row) => String(row["id"]) === active.id);
+    const newIndex = visible.findIndex((row) => String(row["id"]) === over.id);
+    if (oldIndex === -1 || newIndex === -1) return;
+    const next = arrayMove(visible, oldIndex, newIndex);
+    reorder.mutate(next.map((row) => String(row["id"])));
+  };
 
   const openNew = () => {
     setErrors({});
@@ -208,70 +233,28 @@ export function CollectionManager({ config }: { config: CollectionConfig }) {
           {config.emptyLabel ?? "Nothing here yet."}
         </div>
       ) : (
-        <ul className="divide-y divide-border rounded-lg border border-border">
-          {visible.map((row, index) => (
-            <li key={String(row["id"])} className="flex flex-wrap items-center gap-3 px-4 py-3">
-              <div className="min-w-0 flex-1">
-                <p className="truncate text-sm font-medium">
-                  {String(row[config.labelKey] ?? "Untitled")}
-                </p>
-                {config.subtitleKey ? (
-                  <p className="truncate text-xs text-muted-foreground">
-                    {String(row[config.subtitleKey] ?? "")}
-                  </p>
-                ) : null}
-              </div>
-              {config.statusKey ? (
-                <Badge variant={row[config.statusKey] === "published" ? "default" : "secondary"}>
-                  {String(row[config.statusKey] ?? "draft")}
-                </Badge>
-              ) : null}
-              {config.orderable ? (
-                <div className="flex items-center gap-1">
-                  <Button
-                    size="icon"
-                    variant="ghost"
-                    aria-label="Move up"
-                    disabled={index === 0 || move.isPending}
-                    onClick={() => move.mutate({ index, direction: -1 })}
-                  >
-                    <ArrowUp className="h-4 w-4" />
-                  </Button>
-                  <Button
-                    size="icon"
-                    variant="ghost"
-                    aria-label="Move down"
-                    disabled={index === visible.length - 1 || move.isPending}
-                    onClick={() => move.mutate({ index, direction: 1 })}
-                  >
-                    <ArrowDown className="h-4 w-4" />
-                  </Button>
-                </div>
-              ) : null}
-              {config.duplicable ? (
-                <Button
-                  size="icon"
-                  variant="ghost"
-                  aria-label="Duplicate"
-                  onClick={() => duplicate.mutate(row)}
-                >
-                  <Copy className="h-4 w-4" />
-                </Button>
-              ) : null}
-              <Button size="icon" variant="ghost" aria-label="Edit" onClick={() => openEdit(row)}>
-                <Pencil className="h-4 w-4" />
-              </Button>
-              <Button
-                size="icon"
-                variant="ghost"
-                aria-label="Delete"
-                onClick={() => setPendingDelete(row)}
-              >
-                <Trash2 className="h-4 w-4 text-destructive" />
-              </Button>
-            </li>
-          ))}
-        </ul>
+        <DndContext
+          sensors={sensors}
+          collisionDetection={closestCenter}
+          onDragEnd={handleDragEnd}
+        >
+          <SortableContext items={itemIds} strategy={verticalListSortingStrategy}>
+            <ul className="divide-y divide-border rounded-lg border border-border">
+              {visible.map((row) => (
+                <SortableRow
+                  key={String(row["id"])}
+                  row={row}
+                  config={config}
+                  orderable={config.orderable ?? false}
+                  reordering={reorder.isPending}
+                  onEdit={() => openEdit(row)}
+                  onDelete={() => setPendingDelete(row)}
+                  onDuplicate={() => duplicate.mutate(row)}
+                />
+              ))}
+            </ul>
+          </SortableContext>
+        </DndContext>
       )}
 
       <Dialog open={editing !== null} onOpenChange={(open) => (open ? null : setEditing(null))}>
@@ -289,7 +272,9 @@ export function CollectionManager({ config }: { config: CollectionConfig }) {
               <div
                 key={field.key}
                 className={
-                  field.type === "textarea" || field.type === "tags" ? "sm:col-span-2" : undefined
+                  field.type === "textarea" || field.type === "tags" || field.type === "rich-text"
+                    ? "sm:col-span-2"
+                    : undefined
                 }
               >
                 <FieldInput
@@ -350,3 +335,86 @@ export function CollectionManager({ config }: { config: CollectionConfig }) {
     </div>
   );
 }
+
+function SortableRow({
+  row,
+  config,
+  orderable,
+  reordering,
+  onEdit,
+  onDelete,
+  onDuplicate,
+}: {
+  row: Row;
+  config: CollectionConfig;
+  orderable: boolean;
+  reordering: boolean;
+  onEdit: () => void;
+  onDelete: () => void;
+  onDuplicate: () => void;
+}) {
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+    isDragging,
+  } = useSortable({ id: String(row["id"]), disabled: !orderable || reordering });
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+    zIndex: isDragging ? 10 : undefined,
+  };
+
+  return (
+    <li
+      ref={setNodeRef}
+      style={style}
+      className={`flex flex-wrap items-center gap-2 px-4 py-3 bg-background ${
+        isDragging ? "opacity-60 shadow-lg" : ""
+      }`}
+    >
+      {orderable ? (
+        <Button
+          {...attributes}
+          {...listeners}
+          variant="ghost"
+          size="icon"
+          className="h-8 w-8 cursor-grab text-muted-foreground active:cursor-grabbing"
+          aria-label="Drag to reorder"
+        >
+          <GripVertical className="h-4 w-4" />
+        </Button>
+      ) : null}
+      <div className="min-w-0 flex-1">
+        <p className="truncate text-sm font-medium">
+          {String(row[config.labelKey] ?? "Untitled")}
+        </p>
+        {config.subtitleKey ? (
+          <p className="truncate text-xs text-muted-foreground">
+            {String(row[config.subtitleKey] ?? "")}
+          </p>
+        ) : null}
+      </div>
+      {config.statusKey ? (
+        <Badge variant={row[config.statusKey] === "published" ? "default" : "secondary"}>
+          {String(row[config.statusKey] ?? "draft")}
+        </Badge>
+      ) : null}
+      {config.duplicable ? (
+        <Button size="icon" variant="ghost" aria-label="Duplicate" onClick={onDuplicate}>
+          <Copy className="h-4 w-4" />
+        </Button>
+      ) : null}
+      <Button size="icon" variant="ghost" aria-label="Edit" onClick={onEdit}>
+        <Pencil className="h-4 w-4" />
+      </Button>
+      <Button size="icon" variant="ghost" aria-label="Delete" onClick={onDelete}>
+        <Trash2 className="h-4 w-4 text-destructive" />
+      </Button>
+    </li>
+  );
+}
+

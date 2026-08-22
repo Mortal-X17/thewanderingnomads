@@ -14,10 +14,12 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { MediaPicker } from "@/components/admin/MediaPicker";
+import { RichTextEditor } from "@/components/admin/RichTextEditor";
 
 export type FieldType =
   | "text"
   | "textarea"
+  | "rich-text"
   | "number"
   | "boolean"
   | "select"
@@ -39,6 +41,7 @@ export type FieldDef = {
   step?: number;
   rows?: number;
 };
+
 
 export type FormValues = Record<string, unknown>;
 
@@ -94,7 +97,13 @@ export function FieldInput({
         {field.required ? <span className="ml-1 text-destructive">*</span> : null}
       </Label>
 
-      {field.type === "textarea" ? (
+      {field.type === "rich-text" ? (
+        <RichTextEditor
+          value={(value as string) ?? ""}
+          placeholder={field.placeholder}
+          onChange={(v) => onChange(v)}
+        />
+      ) : field.type === "textarea" ? (
         <Textarea
           id={id}
           rows={field.rows ?? 4}
@@ -148,6 +157,7 @@ export function FieldInput({
           }
         />
       )}
+
 
       {error ? (
         <p className="text-xs text-destructive">{error}</p>
