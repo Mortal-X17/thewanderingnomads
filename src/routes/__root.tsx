@@ -14,6 +14,7 @@ import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { LaunchScreen } from "../components/launch/LaunchScreen";
 import { DesignTokens } from "../components/site/DesignTokens";
+import { SiteSettingsMeta } from "../components/site/SiteSettingsMeta";
 import { getLaunchState } from "../lib/cms/content.functions";
 import { PREVIEW_PARAM, PREVIEW_STORAGE_KEY, PREVIEW_TOKEN, isPreLaunch } from "../lib/launch";
 
@@ -29,7 +30,7 @@ function NotFoundComponent() {
         <div className="mt-8">
           <Link
             to="/"
-            className="inline-flex items-center justify-center rounded-lg bg-forest px-6 py-3 text-sm font-medium text-white transition hover:opacity-90"
+            className="inline-flex items-center justify-center rounded-lg bg-forest-solid px-6 py-3 text-sm font-medium text-white transition hover:opacity-90"
           >
             Return home
           </Link>
@@ -57,7 +58,7 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
               router.invalidate();
               reset();
             }}
-            className="inline-flex items-center justify-center rounded-lg bg-forest px-6 py-3 text-sm font-medium text-white transition hover:opacity-90"
+            className="inline-flex items-center justify-center rounded-lg bg-forest-solid px-6 py-3 text-sm font-medium text-white transition hover:opacity-90"
           >
             Try again
           </button>
@@ -85,7 +86,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           "Community expeditions with confirmed dates. India, the Himalayas, and custom international journeys — small groups, hosted departures, limited seats.",
       },
       { name: "author", content: "The Wandering Nomads" },
-      { name: "theme-color", content: "#f8f6f0" },
+      { name: "theme-color", content: "#f8f6f0", media: "(prefers-color-scheme: light)" },
+      { name: "theme-color", content: "#191b1f", media: "(prefers-color-scheme: dark)" },
       { property: "og:site_name", content: "The Wandering Nomads" },
       {
         property: "og:title",
@@ -111,6 +113,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         property: "og:image",
         content:
           "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/3fa00827-bd68-4f6b-9816-22dc609dc567",
+      },
+      {
+        property: "og:image:alt",
+        content: "The Wandering Nomads — travellers on a Himalayan ridge",
       },
       {
         name: "twitter:image",
@@ -211,6 +217,7 @@ function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
       {isStudio ? null : <DesignTokens />}
+      {isStudio ? null : <SiteSettingsMeta />}
       <Outlet />
     </QueryClientProvider>
   );

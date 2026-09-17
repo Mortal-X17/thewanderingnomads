@@ -24,6 +24,7 @@ import {
   destinationForJourney,
   imagesForJourney,
 } from "@/lib/destinations";
+import { absoluteUrl } from "@/lib/site";
 import { WhatsAppIcon } from "@/components/site/WhatsAppIcon";
 
 export const Route = createFileRoute("/trip/$slug")({
@@ -34,7 +35,16 @@ export const Route = createFileRoute("/trip/$slug")({
         name: "description",
         content: `Small-group ${titleFromSlug(params.slug)} by The Wandering Nomads. Itinerary, batches, and booking on WhatsApp.`,
       },
+      {
+        property: "og:title",
+        content: `${titleFromSlug(params.slug)} — The Wandering Nomads`,
+      },
+      {
+        property: "og:description",
+        content: `Small-group ${titleFromSlug(params.slug)} by The Wandering Nomads. Itinerary, batches, and booking on WhatsApp.`,
+      },
     ],
+    links: [{ rel: "canonical", href: absoluteUrl(`/trip/${params.slug}`) }],
   }),
   component: TripDetailPage,
 });
@@ -71,7 +81,7 @@ function TripDetailPage() {
             </p>
             <Link
               to="/upcoming-trips"
-              className="mt-10 inline-flex items-center rounded-lg bg-forest px-6 py-3 text-[13px] font-medium text-white"
+              className="mt-10 inline-flex items-center rounded-lg bg-forest-solid px-6 py-3 text-[13px] font-medium text-white"
             >
               See upcoming trips
             </Link>
@@ -171,7 +181,7 @@ function TripDetailPage() {
                   <ul className="mt-4 space-y-2.5 text-[14.5px] text-ink/85">
                     {includes.map((h) => (
                       <li key={h} className="flex gap-2.5">
-                        <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-forest" />
+                        <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-forest-solid" />
                         {h}
                       </li>
                     ))}
@@ -219,7 +229,7 @@ function TripDetailPage() {
                             href={waLink(tripEnquiryMessage(trip, batch))}
                             target="_blank"
                             rel="noreferrer"
-                            className="inline-flex items-center rounded-lg bg-forest px-5 py-2.5 text-[13px] font-medium text-white transition hover:bg-forest/90"
+                            className="inline-flex items-center rounded-lg bg-forest-solid px-5 py-2.5 text-[13px] font-medium text-white transition hover:bg-forest-solid/90"
                           >
                             Enquire
                           </a>
@@ -312,7 +322,7 @@ function TripDetailPage() {
                   href={book}
                   target="_blank"
                   rel="noreferrer"
-                  className="mt-6 flex w-full items-center justify-center gap-2.5 rounded-lg bg-forest px-6 py-4 text-[15px] font-semibold text-white shadow-[0_2px_8px_rgba(52,78,65,0.25)] transition hover:bg-forest/90 active:scale-[0.99] focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-card"
+                  className="mt-6 flex w-full items-center justify-center gap-2.5 rounded-lg bg-forest-solid px-6 py-4 text-[15px] font-semibold text-white shadow-[0_2px_8px_rgba(52,78,65,0.25)] transition hover:bg-forest-solid/90 active:scale-[0.99] focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-card"
                 >
                   <WhatsAppIcon className="h-4.5 w-4.5 shrink-0" />
                   Book now — WhatsApp
@@ -362,7 +372,7 @@ function TripDetailPage() {
         </div>
       </main>
 
-      <div className="fixed inset-x-0 bottom-0 z-[64] border-t border-ink/6 bg-white/95 px-4 py-3 backdrop-blur-md lg:hidden">
+      <div className="fixed inset-x-0 bottom-0 z-[64] border-t border-ink/6 bg-background/95 px-4 py-3 backdrop-blur-md lg:hidden">
         <div className="mx-auto flex max-w-6xl items-center justify-between gap-3">
           <div className="min-w-0">
             {trip.price ? <p className="display text-xl text-ink">{trip.price}</p> : null}
@@ -374,7 +384,7 @@ function TripDetailPage() {
             href={book}
             target="_blank"
             rel="noreferrer"
-            className="flex min-h-[48px] shrink-0 items-center justify-center gap-2 rounded-full bg-forest px-7 py-3 text-[14.5px] font-semibold text-white shadow-lift transition hover:opacity-90 active:scale-[0.99] focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+            className="flex min-h-[48px] shrink-0 items-center justify-center gap-2 rounded-full bg-forest-solid px-7 py-3 text-[14.5px] font-semibold text-white shadow-lift transition hover:opacity-90 active:scale-[0.99] focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
           >
             <WhatsAppIcon className="h-4 w-4 shrink-0" />
             Book now

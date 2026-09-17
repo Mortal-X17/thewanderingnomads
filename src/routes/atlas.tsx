@@ -57,7 +57,7 @@ function AtlasPage() {
   return (
     <SiteLayout>
       {/* Hero */}
-      <section className="relative overflow-hidden pt-32 pb-16 sm:pt-40 sm:pb-24 bg-white">
+      <section className="relative overflow-hidden pt-32 pb-16 sm:pt-40 sm:pb-24 bg-background">
         <div
           aria-hidden
           className="pointer-events-none absolute inset-0 opacity-50"
@@ -130,7 +130,7 @@ function AtlasPage() {
                     >
                       <motion.span
                         layoutId={`dot-${s.id}`}
-                        className="h-1.5 w-1.5 rounded-full bg-forest"
+                        className="h-1.5 w-1.5 rounded-full bg-forest-solid"
                       />
                       <span className="border-b border-transparent group-hover:border-forest/40">
                         {s.name}

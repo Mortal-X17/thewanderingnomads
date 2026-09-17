@@ -3,7 +3,8 @@ import { createFileRoute } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { Reveal } from "@/components/site/Reveal";
 import { EnquiryForm } from "@/components/site/EnquiryForm";
-import { CONTACT_EMAIL, PHONE_DISPLAY, WHATSAPP_NUMBER, waLink } from "@/lib/site";
+import { useContent } from "@/lib/cms/useContent";
+import { CONTACT_EMAIL, PHONE_DISPLAY, WHATSAPP_NUMBER, absoluteUrl, waLink } from "@/lib/site";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
@@ -16,14 +17,19 @@ export const Route = createFileRoute("/contact")({
       },
       { property: "og:title", content: "Contact — The Wandering Nomads" },
       { property: "og:description", content: "Plan your next trip with The Wandering Nomads." },
-      { property: "og:url", content: "/contact" },
+      { property: "og:url", content: absoluteUrl("/contact") },
     ],
-    links: [{ rel: "canonical", href: "/contact" }],
+    links: [{ rel: "canonical", href: absoluteUrl("/contact") }],
   }),
   component: ContactPage,
 });
 
 function ContactPage() {
+  const { settings } = useContent();
+  const email = settings?.contact_email ?? CONTACT_EMAIL;
+  const phone = settings?.contact_phone ?? PHONE_DISPLAY;
+  const phoneDigits = phone.replace(/[^0-9]/g, "");
+
   return (
     <SiteLayout>
       <main className="pt-36 pb-32">
@@ -45,13 +51,23 @@ function ContactPage() {
 
           <div className="mt-14 grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
             <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-1">
-              <Row label="Email" href={`mailto:${CONTACT_EMAIL}`} v={CONTACT_EMAIL} />
-              <Row label="WhatsApp" href={waLink()} v={PHONE_DISPLAY} />
-              <Row label="Phone" href={`tel:+${WHATSAPP_NUMBER}`} v={PHONE_DISPLAY} />
+              <Row label="Email" href={`mailto:${email}`} v={email} />
+              <Row
+                label="WhatsApp"
+                href={phoneDigits ? `https://wa.me/${phoneDigits}` : waLink()}
+                v={phone}
+                external
+              />
+              <Row
+                label="Phone"
+                href={phoneDigits ? `tel:+${phoneDigits}` : `tel:+${WHATSAPP_NUMBER}`}
+                v={phone}
+              />
               <Row
                 label="Instagram"
                 href="https://instagram.com/thewanderingnomads.in"
                 v="@thewanderingnomads.in"
+                external
               />
               <Row label="Based in" v="Jaipur, Rajasthan, India" />
             </div>
@@ -63,7 +79,17 @@ function ContactPage() {
   );
 }
 
-function Row({ label, v, href }: { label: string; v: string; href?: string }) {
+function Row({
+  label,
+  v,
+  href,
+  external = false,
+}: {
+  label: string;
+  v: string;
+  href?: string;
+  external?: boolean;
+}) {
   return (
     <Reveal>
       <div className="border-t border-forest/15 pt-5">
@@ -73,8 +99,7 @@ function Row({ label, v, href }: { label: string; v: string; href?: string }) {
             <a
               href={href}
               className="border-b border-forest/30 pb-0.5 transition hover:border-forest hover:text-forest"
-              target="_blank"
-              rel="noreferrer"
+              {...(external ? { target: "_blank", rel: "noreferrer" } : {})}
             >
               {v}
             </a>

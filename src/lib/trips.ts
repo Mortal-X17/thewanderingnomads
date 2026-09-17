@@ -16,11 +16,23 @@ export function formatDate(iso?: string | null): string {
   return `${d.getDate()} ${MONTHS[d.getMonth()]} ${d.getFullYear()}`;
 }
 
-/** "25 Aug – 31 Aug 2026" (collapses to a single date when end equals start). */
+/** "16 – 20 Oct 2026" (single date when start equals end; year shown once). */
 export function formatBatchDates(batch: Pick<TripBatchRecord, "start_date" | "end_date">): string {
   const start = formatDate(batch.start_date);
   const end = batch.end_date ? formatDate(batch.end_date) : "";
-  return end && end !== start ? `${start} – ${end}` : start;
+  if (!end || end === start) return start;
+
+  // Compact "16 – 20 Oct 2026" / "31 Oct – 3 Nov 2026" when the parts allow it.
+  const [startDay, startMonth, startYear] = start.split(" ");
+  const [endDay, endMonth, endYear] = end.split(" ");
+  if (!startDay || !endDay || !endMonth || !endYear) return `${start} – ${end}`;
+  if (startMonth === endMonth && startYear === endYear) {
+    return `${startDay} – ${endDay} ${endMonth} ${endYear}`;
+  }
+  if (startMonth && startYear && startYear === endYear) {
+    return `${startDay} ${startMonth} – ${endDay} ${endMonth} ${endYear}`;
+  }
+  return `${start} – ${end}`;
 }
 
 /** Batches for one trip, oldest first. */

@@ -47,5 +47,14 @@ export default tseslint.config(
       "@typescript-eslint/no-unused-vars": "off",
     },
   },
+  {
+    // shadcn/ui primitives legitimately co-export components and their helpers
+    // (buttonVariants, useFormField, SidebarProvider …) — the fast-refresh
+    // warning is noise for this generated layer.
+    files: ["src/components/ui/**/*.{ts,tsx}"],
+    rules: {
+      "react-refresh/only-export-components": "off",
+    },
+  },
   eslintPluginPrettier,
 );

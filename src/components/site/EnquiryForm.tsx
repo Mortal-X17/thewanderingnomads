@@ -31,20 +31,29 @@ export function EnquiryForm({ tone = "light" }: { tone?: "light" | "dark" }) {
         We'll take it from here
       </h3>
       <div className="mt-6 grid gap-4">
-        <Field dark={dark} name="name" label="Your name" placeholder="Your name" />
+        <Field
+          dark={dark}
+          name="name"
+          label="Your name"
+          placeholder="Your name"
+          autoComplete="name"
+        />
         <Field
           dark={dark}
           name="destination"
           label="Destination in mind"
           placeholder="Kashmir, Spiti, Bhutan…"
+          id="enquiry-destination"
         />
         <div>
           <label
+            htmlFor="enquiry-note"
             className={`text-[11px] uppercase tracking-[0.18em] ${dark ? "text-white/70" : "text-muted-foreground"}`}
           >
             A few words
           </label>
           <textarea
+            id="enquiry-note"
             name="note"
             rows={4}
             placeholder="When you'd like to travel, group size, anything on your mind."
@@ -59,8 +68,8 @@ export function EnquiryForm({ tone = "light" }: { tone?: "light" | "dark" }) {
           type="submit"
           className={
             dark
-              ? "mt-2 inline-flex items-center justify-center gap-2 rounded-lg bg-white px-6 py-3.5 text-[13.5px] font-medium text-forest transition hover:opacity-90"
-              : "mt-2 inline-flex items-center justify-center gap-2 rounded-lg bg-forest px-6 py-3.5 text-[13.5px] font-medium text-white transition hover:bg-forest/90 hover:shadow-[0_2px_8px_rgba(52,78,65,0.25)]"
+              ? "mt-2 inline-flex items-center justify-center gap-2 rounded-lg bg-white px-6 py-3.5 text-[13.5px] font-medium text-forest-solid transition hover:opacity-90"
+              : "mt-2 inline-flex items-center justify-center gap-2 rounded-lg bg-forest-solid px-6 py-3.5 text-[13.5px] font-medium text-white transition hover:bg-forest-solid/90 hover:shadow-[0_2px_8px_rgba(52,78,65,0.25)]"
           }
         >
           Continue on WhatsApp
@@ -75,22 +84,30 @@ function Field({
   name,
   label,
   placeholder,
+  autoComplete,
+  id,
 }: {
   dark: boolean;
   name: string;
   label: string;
   placeholder: string;
+  autoComplete?: string;
+  id?: string;
 }) {
+  const fieldId = id ?? `enquiry-${name}`;
   return (
     <div>
       <label
+        htmlFor={fieldId}
         className={`text-[11px] uppercase tracking-[0.18em] ${dark ? "text-white/70" : "text-muted-foreground"}`}
       >
         {label}
       </label>
       <input
+        id={fieldId}
         name={name}
         placeholder={placeholder}
+        autoComplete={autoComplete}
         className={
           dark
             ? "mt-2 w-full rounded-lg border border-white/20 bg-white/5 px-5 py-3 text-[14.5px] text-white placeholder:text-white/55 outline-none transition focus:border-white/40 focus:bg-white/10"

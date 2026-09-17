@@ -43,7 +43,7 @@ export function Nav() {
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
         transparent
           ? ""
-          : "bg-white/95 backdrop-blur-md border-b border-ink/6 shadow-[0_1px_3px_rgba(20,28,36,0.04)]"
+          : "bg-background/95 backdrop-blur-md border-b border-ink/6 shadow-[0_1px_3px_rgba(20,28,36,0.04)]"
       }`}
     >
       <nav className="mx-auto flex w-full max-w-6xl items-center justify-between px-5 py-3.5 sm:px-6 sm:py-4">
@@ -84,7 +84,7 @@ export function Nav() {
             className={`inline-flex items-center rounded-lg px-4 py-2 text-[13px] font-medium transition ${
               transparent
                 ? "border border-white/30 bg-white/10 text-white backdrop-blur-md hover:bg-white/20"
-                : "bg-forest text-white hover:bg-forest/90 hover:shadow-[0_2px_8px_rgba(52,78,65,0.25)]"
+                : "bg-forest-solid text-white hover:bg-forest-solid/90 hover:shadow-[0_2px_8px_rgba(52,78,65,0.25)]"
             }`}
           >
             Book Now
@@ -126,7 +126,7 @@ export function Nav() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -6 }}
             transition={{ duration: 0.2 }}
-            className="absolute left-3 right-3 top-[68px] rounded-2xl bg-white border border-ink/8 shadow-lift p-3 lg:hidden"
+            className="absolute left-3 right-3 top-[68px] rounded-2xl bg-card border border-ink/8 shadow-lift p-3 lg:hidden"
           >
             <ul className="flex flex-col">
               {links.map((l) => (
@@ -144,7 +144,7 @@ export function Nav() {
                 <Link
                   to="/upcoming-trips"
                   onClick={() => setOpen(false)}
-                  className="block rounded-xl bg-forest px-4 py-3 text-center text-[13px] font-medium text-white"
+                  className="block rounded-xl bg-forest-solid px-4 py-3 text-center text-[13px] font-medium text-white"
                 >
                   Book Now
                 </Link>

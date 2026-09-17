@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
 
 import { useContent } from "@/lib/cms/useContent";
-import { CONTACT_EMAIL, PHONE_DISPLAY } from "@/lib/site";
+import { CONTACT_EMAIL, PHONE_DISPLAY, waLink } from "@/lib/site";
 
 export function Footer() {
   const { settings, social } = useContent();
@@ -23,7 +23,7 @@ export function Footer() {
         ];
 
   return (
-    <footer className="bg-forest text-white/90">
+    <footer className="bg-forest-solid text-white/90">
       <div className="mx-auto max-w-6xl px-6 py-16 sm:py-20">
         <div className="grid gap-12 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
           <div>
@@ -84,10 +84,10 @@ export function Footer() {
 
           <FooterCol title="Talk to us">
             <FA href={`mailto:${email}`}>{email}</FA>
-            <FA href={`tel:${phoneDigits ? `+${phoneDigits}` : ""}`}>{phone}</FA>
-            <FA href={`https://wa.me/${phoneDigits}`}>WhatsApp</FA>
+            <FA href={phoneDigits ? `tel:+${phoneDigits}` : undefined}>{phone}</FA>
+            <FA href={phoneDigits ? `https://wa.me/${phoneDigits}` : waLink()}>WhatsApp</FA>
             {socialLinks.map((l) => (
-              <FA key={l.id} href={l.url}>
+              <FA key={l.id} href={l.url} external>
                 {l.label || l.handle || l.platform}
               </FA>
             ))}
@@ -127,10 +127,26 @@ function FLink({ to, children }: { to: string; children: React.ReactNode }) {
   );
 }
 
-function FA({ href, children }: { href: string; children: React.ReactNode }) {
+function FA({
+  href,
+  children,
+  external = false,
+}: {
+  href?: string;
+  children: React.ReactNode;
+  /** Only web links open in a new tab — mailto/tel must not. */
+  external?: boolean;
+}) {
+  if (!href) {
+    return <li>{children}</li>;
+  }
   return (
     <li>
-      <a href={href} className="transition hover:text-white" target="_blank" rel="noreferrer">
+      <a
+        href={href}
+        className="transition hover:text-white"
+        {...(external ? { target: "_blank", rel: "noreferrer" } : {})}
+      >
         {children}
       </a>
     </li>

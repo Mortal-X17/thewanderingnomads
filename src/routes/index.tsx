@@ -17,7 +17,7 @@ import { EnquiryForm } from "@/components/site/EnquiryForm";
 import { useContent, useSection } from "@/lib/cms/useContent";
 import { collectDestinations, destinationForJourney } from "@/lib/destinations";
 import { parsePrice, resolveBatches, resolveJourneys, waLink } from "@/lib/trips";
-import { CONTACT_EMAIL, PHONE_DISPLAY, WHATSAPP_NUMBER } from "@/lib/site";
+import { CONTACT_EMAIL, PHONE_DISPLAY, WHATSAPP_NUMBER, SITE_URL, absoluteUrl } from "@/lib/site";
 
 import heroImg from "@/assets/hero-himalaya.jpg";
 import heroGroup from "@/assets/hero-group.jpg";
@@ -40,9 +40,9 @@ export const Route = createFileRoute("/")({
         content:
           "Community expeditions with confirmed dates. India, the Himalayas, and custom international journeys.",
       },
-      { property: "og:url", content: "/" },
+      { property: "og:url", content: absoluteUrl("/") },
     ],
-    links: [{ rel: "canonical", href: "/" }],
+    links: [{ rel: "canonical", href: absoluteUrl("/") }],
     scripts: [
       {
         type: "application/ld+json",
@@ -50,7 +50,7 @@ export const Route = createFileRoute("/")({
           "@context": "https://schema.org",
           "@type": "TravelAgency",
           name: "The Wandering Nomads",
-          url: "https://thewanderingnomads.lovable.app",
+          url: SITE_URL,
           description:
             "Small-group community trips across India and beyond — confirmed dates, hosted departures.",
           areaServed: ["India", "Bhutan", "Nepal"],
@@ -122,7 +122,7 @@ function ScrollProgress() {
   return (
     <motion.div
       style={{ scaleX: scrollYProgress, transformOrigin: "0% 50%" }}
-      className="fixed inset-x-0 top-0 z-[70] h-[2px] bg-forest"
+      className="fixed inset-x-0 top-0 z-[70] h-[2px] bg-forest-solid"
     />
   );
 }
@@ -243,19 +243,19 @@ function Hero() {
           transition={{ duration: 0.9, delay: 1.15, ease: [0.22, 1, 0.36, 1] }}
           className="mt-10 flex flex-wrap items-center gap-3"
         >
-          <Link
-            to={(copy?.cta_href ?? "/upcoming-trips") as "/upcoming-trips"}
-            className="group inline-flex items-center gap-3 rounded-lg bg-forest px-6 py-3.5 text-[13.5px] font-medium text-white transition hover:bg-forest/90 hover:shadow-[0_4px_16px_rgba(52,78,65,0.3)]"
+          <CtaLink
+            href={copy?.cta_href ?? "/upcoming-trips"}
+            className="group inline-flex items-center gap-3 rounded-lg bg-forest-solid px-6 py-3.5 text-[13.5px] font-medium text-white transition hover:bg-forest-solid/90 hover:shadow-[0_4px_16px_rgba(52,78,65,0.3)]"
           >
             {copy?.cta_label ?? "See upcoming trips"}
             <ArrowRight className="h-4 w-4 transition group-hover:translate-x-0.5" />
-          </Link>
-          <Link
-            to={(copy?.secondary_cta_href ?? "/india-trips") as "/india-trips"}
+          </CtaLink>
+          <CtaLink
+            href={copy?.secondary_cta_href ?? "/india-trips"}
             className="inline-flex items-center gap-2 rounded-lg border border-white/25 bg-white/10 px-6 py-3.5 text-[13.5px] font-medium text-white backdrop-blur-md transition hover:bg-white/20"
           >
             {copy?.secondary_cta_label ?? "Explore India trips"}
-          </Link>
+          </CtaLink>
           <a
             href={waLink("Hi The Wandering Nomads! I'd like to plan a trip.")}
             target="_blank"
@@ -341,14 +341,14 @@ function Upcoming() {
   }, [journeys, price, dest]);
 
   const filters: { id: PriceFilter; label: string }[] = [
-    { id: "all", label: "All destinations" },
+    { id: "all", label: "Any price" },
     { id: "under20", label: "Under ₹20K" },
     { id: "20to50", label: "₹20K – ₹50K" },
     { id: "over50", label: "₹50K+" },
   ];
 
   return (
-    <section id="upcoming" className="relative bg-white py-24 sm:py-32">
+    <section id="upcoming" className="relative bg-background py-24 sm:py-32">
       <div className="mx-auto max-w-6xl px-6">
         <div className="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-end">
           <Reveal>
@@ -382,8 +382,8 @@ function Upcoming() {
                 if (f.id === "all") setDest("all");
               }}
               className={`rounded-lg px-4 py-2 text-[13px] font-medium transition ${
-                price === f.id && dest === "all"
-                  ? "bg-forest text-white shadow-sm"
+                price === f.id
+                  ? "bg-forest-solid text-white shadow-sm"
                   : "bg-cream text-muted-foreground hover:text-forest hover:bg-forest/5"
               }`}
             >
@@ -399,7 +399,7 @@ function Upcoming() {
               }}
               className={`rounded-lg px-4 py-2 text-[13px] font-medium transition ${
                 dest === name
-                  ? "bg-forest text-white shadow-sm"
+                  ? "bg-forest-solid text-white shadow-sm"
                   : "bg-cream text-muted-foreground hover:text-forest hover:bg-forest/5"
               }`}
             >
@@ -471,7 +471,7 @@ function DestinationStrip() {
                 <Link
                   to={to}
                   params={{ slug: dest.slug }}
-                  className="group relative flex aspect-square flex-col justify-end overflow-hidden rounded-2xl bg-ink text-white"
+                  className="group relative flex aspect-square flex-col justify-end overflow-hidden rounded-2xl bg-neutral-900 text-white"
                 >
                   {dest.image ? (
                     <img
@@ -572,7 +572,7 @@ const COMMUNITY_STATS: { value: number; suffix: string; label: string }[] = [
 
 function CommunityStats() {
   return (
-    <section className="relative overflow-hidden bg-forest py-16 text-white sm:py-20">
+    <section className="relative overflow-hidden bg-forest-solid py-16 text-white sm:py-20">
       <img
         src={heroGroup}
         alt=""
@@ -701,7 +701,7 @@ function Testimonials() {
     : defaultTestimonials;
 
   return (
-    <section id="testimonials" className="relative bg-white py-24 sm:py-32">
+    <section id="testimonials" className="relative bg-background py-24 sm:py-32">
       <div className="mx-auto max-w-6xl px-6">
         <div className="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-end">
           <Reveal>
@@ -770,7 +770,10 @@ function Testimonials() {
 
 function ContactCta() {
   return (
-    <section id="contact" className="relative overflow-hidden bg-forest py-24 text-white sm:py-32">
+    <section
+      id="contact"
+      className="relative overflow-hidden bg-forest-solid py-24 text-white sm:py-32"
+    >
       <div
         className="absolute inset-0 opacity-15"
         style={{
@@ -839,10 +842,10 @@ function ContactLine({ label, v, href }: { label: string; v: string; href?: stri
 
 function PromoBanner() {
   return (
-    <section className="bg-white pb-4">
+    <section className="bg-background pb-4">
       <div className="mx-auto max-w-6xl px-6">
         <Reveal>
-          <div className="relative overflow-hidden rounded-2xl bg-forest px-6 py-10 text-white sm:px-10 sm:py-12">
+          <div className="relative overflow-hidden rounded-2xl bg-forest-solid px-6 py-10 text-white sm:px-10 sm:py-12">
             <img
               src={heroImg}
               alt=""
@@ -859,7 +862,7 @@ function PromoBanner() {
                 href={waLink("Hi The Wandering Nomads! I need help picking a trip.")}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center rounded-lg bg-white px-6 py-3 text-[13.5px] font-medium text-forest transition hover:bg-white/90 hover:shadow-md"
+                className="inline-flex items-center rounded-lg bg-background px-6 py-3 text-[13.5px] font-medium text-forest transition hover:bg-white/90 hover:shadow-md"
               >
                 Request a callback
               </a>
@@ -868,6 +871,34 @@ function PromoBanner() {
         </Reveal>
       </div>
     </section>
+  );
+}
+
+/**
+ * Hero CTA link. CMS authors can point a button at an internal path or a full
+ * external URL — TanStack's <Link> only understands internal paths, so absolute
+ * URLs render as plain anchors instead of being mangled into a route.
+ */
+function CtaLink({
+  href,
+  className,
+  children,
+}: {
+  href: string;
+  className?: string;
+  children: ReactNode;
+}) {
+  if (/^https?:\/\//i.test(href)) {
+    return (
+      <a href={href} target="_blank" rel="noreferrer" className={className}>
+        {children}
+      </a>
+    );
+  }
+  return (
+    <Link to={href} className={className}>
+      {children}
+    </Link>
   );
 }
 

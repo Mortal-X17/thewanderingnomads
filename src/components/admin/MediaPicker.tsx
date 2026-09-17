@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { ImagePlus, Loader2, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 
@@ -13,14 +13,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { listRows, uploadMedia, type MediaRecord } from "@/lib/cms/admin";
-
-export function useMediaList() {
-  return useQuery({
-    queryKey: ["admin", "media"],
-    queryFn: async () => (await listRows("media", "created_at")) as unknown as MediaRecord[],
-  });
-}
+import { uploadMedia } from "@/lib/cms/admin";
+import { useMediaList } from "./useMediaList";
 
 /** Image field: pick from the media library, upload a new file, or clear. */
 export function MediaPicker({

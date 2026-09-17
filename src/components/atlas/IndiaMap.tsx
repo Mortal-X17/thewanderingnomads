@@ -182,7 +182,7 @@ export function IndiaMap({
 
       <div className="mt-4 flex flex-wrap items-center justify-center gap-4 text-[11px] text-muted-foreground">
         <span className="inline-flex items-center gap-2">
-          <span className="h-2.5 w-4 rounded-sm bg-forest" />
+          <span className="h-2.5 w-4 rounded-sm bg-forest-solid" />
           Explored
         </span>
         <span className="inline-flex items-center gap-2">

@@ -1,5 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 
+import { absoluteUrl } from "@/lib/site";
+
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { Reveal } from "@/components/site/Reveal";
 import { useContent } from "@/lib/cms/useContent";
@@ -21,9 +23,9 @@ export const Route = createFileRoute("/gallery")({
       },
       { property: "og:title", content: "Gallery — The Wandering Nomads" },
       { property: "og:description", content: "Field photographs from past expeditions." },
-      { property: "og:url", content: "/gallery" },
+      { property: "og:url", content: absoluteUrl("/gallery") },
     ],
-    links: [{ rel: "canonical", href: "/gallery" }],
+    links: [{ rel: "canonical", href: absoluteUrl("/gallery") }],
   }),
   component: GalleryPage,
 });

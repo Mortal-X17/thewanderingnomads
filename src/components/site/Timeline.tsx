@@ -86,7 +86,7 @@ export function Timeline({ items }: { items?: Milestone[] }) {
           <div className="relative sm:pl-10">
             <span
               aria-hidden
-              className="absolute -left-[3px] top-2 hidden h-2 w-2 rounded-full bg-forest ring-4 ring-background sm:block"
+              className="absolute -left-[3px] top-2 hidden h-2 w-2 rounded-full bg-forest-solid ring-4 ring-background sm:block"
               style={{
                 boxShadow: "0 0 0 6px color-mix(in oklab, var(--forest) 12%, transparent)",
               }}

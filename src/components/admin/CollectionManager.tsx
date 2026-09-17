@@ -41,7 +41,8 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { FieldInput, validate, type FieldDef, type FormValues } from "@/components/admin/fields";
+import { FieldInput, type FieldDef, type FormValues } from "@/components/admin/fields";
+import { validate } from "@/components/admin/validate";
 import {
   deleteRow,
   insertRow,
