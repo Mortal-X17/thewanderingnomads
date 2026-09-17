@@ -5,7 +5,8 @@ import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { FieldInput, validate, type FieldDef, type FormValues } from "@/components/admin/fields";
+import { FieldInput, type FieldDef, type FormValues } from "@/components/admin/fields";
+import { validate } from "@/components/admin/validate";
 import { getSingleton, saveSingleton, type AdminTable } from "@/lib/cms/admin";
 
 export type SingletonGroup = { title: string; description?: string; fields: FieldDef[] };

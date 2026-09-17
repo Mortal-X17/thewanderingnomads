@@ -16,7 +16,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { useMediaList } from "@/components/admin/MediaPicker";
+import { useMediaList } from "@/components/admin/useMediaList";
 import { deleteMedia, mediaUsage, updateRow, uploadMedia, type MediaRecord } from "@/lib/cms/admin";
 
 export const Route = createFileRoute("/admin/media")({

@@ -14,6 +14,7 @@ import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { LaunchScreen } from "../components/launch/LaunchScreen";
 import { DesignTokens } from "../components/site/DesignTokens";
+import { SiteSettingsMeta } from "../components/site/SiteSettingsMeta";
 import { getLaunchState } from "../lib/cms/content.functions";
 import { PREVIEW_PARAM, PREVIEW_STORAGE_KEY, PREVIEW_TOKEN, isPreLaunch } from "../lib/launch";
 
@@ -216,6 +217,7 @@ function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
       {isStudio ? null : <DesignTokens />}
+      {isStudio ? null : <SiteSettingsMeta />}
       <Outlet />
     </QueryClientProvider>
   );
