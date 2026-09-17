@@ -21,7 +21,7 @@ const ITEMS = [
 
 export function Agreement() {
   return (
-    <section className="relative bg-white py-24 sm:py-32">
+    <section className="relative bg-background py-24 sm:py-32">
       <div className="mx-auto max-w-6xl px-6">
         <Reveal>
           <p className="eyebrow">Our unspoken agreement</p>

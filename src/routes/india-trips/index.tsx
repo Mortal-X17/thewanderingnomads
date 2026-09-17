@@ -1,6 +1,8 @@
 import { useMemo, useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 
+import { absoluteUrl } from "@/lib/site";
+
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { Reveal } from "@/components/site/Reveal";
 import { DestinationCard } from "@/components/site/DestinationCard";
@@ -21,9 +23,9 @@ export const Route = createFileRoute("/india-trips/")({
           "Domestic community trips across Kashmir, Spiti, Himachal, Rajasthan, Rishikesh and more. Small groups, confirmed dates, hosted departures.",
       },
       { property: "og:title", content: "India Trips — The Wandering Nomads" },
-      { property: "og:url", content: "/india-trips" },
+      { property: "og:url", content: absoluteUrl("/india-trips") },
     ],
-    links: [{ rel: "canonical", href: "/india-trips" }],
+    links: [{ rel: "canonical", href: absoluteUrl("/india-trips") }],
   }),
   component: IndiaTripsPage,
 });
@@ -71,7 +73,7 @@ function IndiaTripsPage() {
           </div>
         </section>
 
-        <section className="py-20 sm:py-28 bg-white">
+        <section className="py-20 sm:py-28 bg-background">
           <div className="mx-auto max-w-6xl px-6">
             <Reveal>
               <p className="eyebrow">Overview</p>
@@ -89,7 +91,7 @@ function IndiaTripsPage() {
                   onClick={() => setFilter(f.id)}
                   className={`rounded-lg px-4 py-2 text-[13px] font-medium transition ${
                     filter === f.id
-                      ? "bg-forest text-white shadow-sm"
+                      ? "bg-forest-solid text-white shadow-sm"
                       : "bg-cream text-muted-foreground hover:text-forest hover:bg-forest/5"
                   }`}
                 >

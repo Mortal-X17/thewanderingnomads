@@ -57,7 +57,7 @@ export function TripCard({
         <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-black/10" />
 
         <div className="absolute left-3 top-3 flex flex-wrap gap-1.5">
-          <span className="rounded-md bg-white/90 backdrop-blur-sm px-2.5 py-1 text-[10px] uppercase tracking-[0.16em] font-medium text-forest">
+          <span className="rounded-md bg-white/90 backdrop-blur-sm px-2.5 py-1 text-[10px] uppercase tracking-[0.16em] font-medium text-forest-solid">
             Group
           </span>
           {trip.is_available ? null : (
@@ -72,14 +72,14 @@ export function TripCard({
           ) : null}
         </div>
         <div className="absolute right-3 top-3 flex flex-col items-end gap-1.5">
-          <span className="inline-flex items-center gap-1 rounded-md bg-white/90 backdrop-blur-sm px-2 py-1 text-[10.5px] font-semibold text-ink/80">
+          <span className="inline-flex items-center gap-1 rounded-md bg-white/90 backdrop-blur-sm px-2 py-1 text-[10.5px] font-semibold text-neutral-800">
             <svg viewBox="0 0 20 20" className="h-3 w-3 fill-sunrise" aria-hidden>
               <path d="M10 1.5l2.6 5.3 5.9.9-4.2 4.1 1 5.8L10 15l-5.3 2.6 1-5.8L1.5 7.7l5.9-.9L10 1.5z" />
             </svg>
             4.9
           </span>
           {trip.duration ? (
-            <span className="rounded-md bg-white/90 backdrop-blur-sm px-2.5 py-1 text-[10px] uppercase tracking-[0.16em] font-medium text-ink/70">
+            <span className="rounded-md bg-white/90 backdrop-blur-sm px-2.5 py-1 text-[10px] uppercase tracking-[0.16em] font-medium text-neutral-600">
               {trip.duration}
             </span>
           ) : null}
@@ -135,7 +135,7 @@ export function TripCard({
               <p className="mt-0.5 text-[13px] font-medium text-forest">On request</p>
             )}
           </div>
-          <span className="inline-flex items-center gap-1.5 rounded-lg bg-forest/8 px-3 py-2 text-[12px] font-medium text-forest transition group-hover:bg-forest group-hover:text-white">
+          <span className="inline-flex items-center gap-1.5 rounded-lg bg-forest/8 px-3 py-2 text-[12px] font-medium text-forest transition group-hover:bg-forest-solid group-hover:text-white">
             View trip
             <span aria-hidden className="transition group-hover:translate-x-0.5">
               →

@@ -1,2 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /admin
+
+Sitemap: https://thewanderingnomads.lovable.app/sitemap.xml

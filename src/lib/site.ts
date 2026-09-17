@@ -9,6 +9,15 @@
 /** WhatsApp number, digits only (international format). */
 export const WHATSAPP_NUMBER = "919621217333";
 
+/** Canonical production origin — used for sitemap, canonicals and OG URLs. */
+export const SITE_URL = "https://thewanderingnomads.lovable.app";
+
+/** Absolute URL for a path ("" → site root). Falls back to the path itself when no origin is configured. */
+export function absoluteUrl(path: string): string {
+  if (!path) return SITE_URL;
+  return `${SITE_URL}${path.startsWith("/") ? path : `/${path}`}`;
+}
+
 /** Phone number as shown to visitors. */
 export const PHONE_DISPLAY = "+91 96212 17333";
 

@@ -22,7 +22,7 @@ export function HelpDeciding({
             href={waLink(message)}
             target="_blank"
             rel="noreferrer"
-            className="inline-flex items-center rounded-lg bg-forest px-5 py-2.5 text-[13px] font-medium text-white transition hover:bg-forest/90"
+            className="inline-flex items-center rounded-lg bg-forest-solid px-5 py-2.5 text-[13px] font-medium text-white transition hover:bg-forest-solid/90"
           >
             Chat on WhatsApp
           </a>

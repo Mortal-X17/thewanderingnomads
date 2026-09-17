@@ -41,7 +41,7 @@ export function DestinationPage({ slug, region }: { slug: string; region: Region
             </p>
             <Link
               to={listTo as "/india-trips" | "/international-trips"}
-              className="mt-10 inline-flex items-center rounded-lg bg-forest px-6 py-3 text-[13px] font-medium text-white"
+              className="mt-10 inline-flex items-center rounded-lg bg-forest-solid px-6 py-3 text-[13px] font-medium text-white"
             >
               Browse destinations
             </Link>
@@ -97,7 +97,7 @@ export function DestinationPage({ slug, region }: { slug: string; region: Region
                   href={enquire}
                   target="_blank"
                   rel="noreferrer"
-                  className="inline-flex items-center rounded-lg bg-white px-6 py-3 text-[13.5px] font-medium text-forest transition hover:bg-white/90 hover:shadow-md"
+                  className="inline-flex items-center rounded-lg bg-white px-6 py-3 text-[13.5px] font-medium text-forest-solid transition hover:bg-white/90 hover:shadow-md"
                 >
                   Enquire on WhatsApp
                 </a>
@@ -137,7 +137,7 @@ export function DestinationPage({ slug, region }: { slug: string; region: Region
                       <ul className="mt-4 space-y-2.5 text-[14.5px] text-ink/85">
                         {dest.places.map((place) => (
                           <li key={place} className="flex gap-2.5">
-                            <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-forest" />
+                            <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-forest-solid" />
                             {place}
                           </li>
                         ))}
@@ -183,7 +183,7 @@ export function DestinationPage({ slug, region }: { slug: string; region: Region
                     href={enquire}
                     target="_blank"
                     rel="noreferrer"
-                    className="mt-8 inline-flex items-center rounded-lg bg-forest px-6 py-3 text-[13px] font-medium text-white"
+                    className="mt-8 inline-flex items-center rounded-lg bg-forest-solid px-6 py-3 text-[13px] font-medium text-white"
                   >
                     Plan this trip
                   </a>

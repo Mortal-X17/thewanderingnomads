@@ -11,7 +11,7 @@ export function DestinationCard({ dest }: { dest: DestinationView }) {
     <Link
       to={to}
       params={{ slug: dest.slug }}
-      className="group relative flex aspect-[4/5] flex-col overflow-hidden rounded-xl bg-ink text-white"
+      className="group relative flex aspect-[4/5] flex-col overflow-hidden rounded-xl bg-neutral-900 text-white"
     >
       {dest.image ? (
         <img

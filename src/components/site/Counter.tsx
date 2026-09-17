@@ -12,7 +12,7 @@ export function Counter({
 }) {
   const ref = useRef<HTMLSpanElement>(null);
   const inView = useInView(ref, { once: true, margin: "-15% 0px" });
-  const [value, setValue] = useState(0);
+  const [value, setValue] = useState<number | null>(null);
 
   useEffect(() => {
     if (!inView) return;
@@ -24,9 +24,13 @@ export function Counter({
     return () => controls.stop();
   }, [inView, to, duration]);
 
+  // Server render and pre-scroll renders show the real number (never "0+"),
+  // and the count-up takes over once the stat scrolls into view.
+  const display = value == null ? to : Math.round(value);
+
   return (
     <span ref={ref}>
-      {Math.round(value)}
+      {display}
       {suffix}
     </span>
   );

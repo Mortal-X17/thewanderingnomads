@@ -1,4 +1,5 @@
 import type { GalleryImageRecord, JourneyImageRecord, JourneyRecord } from "@/lib/cms/types";
+import { absoluteUrl } from "@/lib/site";
 import { formatRupees, parsePrice } from "@/lib/trips";
 
 import heroImg from "@/assets/hero-himalaya.jpg";
@@ -15,7 +16,12 @@ import gLake from "@/assets/gallery-lake.jpg";
 export type Region = "india" | "international";
 
 export type DestinationCategory =
-  "mountains" | "adventure" | "spiritual" | "culture" | "island" | "city";
+  | "mountains"
+  | "adventure"
+  | "spiritual"
+  | "culture"
+  | "island"
+  | "city";
 
 export type Destination = {
   slug: string;
@@ -448,8 +454,8 @@ export function destinationHead(slug: string, region: Region) {
         content: dest?.blurb ?? `Small-group ${name} trips by The Wandering Nomads.`,
       },
       { property: "og:title", content: `${name} trips — The Wandering Nomads` },
-      { property: "og:url", content: path },
+      { property: "og:url", content: absoluteUrl(path) },
     ],
-    links: [{ rel: "canonical", href: path }],
+    links: [{ rel: "canonical", href: absoluteUrl(path) }],
   };
 }

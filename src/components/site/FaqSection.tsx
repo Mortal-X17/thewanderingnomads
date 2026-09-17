@@ -38,7 +38,7 @@ const FAQS = [
 
 export function FaqSection() {
   return (
-    <section id="faq" className="relative bg-white py-24 sm:py-32">
+    <section id="faq" className="relative bg-background py-24 sm:py-32">
       <div className="mx-auto max-w-6xl px-6">
         <div className="grid gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:gap-20">
           <div>
@@ -58,7 +58,7 @@ export function FaqSection() {
                 href={waLink("Hi The Wandering Nomads! I have a few questions about your trips.")}
                 target="_blank"
                 rel="noreferrer"
-                className="mt-6 inline-flex items-center rounded-lg bg-forest px-5 py-2.5 text-[13px] font-medium text-white transition hover:bg-forest/90 hover:shadow-[0_2px_8px_rgba(52,78,65,0.25)]"
+                className="mt-6 inline-flex items-center rounded-lg bg-forest-solid px-5 py-2.5 text-[13px] font-medium text-white transition hover:bg-forest-solid/90 hover:shadow-[0_2px_8px_rgba(52,78,65,0.25)]"
               >
                 Chat with us
               </a>

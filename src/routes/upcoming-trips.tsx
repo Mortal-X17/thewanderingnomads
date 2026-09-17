@@ -1,6 +1,8 @@
 import { useMemo, useState, type ReactNode } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 
+import { absoluteUrl } from "@/lib/site";
+
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { Reveal } from "@/components/site/Reveal";
 import { TripCard } from "@/components/site/TripCard";
@@ -30,9 +32,9 @@ export const Route = createFileRoute("/upcoming-trips")({
         property: "og:description",
         content: "Small-group expeditions with confirmed dates across India and beyond.",
       },
-      { property: "og:url", content: "/upcoming-trips" },
+      { property: "og:url", content: absoluteUrl("/upcoming-trips") },
     ],
-    links: [{ rel: "canonical", href: "/upcoming-trips" }],
+    links: [{ rel: "canonical", href: absoluteUrl("/upcoming-trips") }],
   }),
   component: UpcomingTripsPage,
 });
@@ -106,7 +108,7 @@ function UpcomingTripsPage() {
                 onClick={() => setFilter(f.id)}
                 className={`rounded-lg px-4 py-2 text-[13px] font-medium transition ${
                   filter === f.id
-                    ? "bg-forest text-white shadow-sm"
+                    ? "bg-forest-solid text-white shadow-sm"
                     : "bg-cream text-muted-foreground hover:text-forest hover:bg-forest/5"
                 }`}
               >
@@ -117,6 +119,8 @@ function UpcomingTripsPage() {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Search trips…"
+              aria-label="Search trips"
+              type="search"
               className="ml-auto w-full max-w-xs rounded-lg border border-ink/10 bg-card px-5 py-2 text-[13.5px] outline-none transition focus:border-forest/40"
             />
           </div>
@@ -154,7 +158,7 @@ function UpcomingTripsPage() {
                 )}
                 target="_blank"
                 rel="noreferrer"
-                className="mt-8 inline-flex items-center rounded-lg bg-forest px-6 py-3 text-[13px] font-medium text-white transition hover:bg-forest/90"
+                className="mt-8 inline-flex items-center rounded-lg bg-forest-solid px-6 py-3 text-[13px] font-medium text-white transition hover:bg-forest-solid/90"
               >
                 Chat on WhatsApp
               </a>
@@ -206,7 +210,7 @@ function Chip({
       onClick={onClick}
       className={`rounded-lg px-3.5 py-1.5 text-[12px] font-medium transition ${
         active
-          ? "bg-forest text-white shadow-sm"
+          ? "bg-forest-solid text-white shadow-sm"
           : "bg-cream text-ink/70 hover:bg-forest/5 hover:text-forest"
       }`}
     >

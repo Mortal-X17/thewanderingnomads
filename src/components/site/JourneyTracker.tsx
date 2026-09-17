@@ -138,7 +138,7 @@ export function JourneyTracker({
                         ease: [0.22, 1, 0.36, 1],
                       }}
                       className={`block rounded-full ${
-                        isActive ? "bg-forest" : isDone ? "bg-ink/45" : "bg-ink/15"
+                        isActive ? "bg-forest-solid" : isDone ? "bg-ink/45" : "bg-ink/15"
                       }`}
                       style={{
                         width: isActive ? 8 : 5,
@@ -214,8 +214,8 @@ export function JourneyTracker({
               className="pointer-events-auto inline-flex items-center gap-2.5 rounded-full border border-ink/10 bg-background/75 px-3.5 py-1.5 backdrop-blur-md shadow-[0_10px_30px_-15px_rgba(20,28,36,0.35)]"
             >
               <span className="relative flex h-1.5 w-1.5">
-                <span className="absolute inset-0 rounded-full bg-forest" />
-                <span className="absolute inset-0 rounded-full bg-forest animate-ping opacity-40" />
+                <span className="absolute inset-0 rounded-full bg-forest-solid" />
+                <span className="absolute inset-0 rounded-full bg-forest-solid animate-ping opacity-40" />
               </span>
               <span className="text-[10.5px] uppercase tracking-[0.22em] text-muted-foreground">
                 Chapter {String(activeIndex + 1).padStart(2, "0")}

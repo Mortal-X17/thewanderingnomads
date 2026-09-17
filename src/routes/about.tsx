@@ -1,5 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 
+import { absoluteUrl } from "@/lib/site";
+
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { Reveal } from "@/components/site/Reveal";
 import { RichText } from "@/components/site/RichText";
@@ -20,9 +22,9 @@ export const Route = createFileRoute("/about")({
         property: "og:description",
         content: "How a year on the road became a community travel company.",
       },
-      { property: "og:url", content: "/about" },
+      { property: "og:url", content: absoluteUrl("/about") },
     ],
-    links: [{ rel: "canonical", href: "/about" }],
+    links: [{ rel: "canonical", href: absoluteUrl("/about") }],
   }),
   component: AboutPage,
 });
@@ -61,7 +63,7 @@ function AboutPage() {
             <div className="flex flex-wrap items-center gap-3">
               <Link
                 to="/upcoming-trips"
-                className="inline-flex items-center rounded-lg bg-forest px-6 py-3.5 text-[13.5px] font-medium text-white transition hover:bg-forest/90 hover:shadow-[0_2px_8px_rgba(52,78,65,0.25)] focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                className="inline-flex items-center rounded-lg bg-forest-solid px-6 py-3.5 text-[13.5px] font-medium text-white transition hover:bg-forest-solid/90 hover:shadow-[0_2px_8px_rgba(52,78,65,0.25)] focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
               >
                 See upcoming trips
               </Link>
